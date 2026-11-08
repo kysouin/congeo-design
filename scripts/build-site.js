@@ -11,6 +11,7 @@ const { checkContrast, formatMarkdown } = require('./lib/contrast-check');
 const root = path.resolve(__dirname, '..');
 const tokens = JSON.parse(fs.readFileSync(path.join(root, 'tokens/tokens.json'), 'utf8'));
 const C = require(path.join(root, 'dist/react'));
+const I18N = require(path.join(root, 'dist/i18n'));
 const h = React.createElement;
 
 // ---------- fonts ----------
@@ -173,7 +174,65 @@ function Showcase({ scheme }) {
 }
 
 function ComponentsSection() {
-  return h(Section, { id: 'components', title: 'Components', note: 'Κάθε component σε light και dark. Το ίδιο markup, μόνο το data-theme αλλάζει. Each component in light and dark; same markup, only data-theme changes.' }, h('div', { className: 'ref-two ref-two--components' }, h(Showcase, { scheme: 'light' }), h(Showcase, { scheme: 'dark' })));
+  return I18N.inLang('el', () => h(Section, { id: 'components', title: 'Components', note: 'Κάθε component σε light και dark. Το ίδιο markup, μόνο το data-theme αλλάζει. Each component in light and dark; same markup, only data-theme changes.' }, h('div', { className: 'ref-two ref-two--components' }, h(Showcase, { scheme: 'light' }), h(Showcase, { scheme: 'dark' }))));
+}
+
+// ---------- language ----------
+const SAMPLE_ISO = '2026-11-12T08:00:00Z'; // Thu 12 Nov 2026 10:00 in Nicosia
+const SAMPLE_NOW_ISO = '2026-11-12T07:22:00Z'; // 09:22 the same morning
+const LANG_ROWS = [
+  ['fmtDate long', (I, d) => I.fmtDate(d, 'long')],
+  ['fmtDate short', (I, d, now) => I.fmtDate(d, 'short', { now })],
+  ['fmtDate numeric', (I, d) => I.fmtDate(d, 'numeric')],
+  ['fmtDate month (heading)', (I, d) => I.fmtDate(d, 'month')],
+  ['fmtDate dayMonth', (I, d) => I.fmtDate(d, 'dayMonth')],
+  ['fmtTime', (I, d) => I.fmtTime(d)],
+  ['fmtTime midnight', (I, d) => I.fmtTime(new Date(d.getTime() - 10 * 3600000))],
+  ['fmtRange', (I, d) => I.fmtRange(d, new Date(d.getTime() + 3600000))],
+  ['fmtRelative +38 min', (I, d, now) => I.fmtRelative(d, now)],
+  ['fmtRelative +1 min', (I, d, now) => I.fmtRelative(new Date(now.getTime() + 60000), now)],
+  ['fmtRelative today / yesterday / tomorrow', (I, d, now) => [0, -1, 1].map((k) => I.fmtRelative(new Date(d.getTime() + k * 86400000 + 8 * 3600000), now)).join(' · ')],
+  ['fmtMoney', (I) => I.fmtMoney(1234.5)],
+  ['num', (I) => I.num(1234.5) + ' · ' + I.num(2, 2)],
+  ['plural 0 / 1 / 2 / 5', (I) => [0, 1, 2, 5].map((n) => I.plural(n, ['change', 'changes'], ['αλλαγή', 'αλλαγές'])).join(' · ')],
+  ['verb (sent)', (I) => [1, 3].map((n) => I.changesSent(n)).join(' · ')],
+  ['sendingChanges', (I) => [1, 3].map((n) => I.sendingChanges(n)).join(' · ')],
+  ['sectionName', (I) => ['00', '01', '02', '03', '04', '05', '06'].map((c) => I.sectionName(c)).join(' · ')],
+  ['t(save) · t(offline) · t(signInWithGoogle)', (I) => [I.t('save'), I.t('offline'), I.t('signInWithGoogle')].join(' · ')],
+];
+// the same rows, as source for the live script (functions serialised; they use only the I18N module API)
+const LANG_ROWS_SRC = '[' + LANG_ROWS.map(([name, fn]) => `[${JSON.stringify(name)}, ${fn.toString()}]`).join(',\n') + ']';
+
+function LanguageSection() {
+  const d = new Date(SAMPLE_ISO);
+  const now = new Date(SAMPLE_NOW_ISO);
+  return h(
+    Section,
+    { id: 'language', title: 'Γλώσσα · Language', note: 'Αγγλικά από προεπιλογή, Ελληνικά με ένα πάτημα, μία επιλογή για όλα τα εργαλεία (cookie congeo_lang στο .congeo.cy). English by default, Greek one tap away, one choice for every tool. The table is live: it follows the switch.' },
+    h('div', { className: 'cg-cluster', style: { gap: 'var(--cg-space-4)' } }, h('div', { id: 'lang-switch' }, h(C.LanguageSwitch, null)), h('span', { className: 'cg-small cg-ink-2' }, 'document.documentElement.lang = ', h('span', { id: 'lang-current', className: 'cg-mono' }, 'en'))),
+    h('p', { className: 'cg-small cg-ink-2' }, h('span', { id: 'lang-caption', className: 'cg-cap', lang: 'el' }, 'Εβδομάδα · Πρόταση · Έγινε'), ' ', h('span', { className: 'cg-xsmall cg-ink-3' }, '← .cg-cap with lang="el": uppercase drops the accents whichever interface language is set')),
+    h(
+      'div',
+      { className: 'ref-table-wrap' },
+      h(
+        'table',
+        { className: 'ref-table cg-small', id: 'lang-table' },
+        h('thead', null, h('tr', null, h('th', null, 'helper'), h('th', { id: 'lang-col-current' }, 'current'), h('th', null, 'English'), h('th', null, 'Ελληνικά'))),
+        h('tbody', null, LANG_ROWS.map(([name, fn]) => h('tr', { key: name }, h('td', { className: 'cg-mono' }, name), h('td', { 'data-live': 'current' }, I18N.inLang('en', () => fn(I18N, d, now))), h('td', { 'data-live': 'en' }, I18N.inLang('en', () => fn(I18N, d, now))), h('td', { 'data-live': 'el', lang: 'el' }, I18N.inLang('el', () => fn(I18N, d, now)))))),
+      ),
+    ),
+    h('p', { className: 'cg-xsmall cg-ink-3' }, `Sample: Thursday 12 November 2026, 10:00 Europe/Nicosia; "now" is 09:22 the same morning. Every value comes from Intl in the browser you are using.`),
+    h('h3', { className: 'cg-h17' }, 'Κανόνες · Rules'),
+    h(
+      'ul',
+      { className: 'cg-small ref-list' },
+      h('li', null, 'Interface language en or el; en on a first visit whatever the browser says. One cookie for all tools; localStorage off the shared domain; never a server round trip.'),
+      h('li', null, 'The interface language never changes the data contracts («Έργο: 0637 · …», «Πηγή:»), the Drive folder names («Έργα», «01 Μελέτη»), or a document already made. Documents have their own language, per project or document.'),
+      h('li', null, 'Input understands both languages at any time.'),
+      h('li', null, 'British English (en-GB), 24-hour, «12 Nov 2026». Correct Greek: accents, final ς, uppercase without accents through lang="el". Glossary terms only (GLOSSARY.md).'),
+      h('li', null, 'PermitFlow stays Greek only: configureLang({ fixed: "el" }).'),
+    ),
+  );
 }
 
 // ---------- contrast ----------
@@ -274,7 +333,9 @@ function Page() {
       null,
       h('meta', { charSet: 'utf-8' }),
       h('meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' }),
+      h('meta', { name: 'congeo-lang-domains', content: '.congeo.cy,.congeo.test' }),
       h('title', null, 'CONGEO Design — αναφορά'),
+      h('script', { dangerouslySetInnerHTML: { __html: I18N.LANG_BOOT_SCRIPT } }),
       h('link', { rel: 'stylesheet', href: './fonts.css' }),
       h('link', { rel: 'stylesheet', href: '../dist/congeo.css' }),
       h('style', { dangerouslySetInnerHTML: { __html: SITE_CSS } }),
@@ -291,7 +352,7 @@ function Page() {
         'header',
         { className: 'ref-header' },
         h('div', { className: 'ref-header__title' }, h(C.ToolMark, { tool: 'internal', label: 'CONGEO Design', size: 'lg' })),
-        h('nav', null, h('a', { href: '#tokens' }, 'Tokens'), h('a', { href: '#components' }, 'Components'), h('a', { href: '#contrast' }, 'Contrast')),
+        h('nav', null, h('a', { href: '#tokens' }, 'Tokens'), h('a', { href: '#language' }, 'Language'), h('a', { href: '#components' }, 'Components'), h('a', { href: '#contrast' }, 'Contrast')),
         h('span', { className: 'ref-spacer' }),
         h('span', { id: 'greek-check', className: 'cg-cap', lang: 'el' }, 'Εβδομάδα · Πρόταση · Έγινε'),
         h(C.Button, { size: 'sm', variant: 'secondary', id: 'theme-toggle', onClick: undefined }, 'Light / Dark'),
@@ -302,10 +363,37 @@ function Page() {
         h('h1', { className: 'cg-title' }, 'Μία εμφάνιση για κάθε εργαλείο'),
         h('p', { className: 'cg-ink-2' }, 'One source for the look of every CONGEO tool. Built from dist/. Light and dark, 320 to 1280 px.'),
         h(TokensSection),
+        h(LanguageSection),
         h(ComponentsSection),
         h(ContrastSection),
       ),
       h('footer', { className: 'ref-footer cg-small cg-ink-3' }, '@congeo/design · generated by scripts/build-site.js'),
+      h('script', {
+        type: 'module',
+        dangerouslySetInnerHTML: {
+          __html: `import * as I from '../dist/i18n/esm/index.js';
+const ROWS = ${LANG_ROWS_SRC};
+const d = new Date(${JSON.stringify(SAMPLE_ISO)}), now = new Date(${JSON.stringify(SAMPLE_NOW_ISO)});
+const sw = document.querySelectorAll('#lang-switch [role="radio"]');
+function render() {
+  const lang = I.uiLang();
+  document.getElementById('lang-current').textContent = lang;
+  document.getElementById('lang-col-current').textContent = lang === 'el' ? 'τρέχουσα (el)' : 'current (en)';
+  sw.forEach((b, i) => { const on = (i === 0 ? 'en' : 'el') === lang; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+  const rows = document.querySelectorAll('#lang-table tbody tr');
+  ROWS.forEach(([, fn], i) => {
+    const tds = rows[i].querySelectorAll('td[data-live]');
+    tds[0].textContent = fn(I, d, now);
+    tds[0].lang = lang;
+    tds[1].textContent = I.inLang('en', () => fn(I, d, now));
+    tds[2].textContent = I.inLang('el', () => fn(I, d, now));
+  });
+}
+sw.forEach((b, i) => b.addEventListener('click', () => I.setLang(i === 0 ? 'en' : 'el')));
+I.onLangChange(render);
+render();`,
+        },
+      }),
       h('script', {
         dangerouslySetInnerHTML: {
           __html: `document.getElementById('theme-toggle').addEventListener('click',function(){var r=document.documentElement;var cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');r.setAttribute('data-theme',cur==='dark'?'light':'dark');});`,

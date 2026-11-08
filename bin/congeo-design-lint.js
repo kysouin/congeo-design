@@ -8,7 +8,12 @@
  * app allows. Exits 1 with file:line:col for each finding.
  *
  * Usage:
- *   congeo-design-lint <dir|file>... [--allow <glob>]... [--ignore <glob>]... [--ext js,ts,...] [--quiet]
+ *   congeo-design-lint <dir|file>... [--allow <glob>]... [--ignore <glob>]... [--ext js,ts,...] [--i18n] [--quiet]
+ *
+ * --i18n also flags user-visible text with Greek letters outside L(...) / LL(...) / plural(...) / verb(...):
+ *   JSX text, aria-label / title / placeholder / alt attributes, and string literals passed to toast- or
+ *   alert-like calls or given as title/label/placeholder/message properties. Data contracts («Έργο: 0637»),
+ *   Drive folder names and other plain strings are not flagged: only text the user reads on screen.
  *
  * Config (optional) in the app's package.json:
  *   "congeoDesignLint": { "allow": ["src/legacy/**"], "ignore": ["**\/*.test.*"], "ext": ["css","tsx"] }
@@ -38,6 +43,91 @@ const RULES = [
   { id: 'google-fonts', re: /fonts\.googleapis\.com|fonts\.gstatic\.com/g, message: 'Google Fonts link (fonts are self-hosted through @congeo/design/fonts.css)' },
 ];
 
+// ---------- i18n (--i18n) ----------
+const GREEK = /[Ͱ-Ͽἀ-῿]/;
+const I18N_EXT = ['js', 'jsx', 'ts', 'tsx', 'mjs', 'vue', 'svelte', 'astro', 'html', 'htm'];
+const WRAPPERS = /\b(?:L|LL|plural|verb|inLang|t)\s*\(/g;
+const VISIBLE_ATTRS = /(?:aria-label|aria-description|aria-placeholder|aria-roledescription|title|placeholder|alt|label)\s*=\s*$/;
+const VISIBLE_CALLS = /(?:toast|alert|confirm|prompt|notify|notice|snack(?:bar)?|banner|message|flash|announce|setError|setStatus|setMessage|setTitle|setToast|showToast|showMessage|showError|showBanner|Alert\.alert)\s*\(\s*(?:\{\s*(?:title|message|text|description)\s*:\s*)?$/;
+const VISIBLE_PROPS = /\b(?:title|label|placeholder|message|text|description|heading|caption|hint|tooltip|ariaLabel|emptyText|confirmText|cancelText|okText|successMessage|errorMessage|helperText)\s*:\s*$/;
+const NEUTRAL_PROPS = /\b(?:name|key|id|path|folder|tag|section|href|src|value|appProperties|extendedProperties|contract|drive|prefix|marker|source|property)\s*[:=]\s*$/i;
+
+// Masks the arguments of L(...) and friends with spaces, across lines. Returns the masked lines.
+function maskWrappers(lines) {
+  let depth = 0;
+  return lines.map((line) => {
+    let out = '';
+    let i = 0;
+    while (i < line.length) {
+      if (depth === 0) {
+        WRAPPERS.lastIndex = i;
+        const m = WRAPPERS.exec(line);
+        if (!m || m.index !== i) {
+          // copy until the next wrapper start
+          const next = m ? m.index : line.length;
+          out += line.slice(i, next);
+          i = next;
+          continue;
+        }
+        out += m[0];
+        i = m.index + m[0].length;
+        depth = 1;
+        continue;
+      }
+      const c = line[i];
+      if (c === '(') depth++;
+      else if (c === ')') depth--;
+      out += depth > 0 || c === ')' ? (c === '(' || c === ')' ? c : ' ') : c;
+      i++;
+    }
+    return out;
+  });
+}
+
+function scanI18n(file, rel, ext) {
+  if (!I18N_EXT.includes(ext)) return [];
+  const raw = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+  const lines = maskWrappers(raw.map((l) => (/cg-lint-ignore/.test(l) ? '' : stripComments(l, ext))));
+  const findings = [];
+  const push = (i, col, rule, text) => findings.push({ file: rel, line: i + 1, col: col + 1, rule, message: rule === 'i18n-text' ? 'Greek text outside L(): JSX text' : rule === 'i18n-attr' ? 'Greek text outside L(): visible attribute' : 'Greek text outside L(): string shown to the user', text: text.trim().slice(0, 80) });
+  lines.forEach((line, i) => {
+    if (!GREEK.test(line)) return;
+    // string literals
+    const strRe = /(['"`])((?:\\.|(?!\1)[^\\\n])*)\1/g;
+    const covered = [];
+    let m;
+    while ((m = strRe.exec(line))) {
+      const [whole, , body] = m;
+      covered.push([m.index, m.index + whole.length]);
+      if (!GREEK.test(body)) continue;
+      const before = line.slice(0, m.index).replace(/\{?\s*$/, '');
+      if (VISIBLE_ATTRS.test(before)) push(i, m.index, 'i18n-attr', whole);
+      else if (VISIBLE_CALLS.test(before)) push(i, m.index, 'i18n-call', whole);
+      else if (VISIBLE_PROPS.test(before) && !NEUTRAL_PROPS.test(before)) push(i, m.index, 'i18n-call', whole);
+    }
+    // JSX / HTML text: Greek between a closing '>' and the next '<' or '{', not inside a string literal
+    const textRe = />([^<>{}]*)(?=<|\{|$)/g;
+    while ((m = textRe.exec(line))) {
+      const body = m[1];
+      if (!GREEK.test(body)) continue;
+      const start = m.index + 1;
+      if (covered.some(([a, b]) => start >= a && start < b)) continue;
+      // only a '>' that closes a tag counts; `a > 0 ? \`σε\`` or `=>` do not
+      if (!/<\/?[a-zA-Z][^<>]*>$/.test(line.slice(0, m.index + 1))) continue;
+      push(i, start, 'i18n-text', body);
+    }
+    // JSX text on a line of its own (no tag on the line): Greek left after strings and {expressions} are removed
+    if (['jsx', 'tsx', 'vue', 'svelte', 'astro', 'html', 'htm'].includes(ext) && !findings.some((f) => f.line === i + 1)) {
+      const rest = line.replace(strRe, '').replace(/\{[^{}]*\}/g, '').replace(/<[^<>]*>/g, '');
+      const g = GREEK.exec(rest);
+      if (g && !/^\s*(?:import|export|const|let|var|return|case|if|for|while|function|type|interface)\b/.test(line) && !/[=:(]\s*[^'"`]*$/.test(line.slice(0, line.search(GREEK)))) {
+        push(i, line.search(GREEK), 'i18n-text', rest);
+      }
+    }
+  });
+  return findings;
+}
+
 // ---------- tiny glob ----------
 function globToRegExp(glob) {
   let re = '';
@@ -61,7 +151,7 @@ function matchesAny(rel, globs) {
 
 // ---------- args ----------
 function parseArgs(argv) {
-  const opts = { paths: [], allow: [], ignore: [], ext: null, quiet: false, json: false };
+  const opts = { paths: [], allow: [], ignore: [], ext: null, quiet: false, json: false, i18n: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--allow') opts.allow.push(argv[++i]);
@@ -69,6 +159,7 @@ function parseArgs(argv) {
     else if (a === '--ext') opts.ext = argv[++i].split(',').map((s) => s.trim().replace(/^\./, ''));
     else if (a === '--quiet') opts.quiet = true;
     else if (a === '--json') opts.json = true;
+    else if (a === '--i18n') opts.i18n = true;
     else if (a === '--help' || a === '-h') { printHelp(); process.exit(0); }
     else if (a.startsWith('--')) { console.error(`Unknown option ${a}`); process.exit(2); }
     else opts.paths.push(a);
@@ -154,6 +245,7 @@ function run(argv, cwd = process.cwd()) {
       if (matchesAny(rel, allow)) continue;
       scanned++;
       findings.push(...scanFile(file, rel, ext));
+      if (opts.i18n) findings.push(...scanI18n(file, rel, ext));
     }
   }
   if (opts.json) {
@@ -161,11 +253,11 @@ function run(argv, cwd = process.cwd()) {
   } else {
     for (const f of findings) console.log(`${f.file}:${f.line}:${f.col}  ${f.message}: ${f.text}`);
     if (!opts.quiet) {
-      console.log(findings.length ? `\ncongeo-design-lint: ${findings.length} finding(s) in ${scanned} file(s). Use tokens from @congeo/design instead.` : `congeo-design-lint: ${scanned} file(s) clean.`);
+      console.log(findings.length ? `\ncongeo-design-lint: ${findings.length} finding(s) in ${scanned} file(s). Use tokens${opts.i18n ? ' and L()' : ''} from @congeo/design instead.` : `congeo-design-lint: ${scanned} file(s) clean.`);
     }
   }
   return findings.length ? 1 : 0;
 }
 
 if (require.main === module) process.exit(run(process.argv.slice(2)));
-module.exports = { run, scanFile, RULES };
+module.exports = { run, scanFile, scanI18n, RULES };

@@ -20,8 +20,9 @@ One source for the look of every CONGEO tool.
 | `dist/tokens.js` + `dist/tokens.d.ts` | React Native / Expo: typed object, light και dark |
 | `dist/Tokens.swift` | Native Swift: χρώματα με dark variants, μεγέθη, radii, spacing |
 | `dist/tailwind.preset.js` | Tailwind preset (Kaneto) |
-| `dist/react/` | Τα React components, compiled JS + `.d.ts` |
-| `bin/congeo-design-lint.js` | Έλεγχος που απορρίπτει χρώματα και γραμματοσειρές εκτός tokens |
+| `dist/react/` | Τα React components, compiled JS + `.d.ts`, μαζί με `useLang()` και `<LanguageSwitch />` |
+| `dist/i18n/` | Η γλώσσα: `L()`, `getLang/setLang/onLangChange`, formatters, κοινό λεξιλόγιο (`@congeo/design/i18n`) |
+| `bin/congeo-design-lint.js` | Έλεγχος που απορρίπτει χρώματα και γραμματοσειρές εκτός tokens, και με `--i18n` ελληνικά εκτός `L()` |
 
 Τα παραγόμενα αρχεία στο `dist/` είναι **committed**. Η εγκατάσταση δεν τρέχει build. Το CI τα ξαναπαράγει και αποτυγχάνει αν διαφέρουν.
 
@@ -111,6 +112,39 @@ module.exports = { presets: [require('@congeo/design/tailwind')], content: ['./s
 
 Μια γραμμή που τελειώνει με `/* cg-lint-ignore */` εξαιρείται.
 
+### Γλώσσα
+
+Κάθε εργαλείο CONGEO εκτός του PermitFlow ανοίγει σε **άψογα Αγγλικά** από προεπιλογή, με διακόπτη για **Ελληνικά**. Το PermitFlow μένει μόνο ελληνικά, γιατί οι άδειες στην Κύπρο είναι στα ελληνικά.
+
+Οι κανόνες:
+
+1. **Γλώσσα διεπαφής:** `en` από προεπιλογή ή `el`. Στην πρώτη επίσκεψη πάντα Αγγλικά, όποια κι αν είναι η γλώσσα του browser.
+2. **Μία επιλογή για όλα τα εργαλεία.** Cookie `congeo_lang=en|el` με `Domain=.congeo.cy; Path=/; Max-Age=1 έτος; SameSite=Lax; Secure`. Ελληνικά στο ένα εργαλείο σημαίνει Ελληνικά στα άλλα στην επόμενη φόρτωση και στο `visibilitychange`. Σε άλλα hosts (`*.pages.dev`, localhost) χρησιμοποιείται localStorage `congeo.lang`. Ποτέ κλήση στον server.
+3. **Τι δεν αλλάζει ποτέ η γλώσσα διεπαφής:** τα data contracts («Έργο: 0637 · …», «Πηγή:», τα `appProperties`, τα `extendedProperties`), τα ονόματα φακέλων στο Drive («Έργα», «01 Μελέτη», «00 Εισερχόμενα/…»), και η **γλώσσα εγγράφου**: μελέτες, τιμολόγια, προσφορές, αναφορές και PDF έχουν δική τους ρύθμιση ανά έργο ή έγγραφο. Ο διακόπτης δεν αλλάζει ποτέ έγγραφο που έχει ήδη γίνει.
+4. **Η εισαγωγή καταλαβαίνει και τα δύο.** Ό,τι διαβάζει ελεύθερο κείμενο (quick add, αναζήτηση) δέχεται Ελληνικά και Αγγλικά πάντα.
+5. **Άψογα σημαίνει:** βρετανικά Αγγλικά (`en-GB`, 24ωρο, «12 Nov 2026», «Thu 12 Nov»), σωστά Ελληνικά (τόνοι, τελικό ς, κεφαλαία χωρίς τόνους μέσω `lang="el"`), χωρίς Greeklish, χωρίς μηχανικές μεταφράσεις, με τους όρους του `GLOSSARY.md`.
+
+Στον κώδικα:
+
+```ts
+import { L, t, fmtDate, fmtRelative, fmtMoney, plural, setLang } from '@congeo/design/i18n';
+import { useLang, LanguageSwitch } from '@congeo/design/react';
+
+L('Save changes', 'Αποθήκευση αλλαγών');   // αγγλικά πρώτα, ελληνικά δεύτερα, δίπλα στη χρήση
+t('save');                                  // κοινό λεξιλόγιο
+fmtDate(d);                                 // «Thursday 12 November 2026» · «Πέμπτη 12 Νοεμβρίου 2026»
+fmtDate(d, 'month');                        // «November 2026» · «Νοέμβριος 2026»
+fmtRelative(d);                             // «in 38 min» · «σε 38′»
+fmtMoney(1234.5);                           // «€1,234.50» · «1.234,50 €»
+plural(3, ['change', 'changes'], ['αλλαγή', 'αλλαγές']);
+```
+
+Το `L()` είναι το μοτίβο που έχουν ήδη το Rhoi και το congeo-pdf: το κείμενο κάθεται δίπλα στη χρήση του, διαβάζεται εκεί που μετράει, και ένα script μπορεί αργότερα να εξαγάγει όλες τις κλήσεις αν έρθει τρίτη γλώσσα.
+
+Στο `<head>` του index.html, πριν από κάθε stylesheet, το `dist/i18n/boot.inline.js` ώστε το `<html lang>` να είναι σωστό πριν το πρώτο paint. Για έγγραφα: `inLang(project.docLang, () => render())`. Για το PermitFlow: `configureLang({ fixed: 'el' })`.
+
+Ο έλεγχος `congeo-design-lint --i18n` βρίσκει ελληνικό κείμενο που βλέπει ο χρήστης εκτός `L()` (κείμενο JSX, `aria-label`, `title`, `placeholder`, strings σε toast/alert). Δεν πειράζει τα data contracts ούτε τα ονόματα φακέλων.
+
 ### Αλλαγές σε tokens
 
 Μόνο στο `tokens/tokens.json`. Μετά `npm run build`, `npm test`, commit μαζί με το `dist/`. Κάθε ζεύγος κειμένου/φόντου που δηλώνεται στο `contrast.pairs` ελέγχεται για WCAG AA (4.5 κείμενο, 3.0 μεγάλο κείμενο και UI marks). Ζεύγος που αποτυγχάνει, ρίχνει το build.
@@ -140,8 +174,9 @@ The CONGEO tools were built in separate sessions, each with its own colours, fon
 | `dist/tokens.js` + `dist/tokens.d.ts` | React Native / Expo: a typed object, light and dark |
 | `dist/Tokens.swift` | Native Swift: colours with dark variants, font sizes, radii, spacing |
 | `dist/tailwind.preset.js` | Tailwind preset (Kaneto) mapping tokens to the theme |
-| `dist/react/` | The React components, compiled JS + `.d.ts` (React is a peer dependency) |
-| `bin/congeo-design-lint.js` | The check that refuses colours and fonts outside the tokens |
+| `dist/react/` | The React components, compiled JS + `.d.ts` (React is a peer dependency), with `useLang()` and `<LanguageSwitch />` |
+| `dist/i18n/` | The language: `L()`, `getLang/setLang/onLangChange`, formatters, shared vocabulary (`@congeo/design/i18n`, CJS and ESM) |
+| `bin/congeo-design-lint.js` | The check that refuses colours and fonts outside the tokens, and with `--i18n` Greek text outside `L()` |
 
 Generated files in `dist/` are **committed**. Installing runs no build. CI regenerates them and fails if they differ.
 
@@ -190,6 +225,38 @@ congeo-design-lint src app --allow "src/legacy/**"
 
 It scans for hex, `rgb()`/`hsl()`, CSS named colours, Tailwind palette classes, `font-family` literals and Google Fonts links, outside the files the app allows (`--allow`, or `congeoDesignLint.allow` in `package.json`), and exits 1 with `file:line:col`. A line ending in `cg-lint-ignore` is skipped.
 
+### Language
+
+Every CONGEO tool except PermitFlow opens in flawless English by default, with a switch to Greek. PermitFlow stays Greek only (Cyprus permits are in Greek).
+
+1. **Interface language** `en` by default, or `el`. Always English on a first visit, whatever the browser's language.
+2. **One choice for all tools:** cookie `congeo_lang=en|el`, `Domain=.congeo.cy; Path=/; Max-Age=1 year; SameSite=Lax; Secure`. Greek in one tool switches the others at their next load and on `visibilitychange`. On other hosts (`*.pages.dev`, localhost) localStorage `congeo.lang`. Never a server round trip.
+3. **What the interface language never changes:** data contracts («Έργο: 0637 · …», «Πηγή:», `appProperties`, `extendedProperties`), Drive folder names («Έργα», «01 Μελέτη»), and the **document language**: studies, invoices, quotes, reports and exported PDFs have their own setting per project or document. The switch never changes a document already made.
+4. **Input understands both** at any time (quick add, search).
+5. **Flawless means** British English (`en-GB`, 24-hour, «12 Nov 2026»), correct Greek (accents, final ς, uppercase without accents through `lang="el"`), no Greeklish, no machine-literal phrasing, and the terms in `GLOSSARY.md`.
+
+```ts
+import { L, LL, inLang, t, fmtDate, fmtTime, fmtRange, fmtRelative, fmtMoney, plural, verb, setLang, onLangChange, configureLang } from '@congeo/design/i18n';
+import { useLang, LanguageSwitch } from '@congeo/design/react';
+```
+
+| helper | English | Greek |
+|---|---|---|
+| `fmtDate(d)` | Thursday 12 November 2026 | Πέμπτη 12 Νοεμβρίου 2026 |
+| `fmtDate(d, 'short')` | Thu 12 Nov | Πέμ 12 Νοε |
+| `fmtDate(d, 'numeric')` | 12/11/2026 | 12/11/2026 |
+| `fmtDate(d, 'month')` | November 2026 | Νοέμβριος 2026 |
+| `fmtTime(d)` | 10:00 | 10:00 |
+| `fmtRange(a, b)` | 10:00–11:00 | 10:00–11:00 |
+| `fmtRelative(d)` | Today · Yesterday · Tomorrow · in 38 min | Σήμερα · Χθες · Αύριο · σε 38′ |
+| `fmtMoney(1234.5)` | €1,234.50 | 1.234,50 € |
+| `plural(n, ['change','changes'], ['αλλαγή','αλλαγές'])` | 1 change / 3 changes | 1 αλλαγή / 3 αλλαγές |
+| `verb(n, 'Sent', ['Στάλθηκε','Στάλθηκαν'])` | Sent | Στάλθηκε / Στάλθηκαν |
+
+`L(en, el)` is English first, inline, the pattern Rhoi and congeo-pdf already use: the string sits next to its use, is reviewed where it matters, and a script can extract every call later if a third language comes. Put `dist/i18n/boot.inline.js` in `<head>` before any stylesheet so `<html lang>` is right before the first paint. Documents render inside `inLang(docLang, () => …)`. PermitFlow calls `configureLang({ fixed: 'el' })`.
+
+`congeo-design-lint --i18n` flags user-visible Greek outside `L()`: JSX text, `aria-label`/`title`/`placeholder`/`alt`, strings passed to toast- or alert-like calls or given as `title`/`label`/`message` properties. Data contracts and folder names are left alone.
+
 ### Changing tokens
 
 Only in `tokens/tokens.json`. Then `npm run build`, `npm test`, and commit together with `dist/`. Every text/background pair declared in `contrast.pairs` is checked against WCAG AA (4.5 for text, 3.0 for large text and UI marks). A failing pair fails the build. The table is in `site/contrast.md` and on the reference page.
@@ -203,6 +270,7 @@ Only in `tokens/tokens.json`. Then `npm run build`, `npm test`, and commit toget
 3. `congeo-design-lint` on fixtures that must pass and fixtures that must fail, and on this package's own source;
 4. Playwright screenshots at 320 / 390 / 1280 px, light and dark, into `site/screenshots/` (WebKit when available; `site/screenshots/webkit.txt` records whether it ran);
 5. the rendered Greek check: the uppercase caption is read off the DOM and must carry no accent;
-6. a proof that the contrast check can fail (ink-3 on bg set to a failing grey).
+6. a proof that the contrast check can fail (ink-3 on bg set to a failing grey);
+7. language: the shared cookie across `a.congeo.test` and `b.congeo.test`, English by default for an `el-GR` browser, `<html lang>` before anything mounts, 45+ formatting cases per language, the `--i18n` lint fixtures and a proof it fails on `<button>Αποθήκευση</button>`.
 
 See `ADOPTING.md` for the steps an app follows to take this package.

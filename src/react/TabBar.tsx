@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cx } from './cx';
+import { L } from '../i18n/core.js';
 
 export interface TabBarItem {
   key: string;
@@ -20,9 +21,9 @@ export interface TabBarProps extends Omit<React.HTMLAttributes<HTMLElement>, 'on
 }
 
 /** Floating, safe-area aware tab bar with 4 items. */
-export function TabBar({ items, value, onChange, inline, label = 'Πλοήγηση', className, ...rest }: TabBarProps) {
+export function TabBar({ items, value, onChange, inline, label, className, ...rest }: TabBarProps) {
   return (
-    <nav aria-label={label} className={cx('cg-tabbar', inline && 'cg-tabbar--inline', className)} {...rest}>
+    <nav aria-label={label ?? L('Navigation', 'Πλοήγηση')} className={cx('cg-tabbar', inline && 'cg-tabbar--inline', className)} {...rest}>
       {items.slice(0, 4).map((it) => {
         const active = it.key === value;
         const Tag: any = it.href ? 'a' : 'button';

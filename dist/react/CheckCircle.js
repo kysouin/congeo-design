@@ -37,9 +37,10 @@ exports.CheckCircle = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
 const cx_1 = require("./cx");
+const core_js_1 = require("../i18n/core.js");
 /** 22 px check circle with a 44 px hit area. */
-exports.CheckCircle = React.forwardRef(function CheckCircle({ checked, overdue, onChange, label = 'Έγινε', className, onClick, ...rest }, ref) {
-    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: "button", role: "checkbox", "aria-checked": checked, "aria-label": label, className: (0, cx_1.cx)('cg-check', checked && 'cg-check--checked', overdue && !checked && 'cg-check--overdue', className), onClick: (e) => {
+exports.CheckCircle = React.forwardRef(function CheckCircle({ checked, overdue, onChange, label, className, onClick, ...rest }, ref) {
+    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: "button", role: "checkbox", "aria-checked": checked, "aria-label": label !== null && label !== void 0 ? label : (0, core_js_1.L)('Done', 'Έγινε'), className: (0, cx_1.cx)('cg-check', checked && 'cg-check--checked', overdue && !checked && 'cg-check--overdue', className), onClick: (e) => {
             onClick === null || onClick === void 0 ? void 0 : onClick(e);
             if (!e.defaultPrevented)
                 onChange === null || onChange === void 0 ? void 0 : onChange(!checked);

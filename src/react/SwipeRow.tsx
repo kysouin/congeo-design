@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cx } from './cx';
+import { L } from '../i18n/core.js';
 
 export interface SwipeRowProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Swipe right reveals this (ok, «Έγινε»). */
@@ -27,8 +28,8 @@ const SLOP = 8; // px before we decide the gesture is horizontal
 export function SwipeRow({
   onSwipeRight,
   onSwipeLeft,
-  rightLabel = 'Έγινε',
-  leftLabel = 'Αύριο',
+  rightLabel,
+  leftLabel,
   threshold = 72,
   onHaptic,
   preview,
@@ -132,10 +133,10 @@ export function SwipeRow({
     >
       <div className="cg-swipe__actions" aria-hidden="true">
         <div className="cg-swipe__action cg-swipe__action--left" style={{ opacity: offset > 0 ? 1 : 0 }}>
-          {rightLabel}
+          {rightLabel ?? L('Done', 'Έγινε')}
         </div>
         <div className="cg-swipe__action cg-swipe__action--right" style={{ opacity: offset < 0 ? 1 : 0 }}>
-          {leftLabel}
+          {leftLabel ?? L('Tomorrow', 'Αύριο')}
         </div>
       </div>
       <div className="cg-swipe__content">{children}</div>

@@ -36,3 +36,5 @@ export { EmptyState } from './EmptyState';
 export type { EmptyStateProps } from './EmptyState';
 export { SwipeRow } from './SwipeRow';
 export type { SwipeRowProps } from './SwipeRow';
+export { useLang, LanguageSwitch } from './i18n';
+export type { LanguageSwitchProps } from './i18n';

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { cx } from './cx';
 import { Button } from './Button';
+import { L } from '../i18n/core.js';
 
 export interface ProposalCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title: React.ReactNode;
@@ -19,9 +20,9 @@ export function ProposalCard({
   body,
   onApprove,
   onReject,
-  approveLabel = 'Έγκριση',
-  rejectLabel = 'Απόρριψη',
-  label = 'Πρόταση',
+  approveLabel,
+  rejectLabel,
+  label,
   busy,
   className,
   children,
@@ -29,7 +30,7 @@ export function ProposalCard({
 }: ProposalCardProps) {
   return (
     <div className={cx('cg-proposal', className)} data-status="proposal" {...rest}>
-      <div className="cg-cap cg-proposal__label">{label}</div>
+      <div className="cg-cap cg-proposal__label">{label ?? L('Proposal', 'Πρόταση')}</div>
       <h3 className="cg-proposal__title">{title}</h3>
       {body != null && <p className="cg-proposal__body">{body}</p>}
       {children}
@@ -37,12 +38,12 @@ export function ProposalCard({
         <div className="cg-proposal__actions">
           {onApprove && (
             <Button variant="primary" onClick={onApprove} disabled={busy}>
-              {approveLabel}
+              {approveLabel ?? L('Approve', 'Έγκριση')}
             </Button>
           )}
           {onReject && (
             <Button variant="secondary" onClick={onReject} disabled={busy}>
-              {rejectLabel}
+              {rejectLabel ?? L('Reject', 'Απόρριψη')}
             </Button>
           )}
         </div>

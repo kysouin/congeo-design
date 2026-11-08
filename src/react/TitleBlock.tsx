@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cx } from './cx';
+import { L } from '../i18n/core.js';
 
 export interface TitleBlockProps extends React.HTMLAttributes<HTMLElement> {
   /** Project number, mono. */
@@ -13,11 +14,11 @@ export interface TitleBlockProps extends React.HTMLAttributes<HTMLElement> {
   labels?: { number?: string; name?: string; date?: string; sheet?: string };
 }
 
-const DEFAULT_LABELS = { number: 'Έργο', name: 'Τίτλος', date: 'Ημερομηνία', sheet: 'Φύλλο' };
+const defaultLabels = () => ({ number: L('Project', 'Έργο'), name: L('Title', 'Τίτλος'), date: L('Date', 'Ημερομηνία'), sheet: L('Sheet', 'Φύλλο') });
 
 /** The drawing title-block header: like the corner of a drawing. */
 export function TitleBlock({ number, name, date, sheet, labels, className, ...rest }: TitleBlockProps) {
-  const l = { ...DEFAULT_LABELS, ...labels };
+  const l = { ...defaultLabels(), ...labels };
   return (
     <header className={cx('cg-titleblock', className)} {...rest}>
       <div className="cg-titleblock__cell">

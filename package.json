@@ -1,22 +1,37 @@
 {
   "name": "@congeo/design",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CONGEO design tokens and components. One source for the look of every CONGEO tool.",
   "license": "UNLICENSED",
   "repository": "github:kysouin/congeo-design",
   "main": "./dist/tokens.js",
   "types": "./dist/tokens.d.ts",
   "exports": {
-    ".": { "types": "./dist/tokens.d.ts", "default": "./dist/tokens.js" },
-    "./tokens": { "types": "./dist/tokens.d.ts", "default": "./dist/tokens.js" },
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
     "./tokens.json": "./tokens/tokens.json",
     "./congeo.css": "./dist/congeo.css",
     "./fonts.css": "./dist/fonts.css",
     "./tailwind": "./dist/tailwind.preset.js",
     "./tailwind.preset.js": "./dist/tailwind.preset.js",
-    "./react": { "types": "./dist/react/index.d.ts", "default": "./dist/react/index.js" },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "default": "./dist/react/index.js"
+    },
     "./Tokens.swift": "./dist/Tokens.swift",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "import": "./dist/i18n/esm/index.js",
+      "require": "./dist/i18n/index.js"
+    },
+    "./i18n/boot.inline.js": "./dist/i18n/boot.inline.js"
   },
   "bin": {
     "congeo-design-lint": "./bin/congeo-design-lint.js"
@@ -30,9 +45,9 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "node scripts/build.js && tsc -p tsconfig.react.json && node scripts/build-site.js",
+    "build": "node scripts/build.js && tsc -p tsconfig.react.json && tsc -p tsconfig.i18n-esm.json && node scripts/build-i18n.js && node scripts/build-site.js",
     "build:tokens": "node scripts/build.js",
-    "build:react": "tsc -p tsconfig.react.json",
+    "build:react": "tsc -p tsconfig.react.json && tsc -p tsconfig.i18n-esm.json && node scripts/build-i18n.js",
     "build:site": "node scripts/build-site.js",
     "test": "node --test --test-concurrency=1 test/*.test.js",
     "test:contrast": "node --test test/contrast.test.js",
@@ -46,7 +61,9 @@
     "react": ">=18"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true }
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/react": "19.3.0",

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cx } from './cx';
+import { L } from '../i18n/core.js';
 
 export interface CheckCircleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   checked: boolean;
@@ -12,7 +13,7 @@ export interface CheckCircleProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
 
 /** 22 px check circle with a 44 px hit area. */
 export const CheckCircle = React.forwardRef<HTMLButtonElement, CheckCircleProps>(function CheckCircle(
-  { checked, overdue, onChange, label = 'Έγινε', className, onClick, ...rest },
+  { checked, overdue, onChange, label, className, onClick, ...rest },
   ref,
 ) {
   return (
@@ -21,7 +22,7 @@ export const CheckCircle = React.forwardRef<HTMLButtonElement, CheckCircleProps>
       type="button"
       role="checkbox"
       aria-checked={checked}
-      aria-label={label}
+      aria-label={label ?? L('Done', 'Έγινε')}
       className={cx('cg-check', checked && 'cg-check--checked', overdue && !checked && 'cg-check--overdue', className)}
       onClick={(e) => {
         onClick?.(e);

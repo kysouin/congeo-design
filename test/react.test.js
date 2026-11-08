@@ -8,6 +8,7 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const { root } = require('./helpers');
 
 const C = require(path.join(root, 'dist/react'));
+const { inLang } = require(path.join(root, 'dist/i18n'));
 const h = React.createElement;
 const r = (el) => renderToStaticMarkup(el);
 const noop = () => {};
@@ -34,15 +35,22 @@ test('react: every component exports and renders its class', () => {
   assert.match(r(h(C.TitleBlock, { number: '0637', name: 'N', date: 'D', sheet: 'A-01' })), /cg-titleblock[\s\S]*0637[\s\S]*A-01/);
   const prop = r(h(C.ProposalCard, { title: 'P', onApprove: noop, onReject: noop }));
   assert.match(prop, /cg-proposal"[^>]*data-status="proposal"/);
-  assert.match(prop, /Πρόταση/);
-  assert.match(prop, /Έγκριση[\s\S]*Απόρριψη/);
+  assert.match(prop, /Proposal/);
+  assert.match(prop, /Approve[\s\S]*Reject/);
+  const propEl = inLang('el', () => r(h(C.ProposalCard, { title: 'P', onApprove: noop, onReject: noop })));
+  assert.match(propEl, /Πρόταση/);
+  assert.match(propEl, /Έγκριση[\s\S]*Απόρριψη/);
   assert.match(r(h(C.ToastRegion, { inline: true }, h(C.Toast, { kind: 'err' }, 'x'))), /cg-toast-region cg-toast-region--inline[\s\S]*cg-toast cg-toast--err/);
-  assert.match(r(h(C.StatusBar, { state: 'failed', count: 2 })), /cg-statusbar cg-statusbar--failed[\s\S]*Αποτυχία αποστολής[\s\S]*cg-statusbar__count">2</);
+  assert.match(r(h(C.StatusBar, { state: 'failed', count: 2 })), /cg-statusbar cg-statusbar--failed[\s\S]*Not sent[\s\S]*cg-statusbar__count">2</);
+  assert.match(inLang('el', () => r(h(C.StatusBar, { state: 'failed', count: 2 }))), /Αποτυχία αποστολής/);
   assert.match(r(h(C.Input, { label: 'L', error: 'E' })), /cg-field cg-field--error[\s\S]*cg-input"[^>]*aria-invalid="true"/);
   assert.match(r(h(C.Textarea, { placeholder: 'p' })), /<textarea[^>]*rows="1"[^>]*class="cg-textarea"/);
   assert.match(r(h(C.Skeleton, { variant: 'row' })), /cg-skeleton cg-skeleton--row/);
   assert.match(r(h(C.EmptyState, { title: 'E', text: 't' })), /cg-empty[\s\S]*cg-empty__title[\s\S]*cg-empty__text/);
   const swipe = r(h(C.SwipeRow, { onSwipeLeft: noop, onSwipeRight: noop, preview: 'right' }, 'row'));
   assert.match(swipe, /cg-swipe cg-swipe--armed[^>]*--cg-swipe-x:72px/);
-  assert.match(swipe, /Έγινε[\s\S]*Αύριο/);
+  assert.match(swipe, /Done[\s\S]*Tomorrow/);
+  assert.match(inLang('el', () => r(h(C.SwipeRow, { onSwipeLeft: noop, onSwipeRight: noop }, 'row'))), /Έγινε[\s\S]*Αύριο/);
+  // the language switch renders both labels, each in its own language
+  assert.match(r(h(C.LanguageSwitch, null)), /aria-checked="true"[^>]*><span lang="en" aria-label="English">EN<\/span>[\s\S]*<span lang="el" aria-label="Ελληνικά">ΕΛ<\/span>/);
 });
