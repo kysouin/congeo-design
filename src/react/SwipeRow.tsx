@@ -3,9 +3,13 @@ import { cx } from './cx';
 import { L } from '../i18n/core.js';
 
 export interface SwipeRowProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Swipe right reveals this (ok, «Έγινε»). */
+  /** A right drag past the threshold: «Έγινε» (ok). */
+  onDone?: () => void;
+  /** A left drag past the threshold: «Αύριο» (ink-2). */
+  onLater?: () => void;
+  /** Alias of onDone. */
   onSwipeRight?: () => void;
-  /** Swipe left reveals this (ink-2, «Αύριο»). */
+  /** Alias of onLater. */
   onSwipeLeft?: () => void;
   rightLabel?: React.ReactNode;
   leftLabel?: React.ReactNode;
@@ -26,8 +30,10 @@ const SLOP = 8; // px before we decide the gesture is horizontal
  * and springs back.
  */
 export function SwipeRow({
-  onSwipeRight,
-  onSwipeLeft,
+  onDone,
+  onLater,
+  onSwipeRight: onSwipeRightProp,
+  onSwipeLeft: onSwipeLeftProp,
   rightLabel,
   leftLabel,
   threshold = 72,
@@ -38,6 +44,8 @@ export function SwipeRow({
   children,
   ...rest
 }: SwipeRowProps) {
+  const onSwipeRight = onDone ?? onSwipeRightProp;
+  const onSwipeLeft = onLater ?? onSwipeLeftProp;
   const rootRef = React.useRef<HTMLDivElement>(null);
   const [x, setX] = React.useState(0);
   const [dragging, setDragging] = React.useState(false);

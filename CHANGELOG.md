@@ -2,6 +2,29 @@
 
 All notable changes to `@congeo/design`. Apps pin a tag; upgrade by changing the tag.
 
+## v1.2.0 — 2026-11-08
+
+What calendar asked for after adopting v1.0 (calendar PR #12), and the React components proven in a real browser.
+
+### Added
+
+- `Select`: a native `<select>` in the Input chrome with a Lucide chevron; label, hint, error, disabled. Never a custom listbox.
+- `DateField`, `TimeField`, `DatePicker`: ΗΗ/ΜΜ/ΕΕΕΕ and 24-hour ΩΩ:ΛΛ whatever the device locale, ISO values, a Monday-first month grid with year and month steps, a 5-minute time list, errors through `L()`. Generalised from calendar's `Fields.tsx` and `DatePicker.tsx`.
+- `@congeo/design/i18n`: `showDate`, `parseDate`, `parseTime`, `maskDate`, `maskTime`, `dayOf`, `isValidDay`, `addDays`, `addMonths`, `monthOf`, `daysInMonth`, `weekdayMon`, `monthGrid`, `dayHeads`, `monthTitle`, `timeOptions`.
+- `Sheet`: swipe down to close (grabber or head; 25 % of the height or a fast flick; springs back otherwise), Escape and backdrop, focus trap with return to the opener, `title` head with `closeButton` and `headExtra`, `threshold`.
+- `StatusBar state="ok"` with the ok tokens; auto-hides after 4 s (`autoHide`, `persist`, `onHide`).
+- `TitleBlock` with 4 to 6 cells (`extra`, `cells`): one row on desktop, two columns on the phone with the number cell first and full-width.
+- `Textarea onSubmit`: Enter submits (Shift+Enter adds a line). `SwipeRow onDone` / `onLater`.
+- `dist/inline.css` and `dist/inline.js` / `inline.mjs` (`INLINE_CSS`): a minified subset for pages served before any bundle, under 12 KB, size asserted in a test.
+- Exports: `accentAttrs`, `Field`, `TitleBlockCell`, and the new components, from `@congeo/design/react`.
+- A real-browser harness (`test/harness/`, esbuild + Chromium with React running) covering SwipeRow, Sheet, Segmented, Textarea, DateField, TimeField, Select, StatusBar ok, ProposalCard, TitleBlock at 1280 / 390 / 320, light and dark; and two proofs that it can fail.
+- Reference page: a «Components v1.2» section in both languages and both themes.
+
+### Changed
+
+- `ProposalCard`: Reject (secondary) on the left, Approve (primary) on the right, as in the Proposal mockup.
+- `Sheet` sets `tabIndex={-1}` on the panel and takes `aria-modal` only when not inline.
+
 ## v1.1.1 — 2026-11-08
 
 George's answers to the eight glossary terms.

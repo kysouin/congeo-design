@@ -100,6 +100,21 @@ Every tool except PermitFlow: English by default, Greek one tap away, one shared
 4. **Turn on `--i18n`.** `congeo-design-lint src app --i18n` in `npm test`. A finding is Greek the user sees outside `L()`. Allow a file only with a reason and a date.
 5. **Take screenshots in both languages.** The same screens as the design migration, English and Greek, light and dark, into `docs/design-migration/after-en/` and `after-el/`. Check: no Greeklish, no accent left on uppercase captions, dates and money as in the README table, the switch in Settings, and that a document already made did not change language.
 
+## From v1.1 to v1.2
+
+v1.2 brings into the package what calendar built for itself after v1.0. An app on v1.1 changes the tag and then:
+
+1. **Replace the app's own date and time fields** with `DateField` and `TimeField` from `@congeo/design/react` (ΗΗ/ΜΜ/ΕΕΕΕ and 24-hour ΩΩ:ΛΛ whatever the device locale, ISO values, pickers, errors through `L()`). For calendar: delete `src/components/Fields.tsx` (`DateField`, `TimeField`, `SelectField`) and `src/components/DatePicker.tsx`, and the `parseDate` / `parseTime` / `showDate` / `monthGrid` helpers now in `@congeo/design/i18n`. The `.datefield`, `.select-wrap`, `.picker-*` and `.mgrid` rules for the picker go too.
+2. **Replace the app's own select** with `Select` (native, Input chrome, Lucide chevron, label, error, disabled).
+3. **Drop the app's sheet gesture.** `Sheet` now closes on a drag down past 25 % of its height or a fast flick, on Escape and on the backdrop, traps focus and returns it. Pass `title` and `closeButton`; remove the app's own pointer handlers, `.sheet-drag` and the panel head (`headExtra` takes anything else the head needs). For calendar: the gesture in `Panel` (`src/components/Common.tsx`).
+4. **Drop the status override.** `StatusBar state="ok"` exists, with `count`, auto-hide after 4 s (`persist` to keep it) and `onHide`. For calendar: the `.cg-statusbar.ok` rule and the `sentNotice` branch that reused `offline`.
+5. **ProposalCard**: the order is now Reject (secondary) left, Approve (primary) right. Remove any CSS that reordered the buttons.
+6. **TitleBlock**: pass `extra` cells (e.g. «NEXT» / «ΕΠΟΜΕΝΟ») or `cells` for full control, 4 to 6 in all; the number is always first. Remove any extra cell the app added by hand.
+7. **Pages served before the bundle** (sign-in, server errors): inline `INLINE_CSS` from `@congeo/design/inline` in the Worker or Pages Function and delete the hand-copied values. For calendar: `functions/_lib/gate.ts`.
+8. **SwipeRow**: `onDone` / `onLater` are the names now (`onSwipeRight` / `onSwipeLeft` still work).
+9. **Textarea**: `onSubmit` replaces the app's own Enter handler.
+10. Run `congeo-design-lint src --i18n`, the app's tests, and take the before/after screenshots.
+
 ## Report (end of the app's prompt)
 
 1. The list of files changed and the number of lint findings before and after (after must be 0, or every allowed file named with its reason).

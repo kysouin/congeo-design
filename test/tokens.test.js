@@ -66,3 +66,20 @@ test('dist: generated outputs carry the tokens', () => {
   assert.ok(fs.existsSync(path.join(root, 'dist/react/index.js')));
   assert.ok(fs.existsSync(path.join(root, 'dist/react/index.d.ts')));
 });
+
+test('dist: inline.css is a minified subset under 12 KB, with inline.js / inline.mjs exporting it', () => {
+  const css = fs.readFileSync(path.join(root, 'dist/inline.css'), 'utf8');
+  const bytes = Buffer.byteLength(css);
+  console.log(`inline.css: ${bytes} bytes`);
+  assert.ok(bytes < 12 * 1024, `inline.css is ${bytes} bytes, limit 12288`);
+  assert.ok(bytes < 12000, `inline.css is ${bytes} bytes, kept under 12000 for headroom`);
+  for (const must of ['--cg-bg:#F3F5F7', '@media (prefers-color-scheme:dark)', '[data-theme="dark"]', '.cg-btn--primary', '.cg-input', '.cg-card', '.cg-statusbar--ok', '.cg-field__label', ':focus-visible']) {
+    assert.ok(css.includes(must), `inline.css has ${must}`);
+  }
+  for (const not of ['.cg-swipe', '.cg-sheet', '.cg-tabbar', '.cg-datepicker', '/*']) assert.ok(!css.includes(not), `inline.css has no ${not}`);
+  const { INLINE_CSS } = require(path.join(root, 'dist/inline.js'));
+  assert.equal(INLINE_CSS, css.trim());
+  const mjs = fs.readFileSync(path.join(root, 'dist/inline.mjs'), 'utf8');
+  assert.match(mjs, /^export const INLINE_CSS = "/m);
+  assert.match(fs.readFileSync(path.join(root, 'dist/inline.d.ts'), 'utf8'), /export declare const INLINE_CSS: string/);
+});

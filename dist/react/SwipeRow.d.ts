@@ -1,8 +1,12 @@
 import * as React from 'react';
 export interface SwipeRowProps extends React.HTMLAttributes<HTMLDivElement> {
-    /** Swipe right reveals this (ok, «Έγινε»). */
+    /** A right drag past the threshold: «Έγινε» (ok). */
+    onDone?: () => void;
+    /** A left drag past the threshold: «Αύριο» (ink-2). */
+    onLater?: () => void;
+    /** Alias of onDone. */
     onSwipeRight?: () => void;
-    /** Swipe left reveals this (ink-2, «Αύριο»). */
+    /** Alias of onLater. */
     onSwipeLeft?: () => void;
     rightLabel?: React.ReactNode;
     leftLabel?: React.ReactNode;
@@ -19,4 +23,4 @@ export interface SwipeRowProps extends React.HTMLAttributes<HTMLDivElement> {
  * (touch-action: pan-y; a vertical move cancels the gesture), has a threshold
  * and springs back.
  */
-export declare function SwipeRow({ onSwipeRight, onSwipeLeft, rightLabel, leftLabel, threshold, onHaptic, preview, disabled, className, children, ...rest }: SwipeRowProps): React.JSX.Element;
+export declare function SwipeRow({ onDone, onLater, onSwipeRight: onSwipeRightProp, onSwipeLeft: onSwipeLeftProp, rightLabel, leftLabel, threshold, onHaptic, preview, disabled, className, children, ...rest }: SwipeRowProps): React.JSX.Element;

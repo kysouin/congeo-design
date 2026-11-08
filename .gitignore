@@ -5,3 +5,4 @@ site/fonts.css
 # Playwright traces / temp
 test-results/
 .tmp/
+test/harness/dist/

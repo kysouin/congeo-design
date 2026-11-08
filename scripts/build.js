@@ -378,6 +378,38 @@ function buildTailwindPreset() {
   ].join('\n');
 }
 
+// ---------- inline.css: a minified subset for pages served before any bundle ----------
+const INLINE_SECTIONS = ['Button', 'Card', 'StatusBar', 'Input / Textarea'];
+function section(css, name) {
+  const marker = `/* ---------- ${name} ---------- */`;
+  const i = css.indexOf(marker);
+  if (i < 0) throw new Error(`No section ${name} in components.css`);
+  const j = css.indexOf('/* ---------- ', i + marker.length);
+  return css.slice(i + marker.length, j < 0 ? css.length : j);
+}
+function minifyCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{}:;,>])\s*/g, '$1')
+    .replace(/;}/g, '}')
+    .trim();
+}
+function buildInlineCss() {
+  const base = fs.readFileSync(path.join(root, 'src/css/base.css'), 'utf8');
+  const components = fs.readFileSync(path.join(root, 'src/css/components.css'), 'utf8');
+  const vars = [
+    ':root{color-scheme:light dark;' + minifyCss(staticVars()) + '}',
+    ':root,[data-theme="light"]{color-scheme:light;' + minifyCss(colorVars('light') + shadowVars('light')) + '}',
+    '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;' + minifyCss(colorVars('dark') + shadowVars('dark')) + '}}',
+    '[data-theme="dark"]{color-scheme:dark;' + minifyCss(colorVars('dark') + shadowVars('dark')) + '}',
+  ].join('');
+  // base without the tool/status contexts (a sign-in page has no accents)
+  const baseSlim = base.split('\n').filter((l) => !/^\[data-(tool|status)=/.test(l)).join('\n');
+  const parts = INLINE_SECTIONS.map((n) => minifyCss(section(components, n)));
+  return vars + minifyCss(baseSlim) + parts.join('');
+}
+
 // ---------- run ----------
 write('congeo.css', buildCss());
 write('fonts.css', buildFontsCss());
@@ -386,4 +418,10 @@ write('tokens.js', js);
 write('tokens.d.ts', dts);
 write('Tokens.swift', buildSwift());
 write('tailwind.preset.js', buildTailwindPreset());
+const inlineCss = buildInlineCss();
+write('inline.css', inlineCss + '\n');
+write('inline.js', HEADER.replace('/*', '//').replace('*/', '').trimEnd() + '\n// The minified subset of congeo.css (variables, base, Button, Input, Card, StatusBar) for pages served before any bundle.\nconst INLINE_CSS = ' + JSON.stringify(inlineCss) + ';\nmodule.exports = { INLINE_CSS };\n');
+write('inline.mjs', HEADER.replace('/*', '//').replace('*/', '').trimEnd() + '\nexport const INLINE_CSS = ' + JSON.stringify(inlineCss) + ';\nexport default INLINE_CSS;\n');
+write('inline.d.ts', HEADER + 'export declare const INLINE_CSS: string;\nexport default INLINE_CSS;\n');
+console.log(`inline.css ${Buffer.byteLength(inlineCss)} bytes`);
 console.log(`dist written to ${path.relative(root, outDir) || '.'}`);

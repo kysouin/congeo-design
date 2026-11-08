@@ -22,3 +22,4 @@ export { TIME_ZONE, nicosiaParts, dayDiff, fmtDate, fmtTime, fmtRange, fmtRelati
 export type { DateStyle, DateOptions, Forms } from './format.js';
 export { COMMON, t, sendingChanges, changesNotSent, changesSent, SECTIONS, sectionName, TOOLS, toolName } from './common.js';
 export type { CommonKey, Section, ToolKey } from './common.js';
+export { showDate, parseDate, parseTime, maskDate, maskTime, dayOf, isValidDay, addDays, addMonths, monthOf, daysInMonth, weekdayMon, monthGrid, dayHeads, monthTitle, timeOptions } from './dates.js';
