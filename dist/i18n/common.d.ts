@@ -51,7 +51,7 @@ export interface Section {
     el: string;
 }
 export declare const SECTIONS: readonly Section[];
-/** The display name of a section in the current language, with or without its number: «01 Study» · «01 Μελέτη». */
+/** The display name of a section in the current language, with or without its number: «01 Design» · «01 Μελέτη». */
 export declare function sectionName(code: Section['code'], withCode?: boolean): string;
 /** The tool names. They are brands and are not translated. */
 export declare const TOOLS: {

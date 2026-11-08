@@ -7,7 +7,7 @@
  * - Strings are written inline, English first: L('Save changes', 'Αποθήκευση αλλαγών'). The string sits next to its
  *   use, so it is read and reviewed where it matters, and a script can extract every L() call later if a third
  *   language comes. This is the pattern Rhoi and congeo-pdf already use.
- * - The document language (a study, an invoice, an exported PDF) is a separate setting per project or document.
+ * - The document language (a design, an invoice, an exported PDF) is a separate setting per project or document.
  *   `inLang('el', () => …)` renders inside it without touching the interface language or what is remembered of it.
  */
 export type Lang = 'en' | 'el';

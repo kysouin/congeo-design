@@ -58,14 +58,14 @@ export function changesSent(n) {
 }
 export const SECTIONS = [
     { code: '00', drive: '00 Εισερχόμενα', en: 'Incoming', el: 'Εισερχόμενα' },
-    { code: '01', drive: '01 Μελέτη', en: 'Study', el: 'Μελέτη' },
+    { code: '01', drive: '01 Μελέτη', en: 'Design', el: 'Μελέτη' },
     { code: '02', drive: '02 Άδεια', en: 'Permit', el: 'Άδεια' },
     { code: '03', drive: '03 Επίβλεψη', en: 'Supervision', el: 'Επίβλεψη' },
     { code: '04', drive: '04 As-built', en: 'As-built', el: 'As-built' },
     { code: '05', drive: '05 Οικονομικά', en: 'Finance', el: 'Οικονομικά' },
     { code: '06', drive: '06 Έγγραφα', en: 'Documents', el: 'Έγγραφα' },
 ];
-/** The display name of a section in the current language, with or without its number: «01 Study» · «01 Μελέτη». */
+/** The display name of a section in the current language, with or without its number: «01 Design» · «01 Μελέτη». */
 export function sectionName(code, withCode = true) {
     const s = SECTIONS.find((x) => x.code === code);
     if (!s)

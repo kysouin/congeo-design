@@ -53,7 +53,7 @@ const EN = [
   ['sent 3', () => I.changesSent(3), '3 changes sent'],
   ['not sent 0', () => I.changesNotSent(0), '0 changes not sent'],
   ['sending 2', () => I.sendingChanges(2), 'Sending 2 changes'],
-  ['section', () => I.sectionName('01'), '01 Study'],
+  ['section', () => I.sectionName('01'), '01 Design'],
   ['section, bare', () => I.sectionName('05', false), 'Finance'],
   ['common', () => I.t('signInWithGoogle'), 'Sign in with Google'],
 ];

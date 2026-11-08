@@ -2,6 +2,23 @@
 
 All notable changes to `@congeo/design`. Apps pin a tag; upgrade by changing the tag.
 
+## v1.1.1 — 2026-11-08
+
+George's answers to the eight glossary terms.
+
+### Changed
+
+- `GLOSSARY.md`: the eight «⚠ George» terms are confirmed.
+  - consumer unit: «πίνακας» in the interface, «πίνακας διανομής» in documents.
+  - two-way switch: «αλέ-ρετούρ».
+  - bonding: «ισοδυναμική σύνδεση».
+  - **design** (not *study*) in English, everywhere.
+  - site visit: «επίσκεψη στο έργο».
+  - planning permit: «πολεοδομική άδεια», distinct from building permit «άδεια οικοδομής».
+  - expense: «έξοδο».
+  - statement: «κατάσταση λογαριασμού».
+- Section 01 in English is **«01 Design»** (was «01 Study»). The Drive name «01 Μελέτη» is unchanged.
+
 ## v1.1.0 — 2026-11-08
 
 One language system for every CONGEO tool: English by default, Greek one tap away. PermitFlow stays Greek only.
