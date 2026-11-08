@@ -20,5 +20,5 @@ export {
 export type { Lang } from './core.js';
 export { TIME_ZONE, nicosiaParts, dayDiff, fmtDate, fmtTime, fmtRange, fmtRelative, fmtMoney, num, plural, verb } from './format.js';
 export type { DateStyle, DateOptions, Forms } from './format.js';
-export { COMMON, t, sendingChanges, changesNotSent, changesSent, SECTIONS, sectionName, TOOLS } from './common.js';
+export { COMMON, t, sendingChanges, changesNotSent, changesSent, SECTIONS, sectionName, TOOLS, toolName } from './common.js';
 export type { CommonKey, Section, ToolKey } from './common.js';

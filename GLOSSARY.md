@@ -11,7 +11,7 @@ Rhoi already uses many of these (`web/src/i18n.ts`); where it does, the Greek he
 | English | Greek | note |
 |---|---|---|
 | distribution board | πίνακας διανομής | BS 7671 term. Rhoi: «Πίνακες διανομής». «Πίνακας» alone in running text. |
-| consumer unit | πίνακας κατοικίας | the domestic board; BS 7671 uses *consumer unit*. **⚠ George**: Cyprus practice may say «πίνακας» for both. |
+| consumer unit | πίνακας | the domestic board; BS 7671 uses *consumer unit*. Confirmed by George (8 Nov 2026): «πίνακας» in the interface, «πίνακας διανομής» in documents. |
 | sub-board | υποπίνακας | Rhoi: «Τροφοδοσία υποπίνακα» |
 | final circuit | τελικό κύκλωμα | BS 7671. Rhoi: «τα τελικά κυκλώματα» |
 | ring final circuit | δακτύλιος, κύκλωμα δακτυλίου | Rhoi: «δακτύλιος» |
@@ -24,13 +24,13 @@ Rhoi already uses many of these (`web/src/i18n.ts`); where it does, the Greek he
 | socket outlet | ρευματοδότης | BS 7671 says *socket-outlet*; the tools write *socket outlet*. Rhoi: «Ρευματοδότες». Colloquial «πρίζα» only in casual UI copy, never in documents. |
 | luminaire | φωτιστικό | BS 7671 term (not *light fitting*). Rhoi: «Φωτιστικό» |
 | switch | διακόπτης | |
-| two-way switch | αλέ-ρετούρ | Rhoi: «Αλέ-ρετούρ». **⚠ George**: formal alternative «διακόπτης κομιτατέρ» / «μεταγωγικός»? |
+| two-way switch | αλέ-ρετούρ | Rhoi: «Αλέ-ρετούρ». Confirmed by George (8 Nov 2026): the term electricians use, also in documents. |
 | isolator | διακόπτης απομόνωσης | Rhoi |
 | fused spur / fused connection unit | σταθερή σύνδεση (fused spur) | Rhoi keeps the English in brackets |
 | cable size (cross-sectional area) | διατομή καλωδίου | BS 7671: *csa*. Rhoi: «διατομή» |
 | earthing | γείωση | Rhoi: «Γείωση», «Σύστημα γείωσης», «Αγωγός γείωσης» |
 | protective conductor (cpc) | αγωγός προστασίας | Rhoi |
-| bonding | ισοδυναμική σύνδεση | BS 7671 *protective bonding*. **⚠ George** |
+| bonding | ισοδυναμική σύνδεση | BS 7671 *protective bonding*. Confirmed by George (8 Nov 2026). |
 | main switch | γενικός διακόπτης | Rhoi: «Γενικός διακόπτης», «Γενικός» in a short label |
 | tails (meter tails) | καλώδια μετρητή | Rhoi: «Καλώδια μετρητή» |
 | meter | μετρητής | Rhoi: «Κύριος μετρητής» |
@@ -57,14 +57,14 @@ Rhoi already uses many of these (`web/src/i18n.ts`); where it does, the Greek he
 |---|---|---|
 | project | έργο | «Έργο 0637» in the data contract, both languages keep the Greek line |
 | project number | αριθμός έργου | the four digits, mono |
-| study (design) | μελέτη | section 01. In English, *study* is the CONGEO word; *design* when the reader is British. **⚠ George**: pick one for documents going to UK-trained engineers. |
-| electrical installation study | μελέτη ηλεκτρολογικής εγκατάστασης | Rhoi (title block) |
+| design | μελέτη | section 01. Confirmed by George (8 Nov 2026): **design** everywhere in English (interface and documents), never *study*. |
+| electrical installation design | μελέτη ηλεκτρολογικής εγκατάστασης | Rhoi (title block); English follows *design* above |
 | site supervision | επίβλεψη | section 03. Greek has no «εργοταξίου» in the section name. |
-| site visit | επίσκεψη στο έργο | Rhoi: «επίσκεψη στο έργο»; the calendar mockups say «επίσκεψη στο εργοτάξιο». **⚠ George**: pick one. |
+| site visit | επίσκεψη στο έργο | Confirmed by George (8 Nov 2026), as in Rhoi. The calendar's «επίσκεψη στο εργοτάξιο» changes to this. |
 | site | εργοτάξιο | the place; «τοποθεσία» is the address field (Rhoi: «Τοποθεσία») |
 | as-built (drawings) | σχέδια όπως κατασκευάστηκαν | section 04 keeps «As-built» in both languages (the approved Project hub) |
 | permit | άδεια | section 02; «άδεια οικοδομής» when the full term is needed |
-| planning permit | πολεοδομική άδεια | **⚠ George** |
+| planning permit | πολεοδομική άδεια | Confirmed by George (8 Nov 2026); distinct from building permit. |
 | building permit | άδεια οικοδομής | |
 | incoming files | εισερχόμενα | section 00 |
 | documents | έγγραφα | section 06 |
@@ -94,12 +94,12 @@ Rhoi already uses many of these (`web/src/i18n.ts`); where it does, the Greek he
 | receipt | απόδειξη | |
 | credit note | πιστωτικό σημείωμα | |
 | VAT | ΦΠΑ | Rhoi: «ΦΠΑ»; the registration number «Αρ. εγγραφής ΦΠΑ» |
-| expense | έξοδο | «δαπάνη» in formal accounting text. **⚠ George**: which one invoicing shows. |
+| expense | έξοδο | Confirmed by George (8 Nov 2026): «έξοδο» / «έξοδα» in the interface. |
 | payment | πληρωμή | |
 | due date | προθεσμία πληρωμής | |
 | outstanding (open) | ανοιχτό | the hub: «1 ανοιχτό» |
 | fee | αμοιβή | |
-| statement | κατάσταση λογαριασμού | **⚠ George** |
+| statement | κατάσταση λογαριασμού | Confirmed by George (8 Nov 2026). |
 
 ## Interface words that are not terms
 

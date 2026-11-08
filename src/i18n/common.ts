@@ -77,7 +77,7 @@ export interface Section {
 
 export const SECTIONS: readonly Section[] = [
   { code: '00', drive: '00 Εισερχόμενα', en: 'Incoming', el: 'Εισερχόμενα' },
-  { code: '01', drive: '01 Μελέτη', en: 'Study', el: 'Μελέτη' },
+  { code: '01', drive: '01 Μελέτη', en: 'Design', el: 'Μελέτη' },
   { code: '02', drive: '02 Άδεια', en: 'Permit', el: 'Άδεια' },
   { code: '03', drive: '03 Επίβλεψη', en: 'Supervision', el: 'Επίβλεψη' },
   { code: '04', drive: '04 As-built', en: 'As-built', el: 'As-built' },
@@ -85,7 +85,7 @@ export const SECTIONS: readonly Section[] = [
   { code: '06', drive: '06 Έγγραφα', en: 'Documents', el: 'Έγγραφα' },
 ];
 
-/** The display name of a section in the current language, with or without its number: «01 Study» · «01 Μελέτη». */
+/** The display name of a section in the current language, with or without its number: «01 Design» · «01 Μελέτη». */
 export function sectionName(code: Section['code'], withCode = true): string {
   const s = SECTIONS.find((x) => x.code === code);
   if (!s) return code;
@@ -93,16 +93,26 @@ export function sectionName(code: Section['code'], withCode = true): string {
   return withCode ? `${s.code} ${name}` : name;
 }
 
-/** The tool names. They are brands and are not translated. */
+/**
+ * The tool names. Products sold on their own (Kaneto, Rhoi, Trace, PermitFlow) are brands and are never
+ * translated. The office tools have descriptive names, which follow the interface language: use toolName().
+ */
 export const TOOLS = {
-  kaneto: 'Kaneto',
-  rhoi: 'Rhoi',
-  trace: 'Trace',
-  permitflow: 'PermitFlow',
-  calendar: 'Ατζέντα',
-  pdf: 'congeo-pdf',
-  invoicing: 'Invoicing',
-  congeo: 'CONGEO',
+  kaneto: { en: 'Kaneto', el: 'Kaneto' },
+  rhoi: { en: 'Rhoi', el: 'Rhoi' },
+  trace: { en: 'Trace', el: 'Trace' },
+  permitflow: { en: 'PermitFlow', el: 'PermitFlow' },
+  calendar: { en: 'Agenda', el: 'Ατζέντα' },
+  pdf: { en: 'PDF', el: 'PDF' },
+  scan: { en: 'Scan', el: 'Σάρωση' },
+  invoicing: { en: 'Invoicing', el: 'Τιμολόγηση' },
+  congeo: { en: 'CONGEO', el: 'CONGEO' },
 } as const;
+
+/** A tool's name in the current interface language: toolName('calendar') → «Agenda» · «Ατζέντα». */
+export function toolName(key: ToolKey): string {
+  const t = TOOLS[key];
+  return L(t.en, t.el);
+}
 
 export type ToolKey = keyof typeof TOOLS;
