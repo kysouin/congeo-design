@@ -37,8 +37,8 @@ exports.useLang = useLang;
 exports.LanguageSwitch = LanguageSwitch;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
-const Segmented_1 = require("./Segmented");
+const cx_js_1 = require("./cx.js");
+const Segmented_js_1 = require("./Segmented.js");
 const core_js_1 = require("../i18n/core.js");
 /** The interface language; the component re-renders when it changes, here or in another tool. */
 function useLang() {
@@ -49,7 +49,7 @@ function useLang() {
 /** «EN | ΕΛ». Each label is in its own language, so it reads correctly whichever one is set. */
 function LanguageSwitch({ className, block, onChange }) {
     const lang = useLang();
-    return ((0, jsx_runtime_1.jsx)(Segmented_1.Segmented, { label: (0, core_js_1.L)('Language', 'Γλώσσα'), className: (0, cx_1.cx)('cg-langswitch', className), block: block, value: lang, onChange: (l) => {
+    return ((0, jsx_runtime_1.jsx)(Segmented_js_1.Segmented, { label: (0, core_js_1.L)('Language', 'Γλώσσα'), className: (0, cx_js_1.cx)('cg-langswitch', className), block: block, value: lang, onChange: (l) => {
             (0, core_js_1.setLang)(l);
             onChange === null || onChange === void 0 ? void 0 : onChange(l);
         }, options: [

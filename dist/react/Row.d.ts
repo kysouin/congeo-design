@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accent } from './types';
+import { Accent } from './types.js';
 export interface RowProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
     /** Wraps; never scrolls sideways. */
     title: React.ReactNode;

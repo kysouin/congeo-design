@@ -36,8 +36,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sheet = Sheet;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
-const Button_1 = require("./Button");
+const cx_js_1 = require("./cx.js");
+const Button_js_1 = require("./Button.js");
 const core_js_1 = require("../i18n/core.js");
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 const FLICK = 0.6; // px per ms
@@ -149,7 +149,7 @@ function Sheet({ open, onClose, title, closeButton, inline, threshold = 0.25, he
         if (e.type !== 'pointercancel' && (dist > h * threshold || (d.v > FLICK && dist > 24)))
             (_b = onCloseRef.current) === null || _b === void 0 ? void 0 : _b.call(onCloseRef);
     };
-    const content = ((0, jsx_runtime_1.jsxs)("div", { ref: panel, role: "dialog", "aria-modal": !inline, tabIndex: -1, className: (0, cx_1.cx)('cg-sheet', inline && 'cg-sheet--inline', dragging && 'cg-sheet--dragging', className), style: { ...style, transform: dy ? `translateY(${dy}px)` : undefined }, onPointerDown: start, onPointerMove: move, onPointerUp: end, onPointerCancel: end, ...rest, children: [(0, jsx_runtime_1.jsx)("div", { className: "cg-sheet__grabber", "aria-hidden": "true" }), (title != null || closeButton || headExtra) && ((0, jsx_runtime_1.jsxs)("div", { className: "cg-sheet__head", children: [title != null && (0, jsx_runtime_1.jsx)("h2", { className: "cg-sheet__title", children: title }), headExtra, closeButton && ((0, jsx_runtime_1.jsx)(Button_1.IconButton, { variant: "ghost", label: (0, core_js_1.L)('Close', 'Κλείσιμο'), onClick: () => onClose === null || onClose === void 0 ? void 0 : onClose(), children: (0, jsx_runtime_1.jsx)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: (0, jsx_runtime_1.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) }))] })), children] }));
+    const content = ((0, jsx_runtime_1.jsxs)("div", { ref: panel, role: "dialog", "aria-modal": !inline, tabIndex: -1, className: (0, cx_js_1.cx)('cg-sheet', inline && 'cg-sheet--inline', dragging && 'cg-sheet--dragging', className), style: { ...style, transform: dy ? `translateY(${dy}px)` : undefined }, onPointerDown: start, onPointerMove: move, onPointerUp: end, onPointerCancel: end, ...rest, children: [(0, jsx_runtime_1.jsx)("div", { className: "cg-sheet__grabber", "aria-hidden": "true" }), (title != null || closeButton || headExtra) && ((0, jsx_runtime_1.jsxs)("div", { className: "cg-sheet__head", children: [title != null && (0, jsx_runtime_1.jsx)("h2", { className: "cg-sheet__title", children: title }), headExtra, closeButton && ((0, jsx_runtime_1.jsx)(Button_js_1.IconButton, { variant: "ghost", label: (0, core_js_1.L)('Close', 'Κλείσιμο'), onClick: () => onClose === null || onClose === void 0 ? void 0 : onClose(), children: (0, jsx_runtime_1.jsx)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: (0, jsx_runtime_1.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) }))] })), children] }));
     if (inline)
         return content;
     return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { className: "cg-sheet-backdrop", onClick: () => onClose === null || onClose === void 0 ? void 0 : onClose(), "aria-hidden": "true" }), content] }));

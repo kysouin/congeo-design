@@ -6,3 +6,5 @@ site/fonts.css
 test-results/
 .tmp/
 test/harness/dist/
+test/fixtures/vite-app/node_modules/
+test/fixtures/vite-app/dist/

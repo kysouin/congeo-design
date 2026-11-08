@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Segmented } from './Segmented';
+import { cx } from './cx.js';
+import { Segmented } from './Segmented.js';
 import { onLangChange, setLang, uiLang, L, type Lang } from '../i18n/core.js';
 
 /** The interface language; the component re-renders when it changes, here or in another tool. */

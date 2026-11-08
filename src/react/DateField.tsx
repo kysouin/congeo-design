@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Field, type FieldProps } from './Input';
-import { Button, IconButton } from './Button';
-import { DatePicker } from './DatePicker';
+import { cx } from './cx.js';
+import { Field, type FieldProps } from './Input.js';
+import { Button, IconButton } from './Button.js';
+import { DatePicker } from './DatePicker.js';
 import { L } from '../i18n/core.js';
 import { addDays, dayOf, maskDate, maskTime, parseDate, parseTime, showDate, timeOptions } from '../i18n/dates.js';
 

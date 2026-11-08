@@ -1,6 +1,6 @@
 {
   "name": "@congeo/design",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "CONGEO design tokens and components. One source for the look of every CONGEO tool.",
   "license": "UNLICENSED",
   "repository": "github:kysouin/congeo-design",
@@ -22,13 +22,14 @@
     "./tailwind.preset.js": "./dist/tailwind.preset.js",
     "./react": {
       "types": "./dist/react/index.d.ts",
-      "default": "./dist/react/index.js"
+      "import": "./dist/esm/react/index.js",
+      "require": "./dist/react/index.js"
     },
     "./Tokens.swift": "./dist/Tokens.swift",
     "./package.json": "./package.json",
     "./i18n": {
       "types": "./dist/i18n/index.d.ts",
-      "import": "./dist/i18n/esm/index.js",
+      "import": "./dist/esm/i18n/index.js",
       "require": "./dist/i18n/index.js"
     },
     "./i18n/boot.inline.js": "./dist/i18n/boot.inline.js",
@@ -51,9 +52,9 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "node scripts/build.js && tsc -p tsconfig.react.json && tsc -p tsconfig.i18n-esm.json && node scripts/build-i18n.js && node scripts/build-site.js",
+    "build": "node scripts/build.js && tsc -p tsconfig.react.json && tsc -p tsconfig.esm.json && node scripts/build-i18n.js && node scripts/build-site.js",
     "build:tokens": "node scripts/build.js",
-    "build:react": "tsc -p tsconfig.react.json && tsc -p tsconfig.i18n-esm.json && node scripts/build-i18n.js",
+    "build:react": "tsc -p tsconfig.react.json && tsc -p tsconfig.esm.json && node scripts/build-i18n.js",
     "build:site": "node scripts/build-site.js",
     "test": "node --test --test-concurrency=1 test/*.test.js",
     "test:contrast": "node --test test/contrast.test.js",
@@ -79,7 +80,8 @@
     "playwright": "1.63.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "vite": "8.3.6"
   },
   "engines": {
     "node": ">=18"

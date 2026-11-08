@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface EmptyStateProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** A Lucide icon element, size 24. */

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { ToolId } from './types';
+import type { ToolId } from './types.js';
 export declare const TOOL_LABELS: Record<ToolId, string>;
 export interface ToolMarkProps extends React.HTMLAttributes<HTMLSpanElement> {
     tool: ToolId;

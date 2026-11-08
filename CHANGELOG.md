@@ -2,6 +2,20 @@
 
 All notable changes to `@congeo/design`. Apps pin a tag; upgrade by changing the tag.
 
+## v1.2.1 — 2026-11-08
+
+One language state, however the package is imported. Found by calendar-7 on v1.2.0.
+
+### Fixed
+
+- `dist/react/*` required the CJS `../i18n/core.js` while `import '@congeo/design/i18n'` resolved `dist/i18n/esm/`, giving two copies of the language state: the switch changed the components' labels but not the app's own `L()` strings. The language, the listeners, the document scope and the config now live on `globalThis[Symbol.for('congeo.i18n')]`; a second loaded copy of `core` reads and writes the same state, and wires the `visibilitychange` / `pageshow` / `storage` listeners only once.
+- No mixed formats: `dist/esm/` holds an ESM build of `react` and `i18n` together (the ESM React imports the ESM i18n). `exports`: `import` → `dist/esm/react/index.js`, `dist/esm/i18n/index.js`, `dist/inline.mjs`; `require` → `dist/react/index.js`, `dist/i18n/index.js`, `dist/inline.js`. Relative imports in `dist/esm` carry their `.js` extension, so a Node ESM consumer loads the React entry too.
+
+### Changed
+
+- `dist/i18n/esm/` moved to `dist/esm/i18n/` (reached only through the exports map). The reference page imports the new path.
+- Tests: a Vite-bundled fixture app (`test/fixtures/vite-app`) that fails on v1.2.0 and passes now; a CJS + ESM dual-consumer test in one Node process.
+
 ## v1.2.0 — 2026-11-08
 
 What calendar asked for after adopting v1.0 (calendar PR #12), and the React components proven in a real browser.

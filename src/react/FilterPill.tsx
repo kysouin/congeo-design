@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Accent, accentAttrs } from './types';
+import { cx } from './cx.js';
+import { Accent, accentAttrs } from './types.js';
 
 export interface FilterPillProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;

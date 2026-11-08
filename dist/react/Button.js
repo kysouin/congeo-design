@@ -36,12 +36,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IconButton = exports.Button = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
+const cx_js_1 = require("./cx.js");
 exports.Button = React.forwardRef(function Button({ variant = 'secondary', size = 'md', block, className, type = 'button', ...rest }, ref) {
-    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, className: (0, cx_1.cx)('cg-btn', `cg-btn--${variant}`, `cg-btn--${size}`, block && 'cg-btn--block', className), ...rest }));
+    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, className: (0, cx_js_1.cx)('cg-btn', `cg-btn--${variant}`, `cg-btn--${size}`, block && 'cg-btn--block', className), ...rest }));
 });
 /** Round 44 px icon button. Pass a Lucide icon as the child. */
 exports.IconButton = React.forwardRef(function IconButton({ variant = 'secondary', label, className, type = 'button', children, ...rest }, ref) {
     var _a;
-    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, "aria-label": label, title: (_a = rest.title) !== null && _a !== void 0 ? _a : label, className: (0, cx_1.cx)('cg-btn', `cg-btn--${variant}`, 'cg-btn--icon', className), ...rest, children: children }));
+    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, "aria-label": label, title: (_a = rest.title) !== null && _a !== void 0 ? _a : label, className: (0, cx_js_1.cx)('cg-btn', `cg-btn--${variant}`, 'cg-btn--icon', className), ...rest, children: children }));
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accent } from './types';
+import { Accent } from './types.js';
 export interface ProjectChipProps extends React.HTMLAttributes<HTMLSpanElement> {
     /** The project number, e.g. "0637". */
     number: string | number;

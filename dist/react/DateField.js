@@ -36,10 +36,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TimeField = exports.DateField = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
-const Input_1 = require("./Input");
-const Button_1 = require("./Button");
-const DatePicker_1 = require("./DatePicker");
+const cx_js_1 = require("./cx.js");
+const Input_js_1 = require("./Input.js");
+const Button_js_1 = require("./Button.js");
+const DatePicker_js_1 = require("./DatePicker.js");
 const core_js_1 = require("../i18n/core.js");
 const dates_js_1 = require("../i18n/dates.js");
 function usePopover(onClose, open, ref) {
@@ -95,7 +95,7 @@ exports.DateField = React.forwardRef(function DateField({ value, onChange, label
     };
     const today = todayProp !== null && todayProp !== void 0 ? todayProp : (0, dates_js_1.dayOf)();
     const error = errorProp !== null && errorProp !== void 0 ? errorProp : (bad ? (0, core_js_1.L)('Not a valid date (DD/MM/YYYY)', 'Μη έγκυρη ημερομηνία (ΗΗ/ΜΜ/ΕΕΕΕ)') : undefined);
-    return ((0, jsx_runtime_1.jsx)(Input_1.Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsxs)("div", { ref: wrap, className: (0, cx_1.cx)('cg-datefield', steps && 'cg-datefield--steps', className), children: [(0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: "cg-input cg-input--mono", inputMode: "numeric", autoComplete: "off", placeholder: (0, core_js_1.L)('DD/MM/YYYY', 'ΗΗ/ΜΜ/ΕΕΕΕ'), value: text, disabled: disabled, "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, onChange: (e) => {
+    return ((0, jsx_runtime_1.jsx)(Input_js_1.Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsxs)("div", { ref: wrap, className: (0, cx_js_1.cx)('cg-datefield', steps && 'cg-datefield--steps', className), children: [(0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: "cg-input cg-input--mono", inputMode: "numeric", autoComplete: "off", placeholder: (0, core_js_1.L)('DD/MM/YYYY', 'ΗΗ/ΜΜ/ΕΕΕΕ'), value: text, disabled: disabled, "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, onChange: (e) => {
                         const t = (0, dates_js_1.maskDate)(e.target.value);
                         setText(t);
                         if (t.length === 10)
@@ -103,7 +103,7 @@ exports.DateField = React.forwardRef(function DateField({ value, onChange, label
                     }, onBlur: (e) => {
                         commit(text);
                         onBlur === null || onBlur === void 0 ? void 0 : onBlur(e);
-                    }, ...rest }), (0, jsx_runtime_1.jsx)(Button_1.IconButton, { variant: "secondary", label: (0, core_js_1.L)('Pick a date', 'Επιλογή ημερομηνίας'), "aria-expanded": open, "aria-haspopup": "dialog", disabled: disabled, onClick: () => setOpen((o) => !o), children: (0, jsx_runtime_1.jsx)(CalendarIcon, {}) }), steps && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Button_1.Button, { size: "sm", disabled: disabled, "aria-label": (0, core_js_1.L)('One day earlier', 'Μία ημέρα πριν'), onClick: () => onChange((0, dates_js_1.addDays)(value || today, -1)), children: "\u2039" }), (0, jsx_runtime_1.jsx)(Button_1.Button, { size: "sm", disabled: disabled, "aria-label": (0, core_js_1.L)('One day later', 'Μία ημέρα μετά'), onClick: () => onChange((0, dates_js_1.addDays)(value || today, 1)), children: "\u203A" }), (0, jsx_runtime_1.jsx)(Button_1.Button, { size: "sm", disabled: disabled, onClick: () => onChange(today), children: (0, core_js_1.L)('Today', 'Σήμερα') })] })), open && ((0, jsx_runtime_1.jsx)("div", { className: "cg-popover", role: "dialog", "aria-label": (0, core_js_1.L)('Pick a date', 'Επιλογή ημερομηνίας'), children: (0, jsx_runtime_1.jsx)(DatePicker_1.DatePicker, { value: value, today: today, onPick: (d) => {
+                    }, ...rest }), (0, jsx_runtime_1.jsx)(Button_js_1.IconButton, { variant: "secondary", label: (0, core_js_1.L)('Pick a date', 'Επιλογή ημερομηνίας'), "aria-expanded": open, "aria-haspopup": "dialog", disabled: disabled, onClick: () => setOpen((o) => !o), children: (0, jsx_runtime_1.jsx)(CalendarIcon, {}) }), steps && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(Button_js_1.Button, { size: "sm", disabled: disabled, "aria-label": (0, core_js_1.L)('One day earlier', 'Μία ημέρα πριν'), onClick: () => onChange((0, dates_js_1.addDays)(value || today, -1)), children: "\u2039" }), (0, jsx_runtime_1.jsx)(Button_js_1.Button, { size: "sm", disabled: disabled, "aria-label": (0, core_js_1.L)('One day later', 'Μία ημέρα μετά'), onClick: () => onChange((0, dates_js_1.addDays)(value || today, 1)), children: "\u203A" }), (0, jsx_runtime_1.jsx)(Button_js_1.Button, { size: "sm", disabled: disabled, onClick: () => onChange(today), children: (0, core_js_1.L)('Today', 'Σήμερα') })] })), open && ((0, jsx_runtime_1.jsx)("div", { className: "cg-popover", role: "dialog", "aria-label": (0, core_js_1.L)('Pick a date', 'Επιλογή ημερομηνίας'), children: (0, jsx_runtime_1.jsx)(DatePicker_js_1.DatePicker, { value: value, today: today, onPick: (d) => {
                             setText((0, dates_js_1.showDate)(d));
                             setBad(false);
                             setOpen(false);
@@ -144,7 +144,7 @@ exports.TimeField = React.forwardRef(function TimeField({ value, onChange, label
     const error = errorProp !== null && errorProp !== void 0 ? errorProp : (bad ? (0, core_js_1.L)('Not a valid time (HH:MM, 24-hour)', 'Μη έγκυρη ώρα (ΩΩ:ΛΛ, 24ωρο)') : undefined);
     const options = React.useMemo(() => (0, dates_js_1.timeOptions)(step), [step]);
     const near = value ? options.find((o) => o >= value) : '09:00';
-    return ((0, jsx_runtime_1.jsx)(Input_1.Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsxs)("div", { ref: wrap, className: (0, cx_1.cx)('cg-timefield', className), children: [(0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: "cg-input cg-input--mono", inputMode: "numeric", autoComplete: "off", placeholder: (0, core_js_1.L)('HH:MM', 'ΩΩ:ΛΛ'), value: text, disabled: disabled, "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, onChange: (e) => {
+    return ((0, jsx_runtime_1.jsx)(Input_js_1.Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsxs)("div", { ref: wrap, className: (0, cx_js_1.cx)('cg-timefield', className), children: [(0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: "cg-input cg-input--mono", inputMode: "numeric", autoComplete: "off", placeholder: (0, core_js_1.L)('HH:MM', 'ΩΩ:ΛΛ'), value: text, disabled: disabled, "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, onChange: (e) => {
                         const t = (0, dates_js_1.maskTime)(e.target.value);
                         setText(t);
                         if (/^\d{2}:\d{2}$/.test(t))
@@ -152,7 +152,7 @@ exports.TimeField = React.forwardRef(function TimeField({ value, onChange, label
                     }, onBlur: (e) => {
                         commit(text);
                         onBlur === null || onBlur === void 0 ? void 0 : onBlur(e);
-                    }, ...rest }), (0, jsx_runtime_1.jsx)(Button_1.IconButton, { variant: "secondary", label: (0, core_js_1.L)('Pick a time', 'Επιλογή ώρας'), "aria-expanded": open, "aria-haspopup": "listbox", disabled: disabled, onClick: () => setOpen((o) => !o), children: (0, jsx_runtime_1.jsx)(ClockIcon, {}) }), open && ((0, jsx_runtime_1.jsx)("div", { className: "cg-popover cg-popover--list", role: "listbox", "aria-label": (0, core_js_1.L)('Pick a time', 'Επιλογή ώρας'), ref: list, children: options.map((o) => ((0, jsx_runtime_1.jsx)("button", { type: "button", role: "option", "aria-selected": o === value, "data-near": o === near || undefined, className: (0, cx_1.cx)('cg-timefield__option cg-mono', o === value && 'cg-timefield__option--selected'), onClick: () => {
+                    }, ...rest }), (0, jsx_runtime_1.jsx)(Button_js_1.IconButton, { variant: "secondary", label: (0, core_js_1.L)('Pick a time', 'Επιλογή ώρας'), "aria-expanded": open, "aria-haspopup": "listbox", disabled: disabled, onClick: () => setOpen((o) => !o), children: (0, jsx_runtime_1.jsx)(ClockIcon, {}) }), open && ((0, jsx_runtime_1.jsx)("div", { className: "cg-popover cg-popover--list", role: "listbox", "aria-label": (0, core_js_1.L)('Pick a time', 'Επιλογή ώρας'), ref: list, children: options.map((o) => ((0, jsx_runtime_1.jsx)("button", { type: "button", role: "option", "aria-selected": o === value, "data-near": o === near || undefined, className: (0, cx_js_1.cx)('cg-timefield__option cg-mono', o === value && 'cg-timefield__option--selected'), onClick: () => {
                             onChange(o);
                             setText(o);
                             setBad(false);

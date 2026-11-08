@@ -37,12 +37,12 @@ exports.FilterPill = void 0;
 exports.FilterPills = FilterPills;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
-const types_1 = require("./types");
+const cx_js_1 = require("./cx.js");
+const types_js_1 = require("./types.js");
 /** Filter pill with a dot and a count. Toggle via aria-pressed. */
 exports.FilterPill = React.forwardRef(function FilterPill({ active, dot, count, className, children, type = 'button', ...rest }, ref) {
-    return ((0, jsx_runtime_1.jsxs)("button", { ref: ref, type: type, "aria-pressed": !!active, className: (0, cx_1.cx)('cg-pill', className), ...(0, types_1.accentAttrs)(dot), ...rest, children: [dot && (0, jsx_runtime_1.jsx)("span", { className: "cg-pill__dot", "aria-hidden": "true" }), (0, jsx_runtime_1.jsx)("span", { className: "cg-pill__label", children: children }), count != null && (0, jsx_runtime_1.jsx)("span", { className: "cg-pill__count", children: count })] }));
+    return ((0, jsx_runtime_1.jsxs)("button", { ref: ref, type: type, "aria-pressed": !!active, className: (0, cx_js_1.cx)('cg-pill', className), ...(0, types_js_1.accentAttrs)(dot), ...rest, children: [dot && (0, jsx_runtime_1.jsx)("span", { className: "cg-pill__dot", "aria-hidden": "true" }), (0, jsx_runtime_1.jsx)("span", { className: "cg-pill__label", children: children }), count != null && (0, jsx_runtime_1.jsx)("span", { className: "cg-pill__count", children: count })] }));
 });
 function FilterPills({ className, ...rest }) {
-    return (0, jsx_runtime_1.jsx)("div", { className: (0, cx_1.cx)('cg-pills', className), ...rest });
+    return (0, jsx_runtime_1.jsx)("div", { className: (0, cx_js_1.cx)('cg-pills', className), ...rest });
 }

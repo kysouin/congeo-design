@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: 'text' | 'title' | 'circle' | 'row' | 'card';

@@ -1,5 +1,4 @@
 "use strict";
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LANG_BOOT_SCRIPT = exports.otherLang = exports.langTag = exports.uiLang = exports.getLang = exports.COOKIE_MAX_AGE = exports.STORAGE_KEY = exports.COOKIE_NAME = exports.LANGS = void 0;
 exports.readStoredLang = readStoredLang;
@@ -15,7 +14,7 @@ exports.COOKIE_NAME = 'congeo_lang';
 exports.STORAGE_KEY = 'congeo.lang';
 exports.COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 const DEFAULT_LANG = 'en';
-const config = { cookieDomains: ['.congeo.cy'], fixed: null };
+const STATE_KEY = Symbol.for('congeo.i18n');
 const hasDoc = () => typeof document !== 'undefined';
 const hasWin = () => typeof window !== 'undefined';
 function isLang(v) {
@@ -32,7 +31,7 @@ function cookieDomain() {
     if (!hasWin())
         return null;
     const host = window.location.hostname;
-    for (const d of [...config.cookieDomains, ...readMetaDomains()]) {
+    for (const d of [...S.config.cookieDomains, ...readMetaDomains()]) {
         const bare = d.replace(/^\./, '');
         if (host === bare || host.endsWith('.' + bare))
             return '.' + bare;
@@ -73,17 +72,30 @@ function writeStored(l) {
         /* private mode */
     }
 }
-let lang = (_a = readStoredLang()) !== null && _a !== void 0 ? _a : DEFAULT_LANG;
-let scope = null;
-const subs = new Set();
+const S = (() => {
+    var _a;
+    const g = globalThis;
+    const existing = g[STATE_KEY];
+    if (existing)
+        return existing;
+    const fresh = {
+        lang: (_a = readStoredLang()) !== null && _a !== void 0 ? _a : DEFAULT_LANG,
+        scope: null,
+        subs: new Set(),
+        config: { cookieDomains: ['.congeo.cy'], fixed: null },
+        wired: false,
+    };
+    g[STATE_KEY] = fresh;
+    return fresh;
+})();
 function apply() {
     if (hasDoc())
-        document.documentElement.lang = lang;
+        document.documentElement.lang = S.lang;
 }
 function notify() {
-    subs.forEach((f) => {
+    S.subs.forEach((f) => {
         try {
-            f(lang);
+            f(S.lang);
         }
         catch {
             /* a listener must not break the others */
@@ -93,24 +105,24 @@ function notify() {
 // the page says its language from the start (screen readers, hyphenation, Greek uppercase, the browser's translate offer)
 apply();
 /** The language strings come out in: the document scope while one is open, else the interface language. */
-const getLang = () => scope !== null && scope !== void 0 ? scope : lang;
+const getLang = () => { var _a; return (_a = S.scope) !== null && _a !== void 0 ? _a : S.lang; };
 exports.getLang = getLang;
 /** The interface language alone. */
-const uiLang = () => lang;
+const uiLang = () => S.lang;
 exports.uiLang = uiLang;
 /** BCP 47 tag for Intl: en-GB or el-GR. */
 const langTag = (l = (0, exports.getLang)()) => (l === 'el' ? 'el-GR' : 'en-GB');
 exports.langTag = langTag;
-const otherLang = (l = lang) => (l === 'el' ? 'en' : 'el');
+const otherLang = (l = S.lang) => (l === 'el' ? 'en' : 'el');
 exports.otherLang = otherLang;
 /** Changes the interface language for every tool: remembered, applied to <html lang>, listeners called. */
 function setLang(l) {
     if (!isLang(l))
         return;
-    if (config.fixed)
+    if (S.config.fixed)
         return;
-    const changed = l !== lang;
-    lang = l;
+    const changed = l !== S.lang;
+    S.lang = l;
     writeStored(l);
     apply();
     if (changed)
@@ -118,22 +130,22 @@ function setLang(l) {
 }
 /** Called after a change here or in another tool (on the next load, on visibilitychange). Returns the unsubscribe. */
 function onLangChange(fn) {
-    subs.add(fn);
+    S.subs.add(fn);
     return () => {
-        subs.delete(fn);
+        S.subs.delete(fn);
     };
 }
 /** Re-reads what is remembered. Another tool may have changed it while this one was in the background. */
 function syncLang() {
-    if (config.fixed)
-        return lang;
+    if (S.config.fixed)
+        return S.lang;
     const stored = readStoredLang();
-    if (stored && stored !== lang) {
-        lang = stored;
+    if (stored && stored !== S.lang) {
+        S.lang = stored;
         apply();
         notify();
     }
-    return lang;
+    return S.lang;
 }
 /**
  * Settings for a tool. `cookieDomains` adds hosts that share the choice (the default is .congeo.cy; a
@@ -142,19 +154,19 @@ function syncLang() {
  */
 function configureLang(opts) {
     if (opts.cookieDomains)
-        config.cookieDomains = opts.cookieDomains.slice();
+        S.config.cookieDomains = opts.cookieDomains.slice();
     if (opts.fixed !== undefined) {
-        config.fixed = opts.fixed;
+        S.config.fixed = opts.fixed;
         if (opts.fixed) {
-            lang = opts.fixed;
+            S.lang = opts.fixed;
             apply();
             notify();
             return;
         }
     }
     const stored = readStoredLang();
-    if (stored && stored !== lang) {
-        lang = stored;
+    if (stored && stored !== S.lang) {
+        S.lang = stored;
         apply();
         notify();
     }
@@ -176,16 +188,18 @@ function LL(o, fallback = '') {
 function inLang(l, fn) {
     if (!l)
         return fn();
-    const prev = scope;
-    scope = l;
+    const prev = S.scope;
+    S.scope = l;
     try {
         return fn();
     }
     finally {
-        scope = prev;
+        S.scope = prev;
     }
 }
-if (hasDoc()) {
+// the listeners are wired once, by whichever copy loads first
+if (hasDoc() && !S.wired) {
+    S.wired = true;
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState !== 'hidden')
             syncLang();

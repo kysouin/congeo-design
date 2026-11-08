@@ -36,8 +36,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Select = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
-const Input_1 = require("./Input");
+const cx_js_1 = require("./cx.js");
+const Input_js_1 = require("./Input.js");
 /**
  * A native <select> in the Input chrome with a Lucide chevron. It never becomes a custom listbox, so the
  * iPhone keeps its native wheel. Pass <option> children.
@@ -45,5 +45,5 @@ const Input_1 = require("./Input");
 exports.Select = React.forwardRef(function Select({ label, hint, error, className, id: idProp, children, ...rest }, ref) {
     const autoId = React.useId();
     const id = idProp !== null && idProp !== void 0 ? idProp : autoId;
-    return ((0, jsx_runtime_1.jsx)(Input_1.Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsxs)("span", { className: (0, cx_1.cx)('cg-select-wrap', rest.disabled && 'cg-select-wrap--disabled'), children: [(0, jsx_runtime_1.jsx)("select", { ref: ref, id: id, className: (0, cx_1.cx)('cg-input', 'cg-select', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, ...rest, children: children }), (0, jsx_runtime_1.jsx)("svg", { className: "cg-select__chevron", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: (0, jsx_runtime_1.jsx)("path", { d: "m6 9 6 6 6-6" }) })] }) }));
+    return ((0, jsx_runtime_1.jsx)(Input_js_1.Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsxs)("span", { className: (0, cx_js_1.cx)('cg-select-wrap', rest.disabled && 'cg-select-wrap--disabled'), children: [(0, jsx_runtime_1.jsx)("select", { ref: ref, id: id, className: (0, cx_js_1.cx)('cg-input', 'cg-select', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, ...rest, children: children }), (0, jsx_runtime_1.jsx)("svg", { className: "cg-select__chevron", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: (0, jsx_runtime_1.jsx)("path", { d: "m6 9 6 6 6-6" }) })] }) }));
 });

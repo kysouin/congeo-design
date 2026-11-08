@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accent } from './types';
+import { Accent } from './types.js';
 export interface FilterPillProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     active?: boolean;
     /** Colour of the dot. Omit for no dot. */

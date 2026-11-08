@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Accent, accentAttrs } from './types';
+import { cx } from './cx.js';
+import { Accent, accentAttrs } from './types.js';
 
 export interface ProjectChipProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** The project number, e.g. "0637". */
