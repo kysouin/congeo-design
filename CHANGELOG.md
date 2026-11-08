@@ -2,6 +2,27 @@
 
 All notable changes to `@congeo/design`. Apps pin a tag; upgrade by changing the tag.
 
+## v1.1.0 — 2026-11-08
+
+One language system for every CONGEO tool: English by default, Greek one tap away. PermitFlow stays Greek only.
+
+### Added
+
+- `src/i18n/` → `@congeo/design/i18n` (CJS and ESM): `getLang`, `uiLang`, `setLang`, `onLangChange`, `syncLang`, `configureLang` (shared cookie domains, a fixed language), `L(en, el)`, `LL({en, el})`, `inLang(docLang, fn)` for the document language, `LANG_BOOT_SCRIPT` and `dist/i18n/boot.inline.js` for `<head>`.
+- The shared choice: cookie `congeo_lang` on `.congeo.cy` (Path=/, one year, SameSite=Lax, Secure on https), localStorage `congeo.lang` elsewhere; re-read on `visibilitychange`, `pageshow` and `storage`. English on a first visit whatever the browser says.
+- Formatting in `Europe/Nicosia` through Intl: `fmtDate` (long, short, numeric, month heading in the nominative, dayMonth, weekday), `fmtTime` (24-hour), `fmtRange`, `fmtRelative` («in 38 min» · «σε 38′», Today/Yesterday/Tomorrow), `fmtMoney`, `num`, `plural`, `verb` (Στάλθηκε / Στάλθηκαν).
+- Shared vocabulary `src/i18n/common.ts`: `COMMON` + `t()`, `sendingChanges`, `changesSent`, `changesNotSent`, the project `SECTIONS` 00–06 for display (Drive names stay Greek), the `TOOLS` names.
+- React: `useLang()` and `<LanguageSwitch />` («EN | ΕΛ») in `@congeo/design/react`.
+- `GLOSSARY.md`: electrical (BS 7671 terms), project and office terms, English | Greek | note, with the unsure ones marked for George.
+- `congeo-design-lint --i18n`: user-visible Greek outside `L()` (JSX text, visible attributes, toast/alert-like strings, title/label/message properties), with fixtures.
+- Reference page: a «Γλώσσα · Language» section with the live formatting table and the switch; the page boots `<html lang>` from the shared choice.
+- Checks: shared cookie across `a.congeo.test` / `b.congeo.test`, default English for `el-GR`, `<html lang>` before DOMContentLoaded, 45+ formatting cases per language, the `--i18n` fixtures and the `<button>Αποθήκευση</button>` proof, Greek uppercase with the switch on Greek.
+
+### Changed
+
+- The components' default labels (CheckCircle, Row, TabBar, TitleBlock, ProposalCard, StatusBar, SwipeRow) now go through `L()`: English in an English interface, Greek in a Greek one.
+- `dist/react/` is compiled together with `dist/i18n/` (`rootDir: src`). Paths inside `dist/react/` are unchanged.
+
 ## v1.0.0 — 2026-11-08
 
 First slice: the source only. No app changes.

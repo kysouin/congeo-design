@@ -9,11 +9,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2019", "DOM", "DOM.Iterable"],
-    "rootDir": "src/react",
-    "outDir": "dist/react",
-    "removeComments": false,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "rootDir": "src",
+    "outDir": "dist",
     "newLine": "lf"
   },
-  "include": ["src/react"]
+  "include": ["src/react", "src/i18n"]
 }

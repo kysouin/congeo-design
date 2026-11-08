@@ -37,13 +37,14 @@ exports.SwipeRow = SwipeRow;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
 const cx_1 = require("./cx");
+const core_js_1 = require("../i18n/core.js");
 const SLOP = 8; // px before we decide the gesture is horizontal
 /**
  * Horizontal swipe row. Uses pointer events, does not block vertical scroll
  * (touch-action: pan-y; a vertical move cancels the gesture), has a threshold
  * and springs back.
  */
-function SwipeRow({ onSwipeRight, onSwipeLeft, rightLabel = 'Έγινε', leftLabel = 'Αύριο', threshold = 72, onHaptic, preview, disabled, className, children, ...rest }) {
+function SwipeRow({ onSwipeRight, onSwipeLeft, rightLabel, leftLabel, threshold = 72, onHaptic, preview, disabled, className, children, ...rest }) {
     const rootRef = React.useRef(null);
     const [x, setX] = React.useState(0);
     const [dragging, setDragging] = React.useState(false);
@@ -133,5 +134,5 @@ function SwipeRow({ onSwipeRight, onSwipeLeft, rightLabel = 'Έγινε', leftLa
     };
     const previewX = preview === 'right' ? threshold : preview === 'left' ? -threshold : 0;
     const offset = preview ? previewX : x;
-    return ((0, jsx_runtime_1.jsxs)("div", { ref: rootRef, className: (0, cx_1.cx)('cg-swipe', dragging && 'cg-swipe--dragging', (armed || preview) && 'cg-swipe--armed', className), style: { ['--cg-swipe-x']: `${offset}px` }, onPointerDown: onPointerDown, onPointerMove: onPointerMove, onPointerUp: finish, onPointerCancel: onPointerCancel, ...rest, children: [(0, jsx_runtime_1.jsxs)("div", { className: "cg-swipe__actions", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("div", { className: "cg-swipe__action cg-swipe__action--left", style: { opacity: offset > 0 ? 1 : 0 }, children: rightLabel }), (0, jsx_runtime_1.jsx)("div", { className: "cg-swipe__action cg-swipe__action--right", style: { opacity: offset < 0 ? 1 : 0 }, children: leftLabel })] }), (0, jsx_runtime_1.jsx)("div", { className: "cg-swipe__content", children: children })] }));
+    return ((0, jsx_runtime_1.jsxs)("div", { ref: rootRef, className: (0, cx_1.cx)('cg-swipe', dragging && 'cg-swipe--dragging', (armed || preview) && 'cg-swipe--armed', className), style: { ['--cg-swipe-x']: `${offset}px` }, onPointerDown: onPointerDown, onPointerMove: onPointerMove, onPointerUp: finish, onPointerCancel: onPointerCancel, ...rest, children: [(0, jsx_runtime_1.jsxs)("div", { className: "cg-swipe__actions", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("div", { className: "cg-swipe__action cg-swipe__action--left", style: { opacity: offset > 0 ? 1 : 0 }, children: rightLabel !== null && rightLabel !== void 0 ? rightLabel : (0, core_js_1.L)('Done', 'Έγινε') }), (0, jsx_runtime_1.jsx)("div", { className: "cg-swipe__action cg-swipe__action--right", style: { opacity: offset < 0 ? 1 : 0 }, children: leftLabel !== null && leftLabel !== void 0 ? leftLabel : (0, core_js_1.L)('Tomorrow', 'Αύριο') })] }), (0, jsx_runtime_1.jsx)("div", { className: "cg-swipe__content", children: children })] }));
 }

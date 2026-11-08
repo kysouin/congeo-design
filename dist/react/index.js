@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SwipeRow = exports.EmptyState = exports.Skeleton = exports.Textarea = exports.Input = exports.StatusBar = exports.ToastRegion = exports.Toast = exports.ProposalCard = exports.TitleBlock = exports.Sheet = exports.TabBarSpacer = exports.TabBar = exports.FilterPills = exports.FilterPill = exports.Segmented = exports.CheckCircle = exports.Row = exports.Card = exports.TOOL_LABELS = exports.ToolMark = exports.ProjectChip = exports.IconButton = exports.Button = exports.cx = void 0;
+exports.LanguageSwitch = exports.useLang = exports.SwipeRow = exports.EmptyState = exports.Skeleton = exports.Textarea = exports.Input = exports.StatusBar = exports.ToastRegion = exports.Toast = exports.ProposalCard = exports.TitleBlock = exports.Sheet = exports.TabBarSpacer = exports.TabBar = exports.FilterPills = exports.FilterPill = exports.Segmented = exports.CheckCircle = exports.Row = exports.Card = exports.TOOL_LABELS = exports.ToolMark = exports.ProjectChip = exports.IconButton = exports.Button = exports.cx = void 0;
 var cx_1 = require("./cx");
 Object.defineProperty(exports, "cx", { enumerable: true, get: function () { return cx_1.cx; } });
 var Button_1 = require("./Button");
@@ -45,3 +45,6 @@ var EmptyState_1 = require("./EmptyState");
 Object.defineProperty(exports, "EmptyState", { enumerable: true, get: function () { return EmptyState_1.EmptyState; } });
 var SwipeRow_1 = require("./SwipeRow");
 Object.defineProperty(exports, "SwipeRow", { enumerable: true, get: function () { return SwipeRow_1.SwipeRow; } });
+var i18n_1 = require("./i18n");
+Object.defineProperty(exports, "useLang", { enumerable: true, get: function () { return i18n_1.useLang; } });
+Object.defineProperty(exports, "LanguageSwitch", { enumerable: true, get: function () { return i18n_1.LanguageSwitch; } });

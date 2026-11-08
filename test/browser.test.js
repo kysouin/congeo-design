@@ -6,7 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
-const { root } = require('./helpers');
+const { root, serve } = require('./helpers');
 
 let pw;
 try {
@@ -15,7 +15,6 @@ try {
   pw = null;
 }
 
-const url = 'file://' + path.join(root, 'site/index.html');
 const shots = path.join(root, 'site/screenshots');
 const WIDTHS = [320, 390, 1280];
 const THEMES = ['light', 'dark'];
@@ -31,6 +30,8 @@ async function launchChromium() {
 
 test('browser: screenshots at three widths, light and dark; no sideways scroll; no errors', { skip: !pw && 'playwright not installed' }, async () => {
   fs.mkdirSync(shots, { recursive: true });
+  const { server, port } = await serve();
+  const url = `http://127.0.0.1:${port}/site/index.html`;
   const browser = await launchChromium();
   try {
     for (const theme of THEMES) {
@@ -41,6 +42,7 @@ test('browser: screenshots at three widths, light and dark; no sideways scroll; 
         page.on('pageerror', (e) => errors.push(e.message));
         page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
         await page.goto(url);
+        await page.waitForSelector('#lang-table tbody tr');
         await page.evaluate(() => document.fonts.ready);
         const info = await page.evaluate(() => ({
           scrollWidth: document.documentElement.scrollWidth,
@@ -63,10 +65,13 @@ test('browser: screenshots at three widths, light and dark; no sideways scroll; 
     }
   } finally {
     await browser.close();
+    server.close();
   }
 });
 
 test('browser: forced [data-theme] panels render both schemes on one page', { skip: !pw && 'playwright not installed' }, async () => {
+  const { server, port } = await serve();
+  const url = `http://127.0.0.1:${port}/site/index.html`;
   const browser = await launchChromium();
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, colorScheme: 'light' });
@@ -87,10 +92,13 @@ test('browser: forced [data-theme] panels render both schemes on one page', { sk
     await page.close();
   } finally {
     await browser.close();
+    server.close();
   }
 });
 
 test('greek: the rendered uppercase caption has no accent (read from the DOM, not the source)', { skip: !pw && 'playwright not installed' }, async () => {
+  const { server, port } = await serve();
+  const url = `http://127.0.0.1:${port}/site/index.html`;
   const browser = await launchChromium();
   try {
     const page = await browser.newPage({ viewport: { width: 390, height: 800 } });
@@ -120,10 +128,13 @@ test('greek: the rendered uppercase caption has no accent (read from the DOM, no
     await page.close();
   } finally {
     await browser.close();
+    server.close();
   }
 });
 
 test('browser: WebKit screenshot once, if WebKit is available here', { skip: !pw && 'playwright not installed' }, async () => {
+  const { server, port } = await serve();
+  const url = `http://127.0.0.1:${port}/site/index.html`;
   let browser;
   try {
     browser = await pw.webkit.launch();
@@ -131,6 +142,7 @@ test('browser: WebKit screenshot once, if WebKit is available here', { skip: !pw
     console.log(`webkit: not available (${String(e.message).split('\n')[0]}). Recorded, not a failure.`);
     fs.mkdirSync(shots, { recursive: true });
     fs.writeFileSync(path.join(shots, 'webkit.txt'), `WebKit was not available in this run.\n${String(e.message).split('\n')[0]}\n`);
+    server.close();
     return;
   }
   try {
@@ -144,5 +156,6 @@ test('browser: WebKit screenshot once, if WebKit is available here', { skip: !pw
     console.log(`webkit: ok, screenshot ${path.relative(root, file)}; greek caption "${greek}"`);
   } finally {
     await browser.close();
+    server.close();
   }
 });

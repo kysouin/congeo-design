@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cx } from './cx';
+import { L } from '../i18n/core.js';
 import { Accent, accentAttrs } from './types';
 
 export interface RowProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -38,7 +39,7 @@ export function Row({ title, meta, accent, pending, done, lead, trail, as, href,
         {children}
       </span>
       <span className="cg-row__trail">
-        {pending && <span className="cg-row__pending" role="img" aria-label="Εκκρεμεί" />}
+        {pending && <span className="cg-row__pending" role="img" aria-label={L('Pending', 'Εκκρεμεί')} />}
         {trail}
       </span>
     </Tag>

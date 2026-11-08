@@ -90,9 +90,20 @@ CI must run `npm test`. From now on a hard-coded colour or font fails the build.
 
 Same screens, same widths, same themes as in step 0, into `docs/design-migration/after/`. Put both sets side by side in the PR description. Check at 320 px that nothing scrolls sideways and that every touch target is at least 44 px.
 
+## Γλώσσα / Language
+
+Every tool except PermitFlow: English by default, Greek one tap away, one shared choice (see README, «Γλώσσα»). The steps, after the look has moved to tokens:
+
+1. **Wrap the strings in `L()`.** `import { L, t } from '@congeo/design/i18n'`. English first, Greek second, next to the use: `L('Save changes', 'Αποθήκευση αλλαγών')`. Use `t('save')`, `t('cancel')`, … for the common words. Leave alone: data contracts («Έργο: 0637 · …», «Πηγή:», `appProperties`, `extendedProperties`), Drive folder names, and anything a document prints (that goes through `inLang(docLang, …)`). A Greek-first app (congeo-pdf: `L('Ελληνικά', 'English')`) swaps the argument order; a Greek-only app (calendar, invoicing) writes the English now, in British English, with the glossary open. Input that reads free text keeps accepting both languages.
+2. **Use the formatters.** Replace local date, time, money and plural code with `fmtDate`, `fmtTime`, `fmtRange`, `fmtRelative`, `fmtMoney`, `num`, `plural`, `verb`. Genitive months in dates, nominative in month headings, 24-hour times, `Europe/Nicosia`.
+3. **Add the switch to Settings.** `<LanguageSwitch />` from `@congeo/design/react` («EN | ΕΛ»). Put `dist/i18n/boot.inline.js` inline in `<head>` before the stylesheets, so `<html lang>` is right before the first paint. Expo apps call `setLang`/`useLang` the same way; the cookie is a web concern and localStorage-like storage is used there (see `configureLang`). PermitFlow: `configureLang({ fixed: 'el' })` and no switch.
+4. **Turn on `--i18n`.** `congeo-design-lint src app --i18n` in `npm test`. A finding is Greek the user sees outside `L()`. Allow a file only with a reason and a date.
+5. **Take screenshots in both languages.** The same screens as the design migration, English and Greek, light and dark, into `docs/design-migration/after-en/` and `after-el/`. Check: no Greeklish, no accent left on uppercase captions, dates and money as in the README table, the switch in Settings, and that a document already made did not change language.
+
 ## Report (end of the app's prompt)
 
 1. The list of files changed and the number of lint findings before and after (after must be 0, or every allowed file named with its reason).
 2. The before/after screenshots.
 3. Anything from the app that had no token (a colour, a component) and what was done with it: mapped to the nearest token, or proposed as a new token in congeo-design (open an issue there; do not add a local value).
 4. What was NOT checked.
+5. For the language step: the count of `L()` calls added, any string you could not translate with the glossary (marked for George), and the two sets of screenshots.
