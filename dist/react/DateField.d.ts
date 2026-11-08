@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type FieldProps } from './Input';
+import { type FieldProps } from './Input.js';
 export interface DateFieldProps extends FieldProps, Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
     /** YYYY-MM-DD or ''. */
     value: string;

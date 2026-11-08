@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { IconButton } from './Button';
+import { cx } from './cx.js';
+import { IconButton } from './Button.js';
 import { L } from '../i18n/core.js';
 
 export interface SheetProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {

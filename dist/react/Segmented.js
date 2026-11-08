@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Segmented = Segmented;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
+const cx_js_1 = require("./cx.js");
 /** Segmented control: Εβδομάδα | Μήνας. Arrow keys move the selection. */
 function Segmented({ options, value, onChange, block, label, className, ...rest }) {
     const refs = React.useRef([]);
@@ -58,7 +58,7 @@ function Segmented({ options, value, onChange, block, label, className, ...rest 
             (_a = refs.current[next]) === null || _a === void 0 ? void 0 : _a.focus();
         }
     };
-    return ((0, jsx_runtime_1.jsx)("div", { role: "radiogroup", "aria-label": label, className: (0, cx_1.cx)('cg-seg', block && 'cg-seg--block', className), onKeyDown: onKeyDown, ...rest, children: options.map((o, i) => {
+    return ((0, jsx_runtime_1.jsx)("div", { role: "radiogroup", "aria-label": label, className: (0, cx_js_1.cx)('cg-seg', block && 'cg-seg--block', className), onKeyDown: onKeyDown, ...rest, children: options.map((o, i) => {
             const selected = o.value === value;
             return ((0, jsx_runtime_1.jsx)("button", { ref: (el) => {
                     refs.current[i] = el;

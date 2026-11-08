@@ -115,6 +115,12 @@ v1.2 brings into the package what calendar built for itself after v1.0. An app o
 9. **Textarea**: `onSubmit` replaces the app's own Enter handler.
 10. Run `congeo-design-lint src --i18n`, the app's tests, and take the before/after screenshots.
 
+## From v1.2.0 to v1.2.1
+
+v1.2.1 fixes one defect: in v1.2.0 `import` of `@congeo/design/i18n` resolved an ESM file while the components required the CJS one, so an app had **two language states**: the switch changed the components' labels but not the app's own `L()` strings. Now the state lives on `globalThis[Symbol.for('congeo.i18n')]`, shared by every copy, and `import` resolves ESM everywhere (`react`, `i18n`, `inline`) while `require` resolves CJS everywhere.
+
+An app on v1.2.0 changes the tag and **removes any alias or dedupe it added for this**. For calendar: the `resolve.alias` for `@congeo/design` in `vite.config.ts` and the note in README §8. Nothing else changes; the import paths are the same.
+
 ## Report (end of the app's prompt)
 
 1. The list of files changed and the number of lint findings before and after (after must be 0, or every allowed file named with its reason).

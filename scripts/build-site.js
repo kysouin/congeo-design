@@ -399,7 +399,7 @@ function Page() {
       h('script', {
         type: 'module',
         dangerouslySetInnerHTML: {
-          __html: `import * as I from '../dist/i18n/esm/index.js';
+          __html: `import * as I from '../dist/esm/i18n/index.js';
 const ROWS = ${LANG_ROWS_SRC};
 const d = new Date(${JSON.stringify(SAMPLE_ISO)}), now = new Date(${JSON.stringify(SAMPLE_NOW_ISO)});
 const sw = document.querySelectorAll('#lang-switch [role="radio"]');

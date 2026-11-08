@@ -37,18 +37,18 @@ exports.Textarea = exports.Input = void 0;
 exports.Field = Field;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
-const cx_1 = require("./cx");
+const cx_js_1 = require("./cx.js");
 /** The label / hint / error chrome around a control. The control must carry `id`. */
 function Field({ label, hint, error, id, children }) {
     const hasChrome = label != null || hint != null || error != null;
     if (!hasChrome)
         return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: children });
-    return ((0, jsx_runtime_1.jsxs)("div", { className: (0, cx_1.cx)('cg-field', error != null && 'cg-field--error'), children: [label != null && ((0, jsx_runtime_1.jsx)("label", { className: "cg-field__label", htmlFor: id, children: label })), children, (error !== null && error !== void 0 ? error : hint) != null && ((0, jsx_runtime_1.jsx)("span", { className: "cg-field__hint", id: `${id}-hint`, children: error !== null && error !== void 0 ? error : hint }))] }));
+    return ((0, jsx_runtime_1.jsxs)("div", { className: (0, cx_js_1.cx)('cg-field', error != null && 'cg-field--error'), children: [label != null && ((0, jsx_runtime_1.jsx)("label", { className: "cg-field__label", htmlFor: id, children: label })), children, (error !== null && error !== void 0 ? error : hint) != null && ((0, jsx_runtime_1.jsx)("span", { className: "cg-field__hint", id: `${id}-hint`, children: error !== null && error !== void 0 ? error : hint }))] }));
 }
 exports.Input = React.forwardRef(function Input({ label, hint, error, mono, className, id: idProp, ...rest }, ref) {
     const autoId = React.useId();
     const id = idProp !== null && idProp !== void 0 ? idProp : autoId;
-    return ((0, jsx_runtime_1.jsx)(Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: (0, cx_1.cx)('cg-input', mono && 'cg-input--mono', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, ...rest }) }));
+    return ((0, jsx_runtime_1.jsx)(Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: (0, cx_js_1.cx)('cg-input', mono && 'cg-input--mono', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, ...rest }) }));
 });
 /** Textarea that grows with its text. */
 exports.Textarea = React.forwardRef(function Textarea({ label, hint, error, maxRows = 8, className, id: idProp, onInput, onKeyDown, onSubmit, rows = 1, style, ...rest }, ref) {
@@ -77,7 +77,7 @@ exports.Textarea = React.forwardRef(function Textarea({ label, hint, error, maxR
                     ref(el);
                 else if (ref)
                     ref.current = el;
-            }, id: id, rows: rows, className: (0, cx_1.cx)('cg-textarea', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, style: style, onInput: (e) => {
+            }, id: id, rows: rows, className: (0, cx_js_1.cx)('cg-textarea', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, style: style, onInput: (e) => {
                 onInput === null || onInput === void 0 ? void 0 : onInput(e);
                 resize();
             }, onKeyDown: (e) => {

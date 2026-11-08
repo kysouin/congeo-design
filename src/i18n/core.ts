@@ -25,7 +25,20 @@ type Config = {
   fixed: Lang | null;
 };
 
-const config: Config = { cookieDomains: ['.congeo.cy'], fixed: null };
+/**
+ * The one language state, however many copies of this module an app loads (CJS and ESM, two bundles, a
+ * component library and the app). It lives on globalThis under a well-known symbol, so every copy reads and
+ * writes the same language, listeners and config. Without this, a switch rendered by one copy would change
+ * the components' labels but not the app's own L() strings.
+ */
+interface SharedState {
+  lang: Lang;
+  scope: Lang | null;
+  subs: Set<(l: Lang) => void>;
+  config: Config;
+  wired: boolean;
+}
+const STATE_KEY = Symbol.for('congeo.i18n');
 
 const hasDoc = () => typeof document !== 'undefined';
 const hasWin = () => typeof window !== 'undefined';
@@ -44,7 +57,7 @@ function readMetaDomains(): string[] {
 function cookieDomain(): string | null {
   if (!hasWin()) return null;
   const host = window.location.hostname;
-  for (const d of [...config.cookieDomains, ...readMetaDomains()]) {
+  for (const d of [...S.config.cookieDomains, ...readMetaDomains()]) {
     const bare = d.replace(/^\./, '');
     if (host === bare || host.endsWith('.' + bare)) return '.' + bare;
   }
@@ -84,18 +97,29 @@ function writeStored(l: Lang) {
   }
 }
 
-let lang: Lang = readStoredLang() ?? DEFAULT_LANG;
-let scope: Lang | null = null;
-const subs = new Set<(l: Lang) => void>();
+const S: SharedState = (() => {
+  const g = globalThis as unknown as Record<symbol, SharedState | undefined>;
+  const existing = g[STATE_KEY];
+  if (existing) return existing;
+  const fresh: SharedState = {
+    lang: readStoredLang() ?? DEFAULT_LANG,
+    scope: null,
+    subs: new Set(),
+    config: { cookieDomains: ['.congeo.cy'], fixed: null },
+    wired: false,
+  };
+  g[STATE_KEY] = fresh;
+  return fresh;
+})();
 
 function apply() {
-  if (hasDoc()) document.documentElement.lang = lang;
+  if (hasDoc()) document.documentElement.lang = S.lang;
 }
 
 function notify() {
-  subs.forEach((f) => {
+  S.subs.forEach((f) => {
     try {
-      f(lang);
+      f(S.lang);
     } catch {
       /* a listener must not break the others */
     }
@@ -106,19 +130,19 @@ function notify() {
 apply();
 
 /** The language strings come out in: the document scope while one is open, else the interface language. */
-export const getLang = (): Lang => scope ?? lang;
+export const getLang = (): Lang => S.scope ?? S.lang;
 /** The interface language alone. */
-export const uiLang = (): Lang => lang;
+export const uiLang = (): Lang => S.lang;
 /** BCP 47 tag for Intl: en-GB or el-GR. */
 export const langTag = (l: Lang = getLang()): 'en-GB' | 'el-GR' => (l === 'el' ? 'el-GR' : 'en-GB');
-export const otherLang = (l: Lang = lang): Lang => (l === 'el' ? 'en' : 'el');
+export const otherLang = (l: Lang = S.lang): Lang => (l === 'el' ? 'en' : 'el');
 
 /** Changes the interface language for every tool: remembered, applied to <html lang>, listeners called. */
 export function setLang(l: Lang) {
   if (!isLang(l)) return;
-  if (config.fixed) return;
-  const changed = l !== lang;
-  lang = l;
+  if (S.config.fixed) return;
+  const changed = l !== S.lang;
+  S.lang = l;
   writeStored(l);
   apply();
   if (changed) notify();
@@ -126,22 +150,22 @@ export function setLang(l: Lang) {
 
 /** Called after a change here or in another tool (on the next load, on visibilitychange). Returns the unsubscribe. */
 export function onLangChange(fn: (l: Lang) => void): () => void {
-  subs.add(fn);
+  S.subs.add(fn);
   return () => {
-    subs.delete(fn);
+    S.subs.delete(fn);
   };
 }
 
 /** Re-reads what is remembered. Another tool may have changed it while this one was in the background. */
 export function syncLang(): Lang {
-  if (config.fixed) return lang;
+  if (S.config.fixed) return S.lang;
   const stored = readStoredLang();
-  if (stored && stored !== lang) {
-    lang = stored;
+  if (stored && stored !== S.lang) {
+    S.lang = stored;
     apply();
     notify();
   }
-  return lang;
+  return S.lang;
 }
 
 /**
@@ -150,19 +174,19 @@ export function syncLang(): Lang {
  * one language (PermitFlow is Greek only): then nothing is read or remembered.
  */
 export function configureLang(opts: Partial<Config>) {
-  if (opts.cookieDomains) config.cookieDomains = opts.cookieDomains.slice();
+  if (opts.cookieDomains) S.config.cookieDomains = opts.cookieDomains.slice();
   if (opts.fixed !== undefined) {
-    config.fixed = opts.fixed;
+    S.config.fixed = opts.fixed;
     if (opts.fixed) {
-      lang = opts.fixed;
+      S.lang = opts.fixed;
       apply();
       notify();
       return;
     }
   }
   const stored = readStoredLang();
-  if (stored && stored !== lang) {
-    lang = stored;
+  if (stored && stored !== S.lang) {
+    S.lang = stored;
     apply();
     notify();
   }
@@ -185,16 +209,18 @@ export function LL(o: { en?: string | null; el?: string | null } | null | undefi
  */
 export function inLang<T>(l: Lang | null | undefined, fn: () => T): T {
   if (!l) return fn();
-  const prev = scope;
-  scope = l;
+  const prev = S.scope;
+  S.scope = l;
   try {
     return fn();
   } finally {
-    scope = prev;
+    S.scope = prev;
   }
 }
 
-if (hasDoc()) {
+// the listeners are wired once, by whichever copy loads first
+if (hasDoc() && !S.wired) {
+  S.wired = true;
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState !== 'hidden') syncLang();
   });

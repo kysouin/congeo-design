@@ -1,0 +1,6 @@
+{
+  "name": "cg-vite-app-fixture",
+  "private": true,
+  "type": "module",
+  "description": "A small app bundled with Vite exactly as an adopting app would: it imports @congeo/design/i18n and a component from @congeo/design/react. The language state must be one."
+}

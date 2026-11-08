@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Field, type FieldProps } from './Input';
+import { cx } from './cx.js';
+import { Field, type FieldProps } from './Input.js';
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement>, FieldProps {}
 

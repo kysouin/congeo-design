@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type FieldProps } from './Input';
+import { type FieldProps } from './Input.js';
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement>, FieldProps {
 }
 /**

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import type { ToolId } from './types';
+import { cx } from './cx.js';
+import type { ToolId } from './types.js';
 
 export const TOOL_LABELS: Record<ToolId, string> = {
   kaneto: 'Kaneto',

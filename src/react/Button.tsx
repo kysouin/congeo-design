@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md';

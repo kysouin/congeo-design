@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { IconButton } from './Button';
+import { cx } from './cx.js';
+import { IconButton } from './Button.js';
 import { L } from '../i18n/core.js';
 import { addMonths, dayHeads, dayOf, monthGrid, monthOf, monthTitle } from '../i18n/dates.js';
 

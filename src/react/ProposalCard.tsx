@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cx } from './cx';
-import { Button } from './Button';
+import { cx } from './cx.js';
+import { Button } from './Button.js';
 import { L } from '../i18n/core.js';
 
 export interface ProposalCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {

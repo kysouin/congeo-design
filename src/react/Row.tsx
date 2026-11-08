@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { cx } from './cx';
+import { cx } from './cx.js';
 import { L } from '../i18n/core.js';
-import { Accent, accentAttrs } from './types';
+import { Accent, accentAttrs } from './types.js';
 
 export interface RowProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Wraps; never scrolls sideways. */
