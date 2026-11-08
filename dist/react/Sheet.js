@@ -39,7 +39,7 @@ const React = __importStar(require("react"));
 const cx_js_1 = require("./cx.js");
 const Button_js_1 = require("./Button.js");
 const core_js_1 = require("../i18n/core.js");
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const focus_js_1 = require("./focus.js");
 const FLICK = 0.6; // px per ms
 /**
  * Bottom sheet with a grabber. Closes on Escape, on the backdrop, and on a drag down (on the grabber or the
@@ -48,66 +48,12 @@ const FLICK = 0.6; // px per ms
  */
 function Sheet({ open, onClose, title, closeButton, inline, threshold = 0.25, headExtra, className, children, style, ...rest }) {
     const panel = React.useRef(null);
-    const opener = React.useRef(null);
     const [dy, setDy] = React.useState(0);
     const [dragging, setDragging] = React.useState(false);
     const drag = React.useRef(null);
     const onCloseRef = React.useRef(onClose);
     onCloseRef.current = onClose;
-    // focus: trap while open, return on close
-    React.useEffect(() => {
-        var _a;
-        var _b;
-        if (!open || inline)
-            return;
-        opener.current = (_b = document.activeElement) !== null && _b !== void 0 ? _b : null;
-        const el = panel.current;
-        const first = el === null || el === void 0 ? void 0 : el.querySelector(FOCUSABLE);
-        (_a = (first !== null && first !== void 0 ? first : el)) === null || _a === void 0 ? void 0 : _a.focus({ preventScroll: true });
-        const onKey = (e) => {
-            var _a;
-            if (e.key === 'Escape') {
-                e.preventDefault();
-                (_a = onCloseRef.current) === null || _a === void 0 ? void 0 : _a.call(onCloseRef);
-                return;
-            }
-            if (e.key !== 'Tab' || !el)
-                return;
-            const items = Array.from(el.querySelectorAll(FOCUSABLE)).filter((x) => x.offsetParent !== null || x === document.activeElement);
-            if (!items.length) {
-                e.preventDefault();
-                el.focus();
-                return;
-            }
-            const firstItem = items[0];
-            const lastItem = items[items.length - 1];
-            if (e.shiftKey && (document.activeElement === firstItem || document.activeElement === el)) {
-                e.preventDefault();
-                lastItem.focus();
-            }
-            else if (!e.shiftKey && document.activeElement === lastItem) {
-                e.preventDefault();
-                firstItem.focus();
-            }
-        };
-        const onFocusIn = (e) => {
-            var _a;
-            if (el && !el.contains(e.target))
-                ((_a = el.querySelector(FOCUSABLE)) !== null && _a !== void 0 ? _a : el).focus();
-        };
-        document.addEventListener('keydown', onKey);
-        document.addEventListener('focusin', onFocusIn);
-        const prevOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.removeEventListener('keydown', onKey);
-            document.removeEventListener('focusin', onFocusIn);
-            document.body.style.overflow = prevOverflow;
-            const back = opener.current;
-            if (back && typeof back.focus === 'function' && document.contains(back))
-                back.focus({ preventScroll: true });
-        };
-    }, [open, inline]);
+    (0, focus_js_1.useModalFocus)(open && !inline, panel, onClose);
     if (!open)
         return null;
     const start = (e) => {

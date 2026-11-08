@@ -35,6 +35,8 @@ public enum CongeoTokens {
     public static let bg = CGDynamicColor(light: CGTokenColor(r: 243, g: 245, b: 247, a: 1), dark: CGTokenColor(r: 10, g: 22, b: 34, a: 1))
     public static let surface = CGDynamicColor(light: CGTokenColor(r: 255, g: 255, b: 255, a: 1), dark: CGTokenColor(r: 19, g: 33, b: 45, a: 1))
     public static let surface2 = CGDynamicColor(light: CGTokenColor(r: 238, g: 241, b: 244, a: 1), dark: CGTokenColor(r: 28, g: 42, b: 54, a: 1))
+    public static let stage = CGDynamicColor(light: CGTokenColor(r: 38, g: 51, b: 64, a: 1), dark: CGTokenColor(r: 6, g: 13, b: 20, a: 1))
+    public static let onStage = CGDynamicColor(light: CGTokenColor(r: 221, g: 227, b: 233, a: 1), dark: CGTokenColor(r: 181, g: 192, b: 201, a: 1))
     public static let line = CGDynamicColor(light: CGTokenColor(r: 221, g: 225, b: 230, a: 1), dark: CGTokenColor(r: 34, g: 49, b: 62, a: 1))
     public static let lineSoft = CGDynamicColor(light: CGTokenColor(r: 228, g: 232, b: 236, a: 1), dark: CGTokenColor(r: 26, g: 40, b: 51, a: 1))
     public static let lineStrong = CGDynamicColor(light: CGTokenColor(r: 203, g: 210, b: 217, a: 1), dark: CGTokenColor(r: 42, g: 57, b: 70, a: 1))

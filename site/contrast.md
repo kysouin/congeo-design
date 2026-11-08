@@ -2,7 +2,7 @@
 
 Generated from tokens/tokens.json by scripts/build-site.js. WCAG AA: 4.5 for text, 3.0 for large text and UI marks.
 
-136 pairs, 0 fail.
+141 pairs, 0 fail.
 
 | scheme | fg | bg | level | min | ratio | result |
 |---|---|---|---|---|---|---|
@@ -37,6 +37,8 @@ Generated from tokens/tokens.json by scripts/build-site.js. WCAG AA: 4.5 for tex
 | light | proposal `#7A3FB0` | surface `#FFFFFF` | text | 4.5 | 6.63 | PASS |
 | light | proposal `#7A3FB0` | surface-2 `#EEF1F4` | text | 4.5 | 5.85 | PASS |
 | light | on-primary `#0A1622` | primary `#00AEEF` | text | 4.5 | 7.21 | PASS |
+| light | on-stage `#DDE3E9` | stage `#263340` | text | 4.5 | 9.96 | PASS |
+| light | primary `#00AEEF` | stage `#263340` | large | 3.0 | 5.09 | PASS |
 | light | on-event-tint `#1F4A5C` | event-tint `#DDF3FC` | text | 4.5 | 8.35 | PASS |
 | light | ok `#1E7B4F` | ok-tint `#E3F4EA` | text | 4.5 | 4.60 | PASS |
 | light | warn `#9A5A0A` | warn-tint `#FBEEDB` | text | 4.5 | 4.78 | PASS |
@@ -104,6 +106,9 @@ Generated from tokens/tokens.json by scripts/build-site.js. WCAG AA: 4.5 for tex
 | dark | proposal `#D3B5F0` | surface `#13212D` | text | 4.5 | 9.07 | PASS |
 | dark | proposal `#D3B5F0` | surface-2 `#1C2A36` | text | 4.5 | 8.12 | PASS |
 | dark | on-primary `#0A1622` | primary `#00AEEF` | text | 4.5 | 7.21 | PASS |
+| dark | on-stage `#B5C0C9` | stage `#060D14` | text | 4.5 | 10.55 | PASS |
+| dark | primary `#00AEEF` | stage `#060D14` | large | 3.0 | 7.72 | PASS |
+| dark | ok `#8FE0B5` | stage `#060D14` | large | 3.0 | 12.55 | PASS |
 | dark | on-event-tint `#BFE6F7` | event-tint `#123A4D` | text | 4.5 | 9.13 | PASS |
 | dark | ok `#8FE0B5` | ok-tint `#11352A` | text | 4.5 | 8.62 | PASS |
 | dark | warn `#F0B957` | warn-tint `#3D2E12` | text | 4.5 | 7.37 | PASS |
@@ -149,3 +154,4 @@ Generated from tokens/tokens.json by scripts/build-site.js. WCAG AA: 4.5 for tex
 - tool-kaneto on light surfaces is the brand cyan at 2.3:1. The ToolMark always shows the tool name next to the dot, so the dot is not the only carrier of meaning. It is not declared as a mark pair in light.
 - focus ring in light is the brand cyan at 2.3:1 on bg; the ring is drawn 2px wide with a 2px offset and a 1px surface halo so it reads against both the control and the page. Declared only in dark, where it is 7.2:1.
 - line, line-soft and line-strong are decorative separators, not UI boundaries that carry meaning. They are not declared.
+- stage is the dark ground a page or a drawing sits on (the PDF editor, a canvas in Rhoi). Text on it uses on-stage; paper on it is surface, which is a fill, not a text pair.

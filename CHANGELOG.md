@@ -2,6 +2,25 @@
 
 All notable changes to `@congeo/design`. Apps pin a tag; upgrade by changing the tag.
 
+## v1.3.0 — 2026-11-08
+
+**Use v1.3.0.** The tag `v1.2.1` was published before PR #5 merged and points at the v1.2.0 commit (`e471dd3`), so it does **not** carry the one-state language fix; `main` did (`18d592e`) but no tag did. v1.3.0 is the first tag with the fix. Apps on `#v1.2.1` still need their Vite alias; apps on `#v1.3.0` remove it.
+
+The components the PDF tool (congeo-pdf PR #2) had to style locally, and a clean version.
+
+### Added
+
+- `Dialog`: the right container per screen. A bottom Sheet on a phone; from 900 px up a centred modal (`maxWidth`, default 560) with title, body and footer actions (secondary left, primary right), Escape, backdrop, focus trap and return. Same API on both; `variant` forces one. `SidePanel`: the same, as a right-hand panel from 900 px up, for editing one item while the list stays in view. Documented when to use which.
+- `Switch`: on/off with label and description, `role="switch"`, 44 px target, Space and Enter.
+- `RadioList`: a vertical list of options with label, optional description and optional trailing mark; `radiogroup`, arrow keys, Home/End, one tab stop.
+- `IconButton` sizes: `md` 44 px (touch) and `sm` 36 px (dense toolbars); `label` is required and shows as a tooltip on hover and focus (`tooltip={false}` to turn it off).
+- `Progress`: determinate (`value` / `max`, «3 of 7» · «3 από 7» through `L()`, `aria-valuetext`) and indeterminate (`aria-busy`), still under `prefers-reduced-motion`.
+- Tokens `stage` / `on-stage`: the dark ground a page or a drawing sits on (light `#263340` / `#DDE3E9`, dark `#060D14` / `#B5C0C9`), in the contrast table; `.cg-stage` and `.cg-stage__paper`.
+- Shared `useModalFocus`, `useMediaQuery`, `DESKTOP_QUERY` (exported); Sheet uses the same hook.
+- Version guard: `test/version.test.js` fails unless `package.json`, `package-lock.json` and the top CHANGELOG heading agree.
+- Harness: Dialog at 1280 (modal) and 390 (sheet), Switch, RadioList, IconButton 36/44 and tooltip, Progress in English and Greek; a third proof (Dialog ignoring the 900 px breakpoint).
+- Reference page: a «Components v1.3» section in both languages and both themes.
+
 ## v1.2.1 — 2026-11-08
 
 One language state, however the package is imported. Found by calendar-7 on v1.2.0.

@@ -278,6 +278,118 @@ const cases = {
       assert.ok(boxes[1].y > boxes[0].y, 'the others start below the number');
     }
   },
+
+  /** Dialog: a centred modal from 900 px up, a bottom sheet below. */
+  async dialogContainer(page) {
+    await clearEvents(page);
+    await page.click('#open-dialog');
+    const dlg = page.locator('[role="dialog"].cg-dialog');
+    await dlg.waitFor();
+    await dlg.evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)));
+    const width = await page.evaluate(() => window.innerWidth);
+    const cls = await dlg.getAttribute('class');
+    const box = await dlg.boundingBox();
+    const vp = await page.evaluate(() => ({ w: window.innerWidth, h: window.innerHeight }));
+    if (width >= 900) {
+      assert.match(cls, /cg-dialog--modal/, `modal at ${width}px`);
+      assert.doesNotMatch(cls, /cg-sheet/);
+      const centreX = box.x + box.width / 2;
+      assert.ok(Math.abs(centreX - vp.w / 2) < 4, `horizontally centred (${centreX} vs ${vp.w / 2})`);
+      assert.ok(box.y > 40 && box.y + box.height < vp.h - 40, 'floats, not glued to the bottom');
+      assert.ok(box.width <= 560 + 1, `max-width 560 (${box.width})`);
+    } else {
+      assert.match(cls, /cg-sheet/, `sheet at ${width}px`);
+      assert.match(cls, /cg-dialog--sheet/);
+      assert.ok(Math.abs(box.y + box.height - vp.h) < 2, 'glued to the bottom');
+      assert.ok(await page.locator('.cg-sheet__grabber').count() === 1);
+    }
+    // footer order: secondary left, primary right
+    const classes = await page.locator('.cg-dialog__foot .cg-btn').evaluateAll((els) => els.map((e) => e.className));
+    assert.match(classes[0], /secondary/);
+    assert.match(classes[1], /primary/);
+    // focus inside, Escape closes, focus returns
+    assert.ok(await page.evaluate(() => document.querySelector('[role="dialog"].cg-dialog').contains(document.activeElement)), 'focus moved into the dialog');
+    await page.keyboard.press('Escape');
+    await page.waitForSelector('[role="dialog"].cg-dialog', { state: 'detached' });
+    assert.deepEqual(await events(page), ['dialog-close']);
+    assert.equal(await page.locator('#dialog-state').textContent(), 'closed');
+    assert.equal(await page.evaluate(() => document.activeElement?.id), 'open-dialog', 'focus returned to the opener');
+  },
+
+  async switchToggles(page) {
+    await clearEvents(page);
+    const sw = page.locator('#sw');
+    assert.equal(await sw.getAttribute('role'), 'switch');
+    const box = await sw.boundingBox();
+    assert.ok(box.height >= 44, `44 px target (${box.height})`);
+    await sw.click();
+    assert.equal(await sw.getAttribute('aria-checked'), 'true');
+    await sw.focus();
+    await page.keyboard.press('Space');
+    assert.equal(await sw.getAttribute('aria-checked'), 'false');
+    await page.keyboard.press('Enter');
+    assert.equal(await sw.getAttribute('aria-checked'), 'true');
+    assert.equal(await page.locator('#switch-value').textContent(), 'true');
+    assert.deepEqual(await events(page), ['switch', 'switch', 'switch']);
+    const name = await sw.evaluate((el) => el.textContent);
+    assert.match(name, /Auto capture|Αυτόματη λήψη/);
+  },
+
+  async radioListKeyboard(page) {
+    const group = page.locator('[data-case="radio"] [role="radiogroup"]');
+    assert.equal(await group.locator('[role="radio"]').count(), 3);
+    await group.locator('[role="radio"][aria-checked="true"]').focus();
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await page.locator('#radio-value').textContent(), 'ranges');
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await page.locator('#radio-value').textContent(), 'every');
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await page.locator('#radio-value').textContent(), 'each', 'wraps');
+    await page.keyboard.press('End');
+    assert.equal(await page.locator('#radio-value').textContent(), 'every');
+    await page.keyboard.press('Home');
+    assert.equal(await page.locator('#radio-value').textContent(), 'each');
+    assert.equal(await page.evaluate(() => document.activeElement.getAttribute('aria-checked')), 'true');
+    await group.locator('[role="radio"]').nth(1).click();
+    assert.equal(await page.locator('#radio-value').textContent(), 'ranges');
+    assert.equal(await group.locator('.cg-radio__mark').count(), 1, 'the trailing mark');
+    const tabbable = await group.locator('[role="radio"][tabindex="0"]').count();
+    assert.equal(tabbable, 1, 'one tab stop');
+  },
+
+  async iconButtonSizes(page) {
+    const md = await page.locator('#ib-md').boundingBox();
+    const sm = await page.locator('#ib-sm').boundingBox();
+    assert.deepEqual([Math.round(md.width), Math.round(md.height)], [44, 44]);
+    assert.deepEqual([Math.round(sm.width), Math.round(sm.height)], [36, 36]);
+    assert.match(await page.locator('#ib-md').getAttribute('aria-label'), /Delete|Διαγραφή/);
+    assert.equal(await page.locator('#ib-sm').getAttribute('data-tooltip'), await page.locator('#ib-sm').getAttribute('aria-label'));
+    await page.locator('#ib-sm').hover();
+    await page.waitForTimeout(450);
+    const tip = await page.locator('#ib-sm').evaluate((el) => {
+      const cs = getComputedStyle(el, '::after');
+      return { content: cs.content, opacity: cs.opacity };
+    });
+    assert.match(tip.content, /Delete|Διαγραφή/);
+    assert.ok(Number(tip.opacity) > 0.9, `tooltip shown on hover (opacity ${tip.opacity})`);
+  },
+
+  async progressText(page) {
+    const det = page.locator('#prog-det [role="progressbar"]');
+    assert.equal(await det.getAttribute('aria-valuenow'), '3');
+    assert.equal(await det.getAttribute('aria-valuemax'), '7');
+    const text = await page.locator('#prog-det .cg-progress__text').textContent();
+    const lang = await page.evaluate(() => document.documentElement.lang);
+    assert.equal(text, lang === 'el' ? '3 από 7' : '3 of 7');
+    assert.equal(await det.getAttribute('aria-valuetext'), text);
+    const w = await page.locator('#prog-det .cg-progress__bar').evaluate((el) => el.getBoundingClientRect().width / el.parentElement.getBoundingClientRect().width);
+    assert.ok(Math.abs(w - 3 / 7) < 0.02, `bar at 3/7 (${w})`);
+    const ind = page.locator('#prog-ind [role="progressbar"]');
+    assert.equal(await ind.getAttribute('aria-busy'), 'true');
+    assert.equal(await ind.getAttribute('aria-valuenow'), null);
+    const anim = await page.locator('#prog-ind .cg-progress__bar').evaluate((el) => getComputedStyle(el).animationName);
+    assert.equal(anim, 'cg-indeterminate');
+  },
 };
 
 module.exports = { cases, events, clearEvents };

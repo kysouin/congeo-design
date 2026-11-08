@@ -1,6 +1,6 @@
 {
   "name": "@congeo/design",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "CONGEO design tokens and components. One source for the look of every CONGEO tool.",
   "license": "UNLICENSED",
   "repository": "github:kysouin/congeo-design",

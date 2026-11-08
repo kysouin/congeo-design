@@ -47,6 +47,13 @@ test('dist: generated outputs carry the tokens', () => {
   assert.match(css, /@media \(prefers-color-scheme: dark\)/);
   assert.match(css, /\[data-theme="dark"\]/);
   assert.match(css, /\.cg-btn--primary/);
+  assert.match(css, /--cg-stage: #263340;/);
+  assert.match(css, /--cg-on-stage: #DDE3E9;/);
+  assert.match(css, /\.cg-stage \{ background: var\(--cg-stage\); color: var\(--cg-on-stage\); \}/);
+  assert.match(css, /\.cg-switch/);
+  assert.match(css, /\.cg-radio/);
+  assert.match(css, /\.cg-progress--indeterminate/);
+  assert.match(css, /\.cg-dialog--modal/);
   assert.match(css, /prefers-reduced-motion/);
   const fonts = fs.readFileSync(path.join(root, 'dist/fonts.css'), 'utf8');
   const imports = fonts.match(/@import/g) || [];
