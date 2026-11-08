@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<title>Εβδομάδα</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0071A4}a:hover{color:#005A83}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum"}
+.chip{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:600;color:#0A1622;background:#EEF1F4;border:1px solid #DDE1E6;border-radius:6px;padding:1px 6px;line-height:18px}
+.cap{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#5B6772}
+.day{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border-radius:12px}
+.dn{font-size:11px;font-weight:600;color:#5B6772}
+.dd{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:600}
+.row{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;padding:10px 14px;align-items:start}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F3F5F7; font-family: Inter, system-ui, sans-serif; color: #0A1622; position: relative; overflow: hidden">
+
+  <div style="padding: 54px 20px 0 20px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <div class="cap">9 – 15 Νοεμβρίου</div>
+        <h1 style="margin: 0; font-size: 34px; line-height: 40px; font-weight: 700; letter-spacing: -0.02em">Εβδομάδα</h1>
+      </div>
+      <div style="display: flex; gap: 6px">
+        <button aria-label="Προηγούμενη εβδομάδα" style="width: 40px; height: 40px; border-radius: 12px; border: 1px solid #DDE1E6; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A1622" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button aria-label="Επόμενη εβδομάδα" style="width: 40px; height: 40px; border-radius: 12px; border: 1px solid #DDE1E6; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A1622" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; background: #FFFFFF; border: 1px solid #DDE1E6; border-radius: 14px; padding: 6px">
+      <div class="day" style="background: #0A1622"><span class="dn" style="color: #C9CFD5">ΔΕΥ</span><span class="dd" style="color: #FFFFFF">9</span><span style="display: flex; gap: 2px"><span style="width: 4px; height: 4px; border-radius: 2px; background: #00AEEF"></span><span style="width: 4px; height: 4px; border-radius: 2px; background: #FFFFFF"></span></span></div>
+      <div class="day"><span class="dn">ΤΡΙ</span><span class="dd">10</span><span style="display: flex; gap: 2px"><span style="width: 4px; height: 4px; border-radius: 2px; background: #868E95"></span></span></div>
+      <div class="day"><span class="dn">ΤΕΤ</span><span class="dd">11</span><span style="height: 4px"></span></div>
+      <div class="day"><span class="dn">ΠΕΜ</span><span class="dd">12</span><span style="display: flex; gap: 2px"><span style="width: 4px; height: 4px; border-radius: 2px; background: #00AEEF"></span><span style="width: 4px; height: 4px; border-radius: 2px; background: #00AEEF"></span><span style="width: 4px; height: 4px; border-radius: 2px; background: #868E95"></span></span></div>
+      <div class="day"><span class="dn">ΠΑΡ</span><span class="dd">13</span><span style="display: flex; gap: 2px"><span style="width: 4px; height: 4px; border-radius: 2px; background: #868E95"></span></span></div>
+      <div class="day"><span class="dn" style="color: #868E95">ΣΑΒ</span><span class="dd" style="color: #868E95">14</span><span style="height: 4px"></span></div>
+      <div class="day"><span class="dn" style="color: #868E95">ΚΥΡ</span><span class="dd" style="color: #868E95">15</span><span style="height: 4px"></span></div>
+    </div>
+  </div>
+
+  <div style="padding: 18px 20px 110px 20px; display: flex; flex-direction: column; gap: 16px">
+    <section style="display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 17px; font-weight: 700">Δευτέρα 9</span><span style="font-size: 13px; color: #5B6772">αύριο</span></div>
+      <div style="background: #FFFFFF; border: 1px solid #DDE1E6; border-radius: 14px">
+        <div class="row">
+          <span class="mono" style="font-size: 13px; color: #5B6772; padding-top: 2px">08:30</span>
+          <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+            <span style="font-size: 15px; font-weight: 600">Αυτοψία πριν την ηλεκτροδότηση</span>
+            <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: #5B6772"><span class="chip">0621</span><span>Οικία Γεωργίου · Τάλα</span></span>
+          </div>
+        </div>
+        <div style="height: 1px; background: #EEF1F4; margin-left: 76px"></div>
+        <div class="row">
+          <span class="mono" style="font-size: 13px; color: #5B6772; padding-top: 2px">15:00</span>
+          <div style="display: flex; gap: 10px; align-items: flex-start; min-width: 0">
+            <span style="flex: none; width: 20px; height: 20px; border-radius: 10px; border: 2px solid #868E95; box-sizing: border-box; margin-top: 1px"></span>
+            <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+              <span style="font-size: 15px; font-weight: 500">Να πάρω τον εργολάβο</span>
+              <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #5B6772"><span class="chip">0637</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 17px; font-weight: 700">Τρίτη 10</span></div>
+      <div style="background: #FFFFFF; border: 1px solid #DDE1E6; border-radius: 14px">
+        <div class="row">
+          <span style="font-size: 12px; color: #5B6772; padding-top: 3px">Όλη μέρα</span>
+          <div style="display: flex; gap: 10px; align-items: flex-start; min-width: 0">
+            <span style="flex: none; width: 20px; height: 20px; border-radius: 10px; border: 2px solid #868E95; box-sizing: border-box; margin-top: 1px"></span>
+            <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+              <span style="font-size: 15px; font-weight: 500">Να στείλω το WV στον αρχιτέκτονα</span>
+              <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #5B6772"><span class="chip">0637</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 17px; font-weight: 700">Τετάρτη 11</span></div>
+      <div style="font-size: 14px; color: #868E95; padding: 4px 2px">Τίποτα προγραμματισμένο</div>
+    </section>
+  </div>
+
+  <nav style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; box-sizing: border-box; padding: 8px 12px 30px 12px; background: rgba(255,255,255,.96); border-top: 1px solid #DDE1E6; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #5B6772; font-size: 11px; font-weight: 500">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5B6772" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      Σήμερα
+    </a>
+    <a href="Week.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #0A1622; font-size: 11px; font-weight: 600">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A1622" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7 14h2M11 14h2M15 14h2M7 17h2" stroke="#00AEEF"/></svg>
+      Εβδομάδα
+    </a>
+    <a href="Project.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #5B6772; font-size: 11px; font-weight: 500">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5B6772" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Έργα
+    </a>
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #5B6772; font-size: 11px; font-weight: 500">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5B6772" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+      Ρυθμίσεις
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

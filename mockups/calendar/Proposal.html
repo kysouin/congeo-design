@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<title>Γρήγορη προσθήκη · πρόταση</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0071A4}a:hover{color:#005A83}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum"}
+.chip{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:600;color:#0A1622;background:#EEF1F4;border:1px solid #DDE1E6;border-radius:6px;padding:1px 6px;line-height:18px}
+.cap{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#5B6772}
+.fl{font-size:12px;color:#5B6772;font-weight:500}
+.fv{font-size:16px;color:#0A1622;font-weight:500}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F3F5F7; font-family: Inter, system-ui, sans-serif; color: #0A1622; position: relative; overflow: hidden">
+
+  <div style="padding: 54px 20px 0 20px; display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <div class="cap">Κυριακή · 8 Νοεμβρίου 2026</div>
+      <h1 style="margin: 0; font-size: 34px; line-height: 40px; font-weight: 700; letter-spacing: -0.02em">Σήμερα</h1>
+    </div>
+
+    <label style="display: flex; align-items: flex-start; gap: 10px; background: #FFFFFF; border: 2px solid #00AEEF; border-radius: 14px; padding: 12px 6px 12px 14px">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A1622" stroke-width="2" stroke-linecap="round" style="margin-top: 2px; flex: none"><path d="M12 5v14M5 12h14"/></svg>
+      <textarea aria-label="Γρήγορη προσθήκη" rows="2" style="flex: 1; min-width: 0; border: 0; outline: none; resize: none; font: 400 16px/22px Inter, sans-serif; color: #0A1622; background: transparent">Να πάρω τον εργολάβο του 0637 αύριο στις 15:00</textarea>
+    </label>
+  </div>
+
+  <div style="padding: 16px 20px 0 20px">
+    <div style="background: #FFFFFF; border: 2px dashed #7A3FB0; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: .1em; color: #7A3FB0">ΠΡΟΤΑΣΗ</span>
+        <span style="font-size: 12px; color: #5B6772">Δεν έχει γραφτεί ακόμα</span>
+      </div>
+
+      <div role="radiogroup" aria-label="Είδος" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: #F3F5F7; border-radius: 10px; padding: 3px">
+        <button role="radio" aria-checked="true" style="height: 36px; border: 0; border-radius: 8px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(10,22,34,.12); font: 600 14px Inter, sans-serif; color: #0A1622">Εκκρεμότητα</button>
+        <button role="radio" aria-checked="false" style="height: 36px; border: 0; border-radius: 8px; background: transparent; font: 500 14px Inter, sans-serif; color: #5B6772">Ραντεβού</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span class="fl">Τίτλος</span>
+        <span class="fv" style="font-size: 18px; font-weight: 600; line-height: 24px">Να πάρω τον εργολάβο</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span class="fl">Πότε</span>
+          <span class="fv">Δευ 9 Νοε · <span class="mono">15:00</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span class="fl">Υπενθύμιση</span>
+          <span class="fv">Την ώρα</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span class="fl">Έργο</span>
+          <span class="fv" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap"><span class="chip">0637</span><span style="font-size: 14px">Πολυκατοικία Χλώρακα</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span class="fl">Μπαίνει στο</span>
+          <span class="fv" style="font-size: 14px">TickTick · Εργασία</span>
+        </div>
+      </div>
+
+      <div style="font-size: 13px; color: #5B6772; line-height: 18px">Πάτα οποιοδήποτε πεδίο για να το αλλάξεις.</div>
+
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 10px">
+        <button style="height: 48px; border-radius: 12px; border: 1px solid #DDE1E6; background: #FFFFFF; font: 600 15px Inter, sans-serif; color: #0A1622">Απόρριψη</button>
+        <button style="height: 48px; border-radius: 12px; border: 0; background: #00AEEF; font: 700 15px Inter, sans-serif; color: #0A1622">Έγκριση</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 18px 20px 0 20px; display: flex; flex-direction: column; gap: 8px">
+    <div class="cap">Όταν δεν είναι σίγουρο</div>
+    <div style="background: #FFFFFF; border: 1px solid #DDE1E6; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 14px; line-height: 20px">Για ποιο έργο; Υπάρχουν δύο με «Χλώρακα».</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <button style="height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #DDE1E6; background: #FFFFFF; font: 500 14px Inter, sans-serif; color: #0A1622; display: flex; align-items: center; gap: 6px"><span class="chip">0637</span>Πολυκατοικία</button>
+        <button style="height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #DDE1E6; background: #FFFFFF; font: 500 14px Inter, sans-serif; color: #0A1622; display: flex; align-items: center; gap: 6px"><span class="chip">0540</span>Οικία</button>
+        <button style="height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #DDE1E6; background: #FFFFFF; font: 500 14px Inter, sans-serif; color: #5B6772">Χωρίς έργο</button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
