@@ -53,15 +53,48 @@ export interface Section {
 export declare const SECTIONS: readonly Section[];
 /** The display name of a section in the current language, with or without its number: «01 Design» · «01 Μελέτη». */
 export declare function sectionName(code: Section['code'], withCode?: boolean): string;
-/** The tool names. They are brands and are not translated. */
+/**
+ * The tool names. Products sold on their own (Kaneto, Rhoi, Trace, PermitFlow) are brands and are never
+ * translated. The office tools have descriptive names, which follow the interface language: use toolName().
+ */
 export declare const TOOLS: {
-    readonly kaneto: 'Kaneto';
-    readonly rhoi: 'Rhoi';
-    readonly trace: 'Trace';
-    readonly permitflow: 'PermitFlow';
-    readonly calendar: 'Ατζέντα';
-    readonly pdf: 'congeo-pdf';
-    readonly invoicing: 'Invoicing';
-    readonly congeo: 'CONGEO';
+    readonly kaneto: {
+        readonly en: 'Kaneto';
+        readonly el: 'Kaneto';
+    };
+    readonly rhoi: {
+        readonly en: 'Rhoi';
+        readonly el: 'Rhoi';
+    };
+    readonly trace: {
+        readonly en: 'Trace';
+        readonly el: 'Trace';
+    };
+    readonly permitflow: {
+        readonly en: 'PermitFlow';
+        readonly el: 'PermitFlow';
+    };
+    readonly calendar: {
+        readonly en: 'Agenda';
+        readonly el: 'Ατζέντα';
+    };
+    readonly pdf: {
+        readonly en: 'PDF';
+        readonly el: 'PDF';
+    };
+    readonly scan: {
+        readonly en: 'Scan';
+        readonly el: 'Σάρωση';
+    };
+    readonly invoicing: {
+        readonly en: 'Invoicing';
+        readonly el: 'Τιμολόγηση';
+    };
+    readonly congeo: {
+        readonly en: 'CONGEO';
+        readonly el: 'CONGEO';
+    };
 };
+/** A tool's name in the current interface language: toolName('calendar') → «Agenda» · «Ατζέντα». */
+export declare function toolName(key: ToolKey): string;
 export type ToolKey = keyof typeof TOOLS;

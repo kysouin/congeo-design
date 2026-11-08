@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TOOLS = exports.sectionName = exports.SECTIONS = exports.changesSent = exports.changesNotSent = exports.sendingChanges = exports.t = exports.COMMON = exports.verb = exports.plural = exports.num = exports.fmtMoney = exports.fmtRelative = exports.fmtRange = exports.fmtTime = exports.fmtDate = exports.dayDiff = exports.nicosiaParts = exports.TIME_ZONE = exports.inLang = exports.LL = exports.L = exports.readStoredLang = exports.configureLang = exports.syncLang = exports.onLangChange = exports.setLang = exports.otherLang = exports.langTag = exports.uiLang = exports.getLang = exports.LANG_BOOT_SCRIPT = exports.COOKIE_MAX_AGE = exports.STORAGE_KEY = exports.COOKIE_NAME = exports.LANGS = void 0;
+exports.toolName = exports.TOOLS = exports.sectionName = exports.SECTIONS = exports.changesSent = exports.changesNotSent = exports.sendingChanges = exports.t = exports.COMMON = exports.verb = exports.plural = exports.num = exports.fmtMoney = exports.fmtRelative = exports.fmtRange = exports.fmtTime = exports.fmtDate = exports.dayDiff = exports.nicosiaParts = exports.TIME_ZONE = exports.inLang = exports.LL = exports.L = exports.readStoredLang = exports.configureLang = exports.syncLang = exports.onLangChange = exports.setLang = exports.otherLang = exports.langTag = exports.uiLang = exports.getLang = exports.LANG_BOOT_SCRIPT = exports.COOKIE_MAX_AGE = exports.STORAGE_KEY = exports.COOKIE_NAME = exports.LANGS = void 0;
 var core_js_1 = require("./core.js");
 Object.defineProperty(exports, "LANGS", { enumerable: true, get: function () { return core_js_1.LANGS; } });
 Object.defineProperty(exports, "COOKIE_NAME", { enumerable: true, get: function () { return core_js_1.COOKIE_NAME; } });
@@ -40,3 +40,4 @@ Object.defineProperty(exports, "changesSent", { enumerable: true, get: function 
 Object.defineProperty(exports, "SECTIONS", { enumerable: true, get: function () { return common_js_1.SECTIONS; } });
 Object.defineProperty(exports, "sectionName", { enumerable: true, get: function () { return common_js_1.sectionName; } });
 Object.defineProperty(exports, "TOOLS", { enumerable: true, get: function () { return common_js_1.TOOLS; } });
+Object.defineProperty(exports, "toolName", { enumerable: true, get: function () { return common_js_1.toolName; } });

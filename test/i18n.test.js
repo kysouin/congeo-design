@@ -189,5 +189,15 @@ test('common: every string has both languages and SECTIONS cover 00–06', () =>
   assert.deepEqual(I.SECTIONS.map((s) => s.code), ['00', '01', '02', '03', '04', '05', '06']);
   assert.ok(I.SECTIONS.every((s) => s.drive.startsWith(s.code + ' ')));
   assert.equal(I.SECTIONS[1].drive, '01 Μελέτη');
-  assert.equal(I.TOOLS.permitflow, 'PermitFlow');
+  assert.equal(I.TOOLS.permitflow.en, 'PermitFlow');
+  assert.equal(I.TOOLS.permitflow.el, 'PermitFlow');
+  for (const [k, v] of Object.entries(I.TOOLS)) assert.ok(!/[Ͱ-Ͽ]/.test(v.en), `${k}: English tool name has Greek letters`);
+});
+
+test('common: toolName follows the interface language for office tools, brands stay', () => {
+  assert.equal(I.inLang('en', () => I.toolName('calendar')), 'Agenda');
+  assert.equal(I.inLang('el', () => I.toolName('calendar')), 'Ατζέντα');
+  assert.equal(I.inLang('el', () => I.toolName('invoicing')), 'Τιμολόγηση');
+  assert.equal(I.inLang('el', () => I.toolName('rhoi')), 'Rhoi');
+  assert.equal(I.inLang('el', () => I.toolName('kaneto')), 'Kaneto');
 });

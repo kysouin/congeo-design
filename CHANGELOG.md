@@ -18,6 +18,10 @@ George's answers to the eight glossary terms.
   - expense: «έξοδο».
   - statement: «κατάσταση λογαριασμού».
 - Section 01 in English is **«01 Design»** (was «01 Study»). The Drive name «01 Μελέτη» is unchanged.
+- `TOOLS` is now `{ en, el }` per tool, with a new `toolName(key)`.
+  - Kaneto, Rhoi, Trace and PermitFlow are brands and stay as they are.
+  - The office tools follow the interface language: Agenda / Ατζέντα, Invoicing / Τιμολόγηση, Scan / Σάρωση, PDF.
+  - Before, the English UI would have shown «Ατζέντα» and the repo name «congeo-pdf».
 
 ## v1.1.0 — 2026-11-08
 
