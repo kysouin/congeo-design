@@ -87,7 +87,28 @@ function maskWrappers(lines) {
 function scanI18n(file, rel, ext) {
   if (!I18N_EXT.includes(ext)) return [];
   const raw = fs.readFileSync(file, 'utf8').split(/\r?\n/);
-  const lines = maskWrappers(raw.map((l) => (/cg-lint-ignore/.test(l) ? '' : stripComments(l, ext))));
+  // mask block comments that span lines (/** … */ docs), then the single-line comments
+  let inBlock = false;
+  const noBlocks = raw.map((l) => {
+    let out = '';
+    let i = 0;
+    while (i < l.length) {
+      if (inBlock) {
+        const e = l.indexOf('*/', i);
+        if (e < 0) return out;
+        inBlock = false;
+        i = e + 2;
+      } else {
+        const b = l.indexOf('/*', i);
+        if (b < 0) return out + l.slice(i);
+        out += l.slice(i, b);
+        inBlock = true;
+        i = b + 2;
+      }
+    }
+    return out;
+  });
+  const lines = maskWrappers(noBlocks.map((l, i) => (/cg-lint-ignore/.test(raw[i]) ? '' : stripComments(l, ext))));
   const findings = [];
   const push = (i, col, rule, text) => findings.push({ file: rel, line: i + 1, col: col + 1, rule, message: rule === 'i18n-text' ? 'Greek text outside L(): JSX text' : rule === 'i18n-attr' ? 'Greek text outside L(): visible attribute' : 'Greek text outside L(): string shown to the user', text: text.trim().slice(0, 80) });
   lines.forEach((line, i) => {

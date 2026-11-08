@@ -44,7 +44,9 @@ const SLOP = 8; // px before we decide the gesture is horizontal
  * (touch-action: pan-y; a vertical move cancels the gesture), has a threshold
  * and springs back.
  */
-function SwipeRow({ onSwipeRight, onSwipeLeft, rightLabel, leftLabel, threshold = 72, onHaptic, preview, disabled, className, children, ...rest }) {
+function SwipeRow({ onDone, onLater, onSwipeRight: onSwipeRightProp, onSwipeLeft: onSwipeLeftProp, rightLabel, leftLabel, threshold = 72, onHaptic, preview, disabled, className, children, ...rest }) {
+    const onSwipeRight = onDone !== null && onDone !== void 0 ? onDone : onSwipeRightProp;
+    const onSwipeLeft = onLater !== null && onLater !== void 0 ? onLater : onSwipeLeftProp;
     const rootRef = React.useRef(null);
     const [x, setX] = React.useState(0);
     const [dragging, setDragging] = React.useState(false);

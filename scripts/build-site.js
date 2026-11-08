@@ -235,6 +235,33 @@ function LanguageSection() {
   );
 }
 
+// ---------- v1.2 components: both languages, both themes ----------
+function NewShowcase({ scheme, lang }) {
+  const noop = () => {};
+  return I18N.inLang(lang, () =>
+    h(
+      'div',
+      { className: 'ref-panel', 'data-theme': scheme, lang, id: `new-${lang}-${scheme}` },
+      h('div', { className: 'cg-cap' }, `${lang} · ${scheme}`),
+      h(Demo, { title: 'Select' }, h('div', { className: 'cg-stack' }, h(C.Select, { label: I18N.L('Project', 'Έργο'), defaultValue: '0637', hint: I18N.L('Native select, Lucide chevron', 'Native select, βέλος Lucide') }, h('option', { value: '0637' }, '0637 · Λατσιά'), h('option', { value: '0712' }, '0712 · Χλώρακα')), h(C.Select, { label: I18N.L('With error', 'Με σφάλμα'), error: I18N.L('Choose a project', 'Διάλεξε έργο'), defaultValue: '' }, h('option', { value: '' }, '—')), h(C.Select, { label: I18N.L('Disabled', 'Ανενεργό'), disabled: true, defaultValue: 'x' }, h('option', { value: 'x' }, '0637 · Λατσιά')))),
+      h(Demo, { title: 'DateField · TimeField' }, h('div', { className: 'cg-stack' }, h(C.DateField, { label: I18N.L('Date', 'Ημερομηνία'), value: '2026-11-12', onChange: noop, today: '2026-11-12', steps: true }), h(C.DateField, { label: I18N.L('Date, invalid', 'Ημερομηνία, μη έγκυρη'), value: '', onChange: noop, error: I18N.L('Not a valid date (DD/MM/YYYY)', 'Μη έγκυρη ημερομηνία (ΗΗ/ΜΜ/ΕΕΕΕ)'), today: '2026-11-12' }), h(C.TimeField, { label: I18N.L('Time', 'Ώρα'), value: '09:30', onChange: noop }))),
+      h(Demo, { title: 'DatePicker' }, h('div', { className: 'cg-card', style: { padding: 'var(--cg-space-2)' } }, h(C.DatePicker, { value: '2026-11-20', today: '2026-11-12', onPick: noop }))),
+      h(Demo, { title: 'Sheet (head, close button, swipe down)' }, h(C.Sheet, { open: true, inline: true, title: I18N.L('New task', 'Νέα εργασία'), closeButton: true }, h('div', { className: 'cg-stack' }, h(C.Input, { label: I18N.L('Title', 'Τίτλος'), placeholder: I18N.L('What needs doing?', 'Τι πρέπει να γίνει;') }), h(C.Button, { variant: 'primary', block: true }, I18N.L('Add', 'Προσθήκη'))))),
+      h(Demo, { title: 'StatusBar ok' }, h('div', { className: 'cg-stack' }, h(C.StatusBar, { state: 'ok', count: 3, persist: true }, I18N.changesSent(3)), h(C.StatusBar, { state: 'sending', count: 2 }, I18N.sendingChanges(2)))),
+      h(Demo, { title: 'ProposalCard (Reject left, Approve right)' }, h(C.ProposalCard, { title: I18N.L('Move the visit to Thursday 14:00', 'Μετακίνηση επίσκεψης στην Πέμπτη 14:00'), body: I18N.L('The contractor is away on Wednesday.', 'Ο εργολάβος λείπει την Τετάρτη.'), onApprove: noop, onReject: noop })),
+      h(Demo, { title: 'TitleBlock, 5 cells' }, h(C.TitleBlock, { number: '0637', name: I18N.L('Papadopoulos house, Latsia', 'Κατοικία Παπαδόπουλου, Λατσιά'), date: '12/11/2026', sheet: '3/12', labels: { sheet: I18N.L('Open', 'Ανοιχτά') }, extra: [{ label: I18N.L('Next', 'Επόμενο'), value: I18N.L('Thu 14:00', 'Πέμ 14:00'), mono: true }] })),
+      h(Demo, { title: 'TitleBlock, 6 cells' }, h(C.TitleBlock, { number: '0712', name: I18N.L('Block of flats, Chlorakas', 'Πολυκατοικία Χλώρακα'), date: '03/11/2026', sheet: 'A-03', extra: [{ label: I18N.L('Revision', 'Αναθεώρηση'), value: '2', mono: true }, { label: I18N.L('Scale', 'Κλίμακα'), value: '1:50', mono: true }] })),
+    ),
+  );
+}
+function NewComponentsSection() {
+  return h(
+    Section,
+    { id: 'v12', title: 'Components v1.2', note: 'Ό,τι ζήτησε η ατζέντα: Select, DateField, TimeField, DatePicker, Sheet με σύρσιμο, StatusBar ok, σειρά ProposalCard, TitleBlock 4–6 κελιών. Σε δύο γλώσσες και δύο θέματα. What calendar asked for, in both languages and both themes.' },
+    h('div', { className: 'ref-two' }, h(NewShowcase, { scheme: 'light', lang: 'en' }), h(NewShowcase, { scheme: 'dark', lang: 'en' }), h(NewShowcase, { scheme: 'light', lang: 'el' }), h(NewShowcase, { scheme: 'dark', lang: 'el' })),
+  );
+}
+
 // ---------- contrast ----------
 function ContrastSection() {
   const { rows, failures } = checkContrast(tokens);
@@ -352,7 +379,7 @@ function Page() {
         'header',
         { className: 'ref-header' },
         h('div', { className: 'ref-header__title' }, h(C.ToolMark, { tool: 'internal', label: 'CONGEO Design', size: 'lg' })),
-        h('nav', null, h('a', { href: '#tokens' }, 'Tokens'), h('a', { href: '#language' }, 'Language'), h('a', { href: '#components' }, 'Components'), h('a', { href: '#contrast' }, 'Contrast')),
+        h('nav', null, h('a', { href: '#tokens' }, 'Tokens'), h('a', { href: '#language' }, 'Language'), h('a', { href: '#v12' }, 'v1.2'), h('a', { href: '#components' }, 'Components'), h('a', { href: '#contrast' }, 'Contrast')),
         h('span', { className: 'ref-spacer' }),
         h('span', { id: 'greek-check', className: 'cg-cap', lang: 'el' }, 'Εβδομάδα · Πρόταση · Έγινε'),
         h(C.Button, { size: 'sm', variant: 'secondary', id: 'theme-toggle', onClick: undefined }, 'Light / Dark'),
@@ -364,6 +391,7 @@ function Page() {
         h('p', { className: 'cg-ink-2' }, 'One source for the look of every CONGEO tool. Built from dist/. Light and dark, 320 to 1280 px.'),
         h(TokensSection),
         h(LanguageSection),
+        h(NewComponentsSection),
         h(ComponentsSection),
         h(ContrastSection),
       ),

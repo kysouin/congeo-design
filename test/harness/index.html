@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>congeo-design harness</title>
+<link rel="stylesheet" href="../../site/fonts.css">
+<link rel="stylesheet" href="../../dist/congeo.css">
+<style>
+  .h-case { margin: var(--cg-space-6) 0; }
+  .h-case > h2 { margin: 0 0 var(--cg-space-3); }
+  .h-out { margin-top: var(--cg-space-2); }
+  .h-spacer { height: 2400px; }
+</style>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var t = q.get('theme'); if (t) document.documentElement.setAttribute('data-theme', t);
+    var l = q.get('lang'); if (l) document.documentElement.lang = l;
+    window.__events = [];
+    window.__bundle = q.get('bundle') || 'harness';
+  })();
+</script>
+</head>
+<body>
+<div id="root" class="cg-screen"></div>
+<script>document.write('<script src="./dist/' + window.__bundle + '.js"><\/script>');</script>
+</body>
+</html>

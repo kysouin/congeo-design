@@ -36,14 +36,15 @@ export function ProposalCard({
       {children}
       {(onApprove || onReject) && (
         <div className="cg-proposal__actions">
-          {onApprove && (
-            <Button variant="primary" onClick={onApprove} disabled={busy}>
-              {approveLabel ?? L('Approve', 'Έγκριση')}
-            </Button>
-          )}
+          {/* Reject first as secondary; Approve last as primary, on the side the thumb reaches (Proposal mockup) */}
           {onReject && (
             <Button variant="secondary" onClick={onReject} disabled={busy}>
               {rejectLabel ?? L('Reject', 'Απόρριψη')}
+            </Button>
+          )}
+          {onApprove && (
+            <Button variant="primary" onClick={onApprove} disabled={busy}>
+              {approveLabel ?? L('Approve', 'Έγκριση')}
             </Button>
           )}
         </div>

@@ -34,9 +34,11 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Textarea = exports.Input = void 0;
+exports.Field = Field;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const React = __importStar(require("react"));
 const cx_1 = require("./cx");
+/** The label / hint / error chrome around a control. The control must carry `id`. */
 function Field({ label, hint, error, id, children }) {
     const hasChrome = label != null || hint != null || error != null;
     if (!hasChrome)
@@ -49,7 +51,7 @@ exports.Input = React.forwardRef(function Input({ label, hint, error, mono, clas
     return ((0, jsx_runtime_1.jsx)(Field, { label: label, hint: hint, error: error, id: id, children: (0, jsx_runtime_1.jsx)("input", { ref: ref, id: id, className: (0, cx_1.cx)('cg-input', mono && 'cg-input--mono', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, ...rest }) }));
 });
 /** Textarea that grows with its text. */
-exports.Textarea = React.forwardRef(function Textarea({ label, hint, error, maxRows = 8, className, id: idProp, onInput, rows = 1, style, ...rest }, ref) {
+exports.Textarea = React.forwardRef(function Textarea({ label, hint, error, maxRows = 8, className, id: idProp, onInput, onKeyDown, onSubmit, rows = 1, style, ...rest }, ref) {
     const autoId = React.useId();
     const id = idProp !== null && idProp !== void 0 ? idProp : autoId;
     const inner = React.useRef(null);
@@ -78,5 +80,11 @@ exports.Textarea = React.forwardRef(function Textarea({ label, hint, error, maxR
             }, id: id, rows: rows, className: (0, cx_1.cx)('cg-textarea', className), "aria-invalid": error != null || undefined, "aria-describedby": (error !== null && error !== void 0 ? error : hint) != null ? `${id}-hint` : undefined, style: style, onInput: (e) => {
                 onInput === null || onInput === void 0 ? void 0 : onInput(e);
                 resize();
-            }, ...rest }) }));
+            }, onKeyDown: (e) => {
+                onKeyDown === null || onKeyDown === void 0 ? void 0 : onKeyDown(e);
+                if (onSubmit && e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing && !e.defaultPrevented) {
+                    e.preventDefault();
+                    onSubmit();
+                }
+            }, enterKeyHint: onSubmit ? 'done' : undefined, ...rest }) }));
 });

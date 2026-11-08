@@ -7,7 +7,8 @@ export interface FieldProps {
   error?: React.ReactNode;
 }
 
-function Field({ label, hint, error, id, children }: FieldProps & { id: string; children: React.ReactNode }) {
+/** The label / hint / error chrome around a control. The control must carry `id`. */
+export function Field({ label, hint, error, id, children }: FieldProps & { id: string; children: React.ReactNode }) {
   const hasChrome = label != null || hint != null || error != null;
   if (!hasChrome) return <>{children}</>;
   return (
@@ -54,11 +55,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, FieldProps {
   /** Maximum rows before it scrolls. */
   maxRows?: number;
+  /** When set, Enter submits instead of adding a line (Shift+Enter still adds one). */
+  onSubmit?: () => void;
 }
 
 /** Textarea that grows with its text. */
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-  { label, hint, error, maxRows = 8, className, id: idProp, onInput, rows = 1, style, ...rest },
+  { label, hint, error, maxRows = 8, className, id: idProp, onInput, onKeyDown, onSubmit, rows = 1, style, ...rest },
   ref,
 ) {
   const autoId = React.useId();
@@ -100,6 +103,14 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(fun
           onInput?.(e);
           resize();
         }}
+        onKeyDown={(e) => {
+          onKeyDown?.(e);
+          if (onSubmit && e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing && !e.defaultPrevented) {
+            e.preventDefault();
+            onSubmit();
+          }
+        }}
+        enterKeyHint={onSubmit ? 'done' : undefined}
         {...rest}
       />
     </Field>

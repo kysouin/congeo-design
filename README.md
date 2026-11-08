@@ -21,7 +21,8 @@ One source for the look of every CONGEO tool.
 | `dist/Tokens.swift` | Native Swift: χρώματα με dark variants, μεγέθη, radii, spacing |
 | `dist/tailwind.preset.js` | Tailwind preset (Kaneto) |
 | `dist/react/` | Τα React components, compiled JS + `.d.ts`, μαζί με `useLang()` και `<LanguageSwitch />` |
-| `dist/i18n/` | Η γλώσσα: `L()`, `getLang/setLang/onLangChange`, formatters, κοινό λεξιλόγιο (`@congeo/design/i18n`) |
+| `dist/i18n/` | Η γλώσσα: `L()`, `getLang/setLang/onLangChange`, formatters, κοινό λεξιλόγιο, ημερομηνίες ΗΗ/ΜΜ/ΕΕΕΕ (`@congeo/design/i18n`) |
+| `dist/inline.css`, `dist/inline.js` | Ελάχιστο υποσύνολο (< 12 KB) για σελίδες που σερβίρονται πριν από κάθε bundle: σελίδα σύνδεσης, σφάλματα από τον server |
 | `bin/congeo-design-lint.js` | Έλεγχος που απορρίπτει χρώματα και γραμματοσειρές εκτός tokens, και με `--i18n` ελληνικά εκτός `L()` |
 
 Τα παραγόμενα αρχεία στο `dist/` είναι **committed**. Η εγκατάσταση δεν τρέχει build. Το CI τα ξαναπαράγει και αποτυγχάνει αν διαφέρουν.
@@ -175,7 +176,8 @@ The CONGEO tools were built in separate sessions, each with its own colours, fon
 | `dist/Tokens.swift` | Native Swift: colours with dark variants, font sizes, radii, spacing |
 | `dist/tailwind.preset.js` | Tailwind preset (Kaneto) mapping tokens to the theme |
 | `dist/react/` | The React components, compiled JS + `.d.ts` (React is a peer dependency), with `useLang()` and `<LanguageSwitch />` |
-| `dist/i18n/` | The language: `L()`, `getLang/setLang/onLangChange`, formatters, shared vocabulary (`@congeo/design/i18n`, CJS and ESM) |
+| `dist/i18n/` | The language: `L()`, `getLang/setLang/onLangChange`, formatters, shared vocabulary, DD/MM/YYYY date helpers (`@congeo/design/i18n`, CJS and ESM) |
+| `dist/inline.css`, `dist/inline.js` | A minified subset (< 12 KB: variables, base, Button, Input, Card, StatusBar) for pages served before any bundle: sign-in pages, server-rendered errors. `import { INLINE_CSS } from '@congeo/design/inline'` in a Worker or Pages Function |
 | `bin/congeo-design-lint.js` | The check that refuses colours and fonts outside the tokens, and with `--i18n` Greek text outside `L()` |
 
 Generated files in `dist/` are **committed**. Installing runs no build. CI regenerates them and fails if they differ.
@@ -261,6 +263,12 @@ import { useLang, LanguageSwitch } from '@congeo/design/react';
 
 Only in `tokens/tokens.json`. Then `npm run build`, `npm test`, and commit together with `dist/`. Every text/background pair declared in `contrast.pairs` is checked against WCAG AA (4.5 for text, 3.0 for large text and UI marks). A failing pair fails the build. The table is in `site/contrast.md` and on the reference page.
 
+### Components
+
+CSS classes prefixed `cg-` and thin React wrappers in `@congeo/design/react`: Button, IconButton, ProjectChip, ToolMark, Card, Row, CheckCircle, Segmented, FilterPill, TabBar, Sheet (swipe down to close, focus trap), TitleBlock (4 to 6 cells; one row on desktop, two columns on the phone with the number first), ProposalCard (Reject left, Approve right), Toast, StatusBar (offline, sending, failed, ok with auto-hide), Input, Textarea (grows; `onSubmit` on Enter), Select (native, Lucide chevron), DateField and TimeField (ΗΗ/ΜΜ/ΕΕΕΕ and 24-hour ΩΩ:ΛΛ whatever the device locale, ISO values, pickers), DatePicker (Monday-first grid), Skeleton, EmptyState, SwipeRow (`onDone` / `onLater`), LanguageSwitch. Helpers: `cx`, `accentAttrs`, `Field`, `useLang`.
+
+Every component is exercised in a real browser with React running (`test/harness/`, Chromium through Playwright), not only rendered on the server.
+
 ### Reference page and checks
 
 `site/index.html` is built from `dist/`: every token with name and value, every component in light and dark, the contrast table. `npm test` runs:
@@ -271,6 +279,7 @@ Only in `tokens/tokens.json`. Then `npm run build`, `npm test`, and commit toget
 4. Playwright screenshots at 320 / 390 / 1280 px, light and dark, into `site/screenshots/` (WebKit when available; `site/screenshots/webkit.txt` records whether it ran);
 5. the rendered Greek check: the uppercase caption is read off the DOM and must carry no accent;
 6. a proof that the contrast check can fail (ink-3 on bg set to a failing grey);
-7. language: the shared cookie across `a.congeo.test` and `b.congeo.test`, English by default for an `el-GR` browser, `<html lang>` before anything mounts, 45+ formatting cases per language, the `--i18n` lint fixtures and a proof it fails on `<button>Αποθήκευση</button>`.
+7. language: the shared cookie across `a.congeo.test` and `b.congeo.test`, English by default for an `el-GR` browser, `<html lang>` before anything mounts, 45+ formatting cases per language, the `--i18n` lint fixtures and a proof it fails on `<button>Αποθήκευση</button>`;
+8. the real-browser harness: SwipeRow gestures (including a vertical touch drag that must scroll the page), Sheet drag / Escape / focus return, Segmented keyboard, Textarea growth and Enter, DateField and TimeField typing and pickers with the locale forced to `en-US`, Select, StatusBar ok with a mocked clock, ProposalCard order, TitleBlock at 1280 / 390 / 320; and two proofs that the harness can fail (the vertical-scroll guard and the Sheet threshold, each broken in a bundle built from patched sources).
 
 See `ADOPTING.md` for the steps an app follows to take this package.
