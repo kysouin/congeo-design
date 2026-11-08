@@ -1,0 +1,48 @@
+'use strict';
+// The React wrappers render the cg- classes (server render, no DOM needed).
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const path = require('path');
+const React = require('react');
+const { renderToStaticMarkup } = require('react-dom/server');
+const { root } = require('./helpers');
+
+const C = require(path.join(root, 'dist/react'));
+const h = React.createElement;
+const r = (el) => renderToStaticMarkup(el);
+const noop = () => {};
+
+test('react: every component exports and renders its class', () => {
+  assert.match(r(h(C.Button, { variant: 'primary', size: 'sm' }, 'x')), /class="cg-btn cg-btn--primary cg-btn--sm"/);
+  assert.match(r(h(C.IconButton, { label: 'Προσθήκη' }, 'x')), /aria-label="Προσθήκη"[^>]*class="cg-btn cg-btn--secondary cg-btn--icon"/);
+  assert.match(r(h(C.ProjectChip, { number: '0637' })), /class="cg-chip">0637</);
+  assert.match(r(h(C.ToolMark, { tool: 'rhoi' })), /data-tool="rhoi"[\s\S]*cg-toolmark__dot[\s\S]*Rhoi/);
+  assert.match(r(h(C.Card, { title: 'T' })), /class="cg-card"[\s\S]*cg-card__title/);
+  const row = r(h(C.Row, { title: 'Τίτλος', meta: 'm', accent: { status: 'warn' }, pending: true }));
+  assert.match(row, /cg-row cg-row--accent/);
+  assert.match(row, /data-status="warn"/);
+  assert.match(row, /cg-row__pending/);
+  assert.match(r(h(C.CheckCircle, { checked: true, overdue: true })), /role="checkbox" aria-checked="true"[^>]*class="cg-check cg-check--checked"/);
+  assert.match(r(h(C.CheckCircle, { checked: false, overdue: true })), /cg-check cg-check--overdue/);
+  assert.match(r(h(C.Segmented, { options: [{ value: 'w', label: 'Εβδομάδα' }, { value: 'm', label: 'Μήνας' }], value: 'm', onChange: noop })), /role="radiogroup"[\s\S]*aria-checked="false"[\s\S]*Εβδομάδα[\s\S]*aria-checked="true"[\s\S]*Μήνας/);
+  assert.match(r(h(C.FilterPill, { active: true, dot: { tool: 'trace' }, count: 3 }, 'Trace')), /aria-pressed="true"[^>]*class="cg-pill"[^>]*data-tool="trace"[\s\S]*cg-pill__count">3</);
+  const items = ['a', 'b', 'c', 'd'].map((k) => ({ key: k, label: k, icon: null }));
+  assert.equal((r(h(C.TabBar, { items, value: 'b', inline: true })).match(/cg-tabbar__item/g) || []).length, 4);
+  assert.match(r(h(C.Sheet, { open: true, inline: true, title: 'S' }, 'body')), /cg-sheet cg-sheet--inline[\s\S]*cg-sheet__grabber/);
+  assert.equal(r(h(C.Sheet, { open: false }, 'body')), '');
+  assert.match(r(h(C.Sheet, { open: true }, 'body')), /cg-sheet-backdrop/);
+  assert.match(r(h(C.TitleBlock, { number: '0637', name: 'N', date: 'D', sheet: 'A-01' })), /cg-titleblock[\s\S]*0637[\s\S]*A-01/);
+  const prop = r(h(C.ProposalCard, { title: 'P', onApprove: noop, onReject: noop }));
+  assert.match(prop, /cg-proposal"[^>]*data-status="proposal"/);
+  assert.match(prop, /Πρόταση/);
+  assert.match(prop, /Έγκριση[\s\S]*Απόρριψη/);
+  assert.match(r(h(C.ToastRegion, { inline: true }, h(C.Toast, { kind: 'err' }, 'x'))), /cg-toast-region cg-toast-region--inline[\s\S]*cg-toast cg-toast--err/);
+  assert.match(r(h(C.StatusBar, { state: 'failed', count: 2 })), /cg-statusbar cg-statusbar--failed[\s\S]*Αποτυχία αποστολής[\s\S]*cg-statusbar__count">2</);
+  assert.match(r(h(C.Input, { label: 'L', error: 'E' })), /cg-field cg-field--error[\s\S]*cg-input"[^>]*aria-invalid="true"/);
+  assert.match(r(h(C.Textarea, { placeholder: 'p' })), /<textarea[^>]*rows="1"[^>]*class="cg-textarea"/);
+  assert.match(r(h(C.Skeleton, { variant: 'row' })), /cg-skeleton cg-skeleton--row/);
+  assert.match(r(h(C.EmptyState, { title: 'E', text: 't' })), /cg-empty[\s\S]*cg-empty__title[\s\S]*cg-empty__text/);
+  const swipe = r(h(C.SwipeRow, { onSwipeLeft: noop, onSwipeRight: noop, preview: 'right' }, 'row'));
+  assert.match(swipe, /cg-swipe cg-swipe--armed[^>]*--cg-swipe-x:72px/);
+  assert.match(swipe, /Έγινε[\s\S]*Αύριο/);
+});

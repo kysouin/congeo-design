@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Row = Row;
+const jsx_runtime_1 = require("react/jsx-runtime");
+const cx_1 = require("./cx");
+const types_1 = require("./types");
+function Row({ title, meta, accent, pending, done, lead, trail, as, href, className, children, ...rest }) {
+    const Tag = as !== null && as !== void 0 ? as : (href ? 'a' : 'div');
+    return ((0, jsx_runtime_1.jsxs)(Tag, { className: (0, cx_1.cx)('cg-row', accent && 'cg-row--accent', done && 'cg-row--done', className), href: href, ...(0, types_1.accentAttrs)(accent), ...rest, children: [accent && (0, jsx_runtime_1.jsx)("span", { className: "cg-row__accent", "aria-hidden": "true" }), (0, jsx_runtime_1.jsx)("span", { className: "cg-row__lead", children: lead }), (0, jsx_runtime_1.jsxs)("span", { className: "cg-row__body", children: [(0, jsx_runtime_1.jsx)("span", { className: "cg-row__title", children: title }), meta != null && (0, jsx_runtime_1.jsx)("span", { className: "cg-row__meta", children: meta }), children] }), (0, jsx_runtime_1.jsxs)("span", { className: "cg-row__trail", children: [pending && (0, jsx_runtime_1.jsx)("span", { className: "cg-row__pending", role: "img", "aria-label": "\u0395\u03BA\u03BA\u03C1\u03B5\u03BC\u03B5\u03AF" }), trail] })] }));
+}

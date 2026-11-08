@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Regenerate dist/ and the reference page
+        run: npm run build
+
+      - name: Generated files must be committed and identical
+        run: |
+          git add -N .
+          git diff --exit-code -- dist site/index.html site/contrast.md || {
+            echo "::error::dist/ or site/ differ from the generated output. Run 'npm run build' and commit."; exit 1; }
+
+      - name: Checks (contrast, determinism, lint fixtures, screenshots, Greek caps)
+        run: npm test
+
+      - name: Lint this package's own source with congeo-design-lint
+        run: node bin/congeo-design-lint.js src
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reference-screenshots
+          path: site/screenshots/
+          retention-days: 30

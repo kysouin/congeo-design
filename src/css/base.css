@@ -1,0 +1,91 @@
+/* Base layer. No values here: only tokens. */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--cg-bg);
+  color: var(--cg-ink);
+  font-family: var(--cg-font-sans);
+  font-size: var(--cg-size-15);
+  line-height: var(--cg-line-15);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--cg-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--cg-surface);
+  border-radius: var(--cg-radius-chip);
+}
+
+a {
+  color: var(--cg-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition: color var(--cg-dur-fast) var(--cg-ease);
+}
+a:hover { color: var(--cg-link-hover); }
+
+::selection {
+  background: var(--cg-event-tint);
+  color: var(--cg-on-event-tint);
+}
+
+.mono, .cg-mono {
+  font-family: var(--cg-font-mono);
+  font-weight: var(--cg-weight-mono, 500);
+  font-feature-settings: var(--cg-mono-features);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Caps: always set lang="el" on the document or the element, so uppercase drops Greek accents. */
+.cap, .cg-cap {
+  font-size: var(--cg-size-12);
+  line-height: var(--cg-line-12);
+  font-weight: 600;
+  letter-spacing: var(--cg-caps-tracking);
+  text-transform: uppercase;
+  color: var(--cg-ink-2);
+}
+
+.cg-title {
+  font-size: var(--cg-size-30);
+  line-height: var(--cg-line-30);
+  font-weight: 700;
+  letter-spacing: var(--cg-title-tracking);
+  margin: 0;
+}
+.cg-h24 { font-size: var(--cg-size-24); line-height: var(--cg-line-24); font-weight: 600; margin: 0; }
+.cg-h20 { font-size: var(--cg-size-20); line-height: var(--cg-line-20); font-weight: 600; margin: 0; }
+.cg-h17 { font-size: var(--cg-size-17); line-height: var(--cg-line-17); font-weight: 600; margin: 0; }
+.cg-small { font-size: var(--cg-size-14); line-height: var(--cg-line-14); }
+.cg-xsmall { font-size: var(--cg-size-13); line-height: var(--cg-line-13); }
+.cg-ink-2 { color: var(--cg-ink-2); }
+.cg-ink-3 { color: var(--cg-ink-3); }
+
+/* Tool and status colour contexts. Components read --cg-tool, --cg-tool-tint, --cg-tool-on-tint. */
+[data-tool="kaneto"]     { --cg-tool: var(--cg-tool-kaneto);     --cg-tool-tint: var(--cg-tool-kaneto-tint);     --cg-tool-on-tint: var(--cg-tool-kaneto-on-tint); }
+[data-tool="rhoi"]       { --cg-tool: var(--cg-tool-rhoi);       --cg-tool-tint: var(--cg-tool-rhoi-tint);       --cg-tool-on-tint: var(--cg-tool-rhoi-on-tint); }
+[data-tool="trace"]      { --cg-tool: var(--cg-tool-trace);      --cg-tool-tint: var(--cg-tool-trace-tint);      --cg-tool-on-tint: var(--cg-tool-trace-on-tint); }
+[data-tool="permitflow"] { --cg-tool: var(--cg-tool-permitflow); --cg-tool-tint: var(--cg-tool-permitflow-tint); --cg-tool-on-tint: var(--cg-tool-permitflow-on-tint); }
+[data-tool="internal"]   { --cg-tool: var(--cg-tool-internal);   --cg-tool-tint: var(--cg-tool-internal-tint);   --cg-tool-on-tint: var(--cg-tool-internal-on-tint); }
+[data-status="ok"]       { --cg-tool: var(--cg-ok);       --cg-tool-tint: var(--cg-ok-tint);       --cg-tool-on-tint: var(--cg-ok); }
+[data-status="warn"]     { --cg-tool: var(--cg-warn);     --cg-tool-tint: var(--cg-warn-tint);     --cg-tool-on-tint: var(--cg-warn); }
+[data-status="err"]      { --cg-tool: var(--cg-err);      --cg-tool-tint: var(--cg-err-tint);      --cg-tool-on-tint: var(--cg-err); }
+[data-status="proposal"] { --cg-tool: var(--cg-proposal); --cg-tool-tint: var(--cg-proposal-tint); --cg-tool-on-tint: var(--cg-proposal); }
+[data-status="event"]    { --cg-tool: var(--cg-primary);  --cg-tool-tint: var(--cg-event-tint);    --cg-tool-on-tint: var(--cg-on-event-tint); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "@congeo/design",
+  "version": "1.0.0",
+  "description": "CONGEO design tokens and components. One source for the look of every CONGEO tool.",
+  "license": "UNLICENSED",
+  "repository": "github:kysouin/congeo-design",
+  "main": "./dist/tokens.js",
+  "types": "./dist/tokens.d.ts",
+  "exports": {
+    ".": { "types": "./dist/tokens.d.ts", "default": "./dist/tokens.js" },
+    "./tokens": { "types": "./dist/tokens.d.ts", "default": "./dist/tokens.js" },
+    "./tokens.json": "./tokens/tokens.json",
+    "./congeo.css": "./dist/congeo.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./tailwind": "./dist/tailwind.preset.js",
+    "./tailwind.preset.js": "./dist/tailwind.preset.js",
+    "./react": { "types": "./dist/react/index.d.ts", "default": "./dist/react/index.js" },
+    "./Tokens.swift": "./dist/Tokens.swift",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "congeo-design-lint": "./bin/congeo-design-lint.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "tokens",
+    "README.md",
+    "ADOPTING.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js && tsc -p tsconfig.react.json && node scripts/build-site.js",
+    "build:tokens": "node scripts/build.js",
+    "build:react": "tsc -p tsconfig.react.json",
+    "build:site": "node scripts/build-site.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
+    "test:contrast": "node --test test/contrast.test.js",
+    "lint:self": "node bin/congeo-design-lint.js src site/index.html --allow 'src/**' --allow 'site/**'"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "playwright": "1.63.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

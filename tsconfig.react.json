@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "CommonJS",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2019", "DOM", "DOM.Iterable"],
+    "rootDir": "src/react",
+    "outDir": "dist/react",
+    "removeComments": false,
+    "newLine": "lf"
+  },
+  "include": ["src/react"]
+}

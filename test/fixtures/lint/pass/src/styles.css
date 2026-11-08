@@ -1,0 +1,6 @@
+#header { color: var(--cg-ink); background: var(--cg-bg); }
+.card { border: 1px solid var(--cg-line); border-radius: var(--cg-radius-card); font-family: var(--cg-font-sans); }
+.mono { font: inherit; }
+.x { background: rgb(var(--cg-rgb-ink) / 0.5); }
+.y { color: transparent; outline-color: currentColor; } /* keywords are fine */
+.z { color: #FFF; } /* cg-lint-ignore */

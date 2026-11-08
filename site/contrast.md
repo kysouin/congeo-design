@@ -1,0 +1,151 @@
+# Contrast table
+
+Generated from tokens/tokens.json by scripts/build-site.js. WCAG AA: 4.5 for text, 3.0 for large text and UI marks.
+
+136 pairs, 0 fail.
+
+| scheme | fg | bg | level | min | ratio | result |
+|---|---|---|---|---|---|---|
+| light | ink `#0A1622` | bg `#F3F5F7` | text | 4.5 | 16.70 | PASS |
+| light | ink `#0A1622` | surface `#FFFFFF` | text | 4.5 | 18.25 | PASS |
+| light | ink `#0A1622` | surface-2 `#EEF1F4` | text | 4.5 | 16.10 | PASS |
+| light | ink-2 `#5B6772` | bg `#F3F5F7` | text | 4.5 | 5.30 | PASS |
+| light | ink-2 `#5B6772` | surface `#FFFFFF` | text | 4.5 | 5.79 | PASS |
+| light | ink-2 `#5B6772` | surface-2 `#EEF1F4` | text | 4.5 | 5.11 | PASS |
+| light | ink-3 `#646E78` | bg `#F3F5F7` | text | 4.5 | 4.75 | PASS |
+| light | ink-3 `#646E78` | surface `#FFFFFF` | text | 4.5 | 5.19 | PASS |
+| light | ink-3 `#646E78` | surface-2 `#EEF1F4` | text | 4.5 | 4.58 | PASS |
+| light | link `#0071A4` | bg `#F3F5F7` | text | 4.5 | 4.93 | PASS |
+| light | link `#0071A4` | surface `#FFFFFF` | text | 4.5 | 5.39 | PASS |
+| light | link `#0071A4` | surface-2 `#EEF1F4` | text | 4.5 | 4.75 | PASS |
+| light | link-hover `#005A83` | bg `#F3F5F7` | text | 4.5 | 6.89 | PASS |
+| light | link-hover `#005A83` | surface `#FFFFFF` | text | 4.5 | 7.53 | PASS |
+| light | link-hover `#005A83` | surface-2 `#EEF1F4` | text | 4.5 | 6.64 | PASS |
+| light | project-text `#0071A4` | bg `#F3F5F7` | text | 4.5 | 4.93 | PASS |
+| light | project-text `#0071A4` | surface `#FFFFFF` | text | 4.5 | 5.39 | PASS |
+| light | project-text `#0071A4` | surface-2 `#EEF1F4` | text | 4.5 | 4.75 | PASS |
+| light | ok `#1E7B4F` | bg `#F3F5F7` | text | 4.5 | 4.80 | PASS |
+| light | ok `#1E7B4F` | surface `#FFFFFF` | text | 4.5 | 5.25 | PASS |
+| light | ok `#1E7B4F` | surface-2 `#EEF1F4` | text | 4.5 | 4.63 | PASS |
+| light | warn `#9A5A0A` | bg `#F3F5F7` | text | 4.5 | 5.00 | PASS |
+| light | warn `#9A5A0A` | surface `#FFFFFF` | text | 4.5 | 5.47 | PASS |
+| light | warn `#9A5A0A` | surface-2 `#EEF1F4` | text | 4.5 | 4.82 | PASS |
+| light | err `#B42318` | bg `#F3F5F7` | text | 4.5 | 6.02 | PASS |
+| light | err `#B42318` | surface `#FFFFFF` | text | 4.5 | 6.57 | PASS |
+| light | err `#B42318` | surface-2 `#EEF1F4` | text | 4.5 | 5.80 | PASS |
+| light | proposal `#7A3FB0` | bg `#F3F5F7` | text | 4.5 | 6.07 | PASS |
+| light | proposal `#7A3FB0` | surface `#FFFFFF` | text | 4.5 | 6.63 | PASS |
+| light | proposal `#7A3FB0` | surface-2 `#EEF1F4` | text | 4.5 | 5.85 | PASS |
+| light | on-primary `#0A1622` | primary `#00AEEF` | text | 4.5 | 7.21 | PASS |
+| light | on-event-tint `#1F4A5C` | event-tint `#DDF3FC` | text | 4.5 | 8.35 | PASS |
+| light | ok `#1E7B4F` | ok-tint `#E3F4EA` | text | 4.5 | 4.60 | PASS |
+| light | warn `#9A5A0A` | warn-tint `#FBEEDB` | text | 4.5 | 4.78 | PASS |
+| light | err `#B42318` | err-tint `#FCE8E6` | text | 4.5 | 5.58 | PASS |
+| light | proposal `#7A3FB0` | proposal-tint `#F3ECFA` | text | 4.5 | 5.75 | PASS |
+| light | ink `#0A1622` | ok-tint `#E3F4EA` | text | 4.5 | 15.98 | PASS |
+| light | ink `#0A1622` | warn-tint `#FBEEDB` | text | 4.5 | 15.95 | PASS |
+| light | ink `#0A1622` | err-tint `#FCE8E6` | text | 4.5 | 15.49 | PASS |
+| light | ink `#0A1622` | proposal-tint `#F3ECFA` | text | 4.5 | 15.81 | PASS |
+| light | ink `#0A1622` | event-tint `#DDF3FC` | text | 4.5 | 15.90 | PASS |
+| light | tool-kaneto-on-tint `#1F4A5C` | tool-kaneto-tint `#DDF3FC` | text | 4.5 | 8.35 | PASS |
+| light | tool-rhoi-on-tint `#26406B` | tool-rhoi-tint `#E6EEF9` | text | 4.5 | 8.86 | PASS |
+| light | tool-trace-on-tint `#6E3210` | tool-trace-tint `#FBEAE0` | text | 4.5 | 8.44 | PASS |
+| light | tool-permitflow-on-tint `#0B4F4A` | tool-permitflow-tint `#DDF3F0` | text | 4.5 | 8.13 | PASS |
+| light | tool-internal-on-tint `#3A4752` | tool-internal-tint `#EEF1F4` | text | 4.5 | 8.41 | PASS |
+| light | tool-rhoi `#1D5BB8` | bg `#F3F5F7` | large | 3.0 | 5.93 | PASS |
+| light | tool-rhoi `#1D5BB8` | surface `#FFFFFF` | large | 3.0 | 6.48 | PASS |
+| light | tool-rhoi `#1D5BB8` | surface-2 `#EEF1F4` | large | 3.0 | 5.72 | PASS |
+| light | tool-trace `#B5541D` | bg `#F3F5F7` | large | 3.0 | 4.52 | PASS |
+| light | tool-trace `#B5541D` | surface `#FFFFFF` | large | 3.0 | 4.94 | PASS |
+| light | tool-trace `#B5541D` | surface-2 `#EEF1F4` | large | 3.0 | 4.36 | PASS |
+| light | tool-permitflow `#0F766E` | bg `#F3F5F7` | large | 3.0 | 5.01 | PASS |
+| light | tool-permitflow `#0F766E` | surface `#FFFFFF` | large | 3.0 | 5.47 | PASS |
+| light | tool-permitflow `#0F766E` | surface-2 `#EEF1F4` | large | 3.0 | 4.83 | PASS |
+| light | tool-internal `#5B6772` | bg `#F3F5F7` | large | 3.0 | 5.30 | PASS |
+| light | tool-internal `#5B6772` | surface `#FFFFFF` | large | 3.0 | 5.79 | PASS |
+| light | tool-internal `#5B6772` | surface-2 `#EEF1F4` | large | 3.0 | 5.11 | PASS |
+| light | ok `#1E7B4F` | bg `#F3F5F7` | large | 3.0 | 4.80 | PASS |
+| light | ok `#1E7B4F` | surface `#FFFFFF` | large | 3.0 | 5.25 | PASS |
+| light | ok `#1E7B4F` | surface-2 `#EEF1F4` | large | 3.0 | 4.63 | PASS |
+| light | warn `#9A5A0A` | bg `#F3F5F7` | large | 3.0 | 5.00 | PASS |
+| light | warn `#9A5A0A` | surface `#FFFFFF` | large | 3.0 | 5.47 | PASS |
+| light | warn `#9A5A0A` | surface-2 `#EEF1F4` | large | 3.0 | 4.82 | PASS |
+| light | err `#B42318` | bg `#F3F5F7` | large | 3.0 | 6.02 | PASS |
+| light | err `#B42318` | surface `#FFFFFF` | large | 3.0 | 6.57 | PASS |
+| light | err `#B42318` | surface-2 `#EEF1F4` | large | 3.0 | 5.80 | PASS |
+| dark | ink `#F2F5F7` | bg `#0A1622` | text | 4.5 | 16.67 | PASS |
+| dark | ink `#F2F5F7` | surface `#13212D` | text | 4.5 | 14.95 | PASS |
+| dark | ink `#F2F5F7` | surface-2 `#1C2A36` | text | 4.5 | 13.38 | PASS |
+| dark | ink-2 `#B5C0C9` | bg `#0A1622` | text | 4.5 | 9.86 | PASS |
+| dark | ink-2 `#B5C0C9` | surface `#13212D` | text | 4.5 | 8.84 | PASS |
+| dark | ink-2 `#B5C0C9` | surface-2 `#1C2A36` | text | 4.5 | 7.91 | PASS |
+| dark | ink-3 `#8A96A1` | bg `#0A1622` | text | 4.5 | 6.05 | PASS |
+| dark | ink-3 `#8A96A1` | surface `#13212D` | text | 4.5 | 5.42 | PASS |
+| dark | ink-3 `#8A96A1` | surface-2 `#1C2A36` | text | 4.5 | 4.85 | PASS |
+| dark | link `#5CCBF5` | bg `#0A1622` | text | 4.5 | 9.83 | PASS |
+| dark | link `#5CCBF5` | surface `#13212D` | text | 4.5 | 8.82 | PASS |
+| dark | link `#5CCBF5` | surface-2 `#1C2A36` | text | 4.5 | 7.89 | PASS |
+| dark | link-hover `#8EDBF8` | bg `#0A1622` | text | 4.5 | 11.85 | PASS |
+| dark | link-hover `#8EDBF8` | surface `#13212D` | text | 4.5 | 10.63 | PASS |
+| dark | link-hover `#8EDBF8` | surface-2 `#1C2A36` | text | 4.5 | 9.51 | PASS |
+| dark | project-text `#7FD8FA` | bg `#0A1622` | text | 4.5 | 11.39 | PASS |
+| dark | project-text `#7FD8FA` | surface `#13212D` | text | 4.5 | 10.21 | PASS |
+| dark | project-text `#7FD8FA` | surface-2 `#1C2A36` | text | 4.5 | 9.14 | PASS |
+| dark | ok `#8FE0B5` | bg `#0A1622` | text | 4.5 | 11.73 | PASS |
+| dark | ok `#8FE0B5` | surface `#13212D` | text | 4.5 | 10.52 | PASS |
+| dark | ok `#8FE0B5` | surface-2 `#1C2A36` | text | 4.5 | 9.41 | PASS |
+| dark | warn `#F0B957` | bg `#0A1622` | text | 4.5 | 10.24 | PASS |
+| dark | warn `#F0B957` | surface `#13212D` | text | 4.5 | 9.18 | PASS |
+| dark | warn `#F0B957` | surface-2 `#1C2A36` | text | 4.5 | 8.22 | PASS |
+| dark | err `#FF8F86` | bg `#0A1622` | text | 4.5 | 8.28 | PASS |
+| dark | err `#FF8F86` | surface `#13212D` | text | 4.5 | 7.42 | PASS |
+| dark | err `#FF8F86` | surface-2 `#1C2A36` | text | 4.5 | 6.64 | PASS |
+| dark | proposal `#D3B5F0` | bg `#0A1622` | text | 4.5 | 10.11 | PASS |
+| dark | proposal `#D3B5F0` | surface `#13212D` | text | 4.5 | 9.07 | PASS |
+| dark | proposal `#D3B5F0` | surface-2 `#1C2A36` | text | 4.5 | 8.12 | PASS |
+| dark | on-primary `#0A1622` | primary `#00AEEF` | text | 4.5 | 7.21 | PASS |
+| dark | on-event-tint `#BFE6F7` | event-tint `#123A4D` | text | 4.5 | 9.13 | PASS |
+| dark | ok `#8FE0B5` | ok-tint `#11352A` | text | 4.5 | 8.62 | PASS |
+| dark | warn `#F0B957` | warn-tint `#3D2E12` | text | 4.5 | 7.37 | PASS |
+| dark | err `#FF8F86` | err-tint `#43201D` | text | 4.5 | 6.51 | PASS |
+| dark | proposal `#D3B5F0` | proposal-tint `#2A1F3D` | text | 4.5 | 8.55 | PASS |
+| dark | ink `#F2F5F7` | ok-tint `#11352A` | text | 4.5 | 12.24 | PASS |
+| dark | ink `#F2F5F7` | warn-tint `#3D2E12` | text | 4.5 | 12.00 | PASS |
+| dark | ink `#F2F5F7` | err-tint `#43201D` | text | 4.5 | 13.11 | PASS |
+| dark | ink `#F2F5F7` | proposal-tint `#2A1F3D` | text | 4.5 | 14.08 | PASS |
+| dark | ink `#F2F5F7` | event-tint `#123A4D` | text | 4.5 | 11.03 | PASS |
+| dark | tool-kaneto-on-tint `#9ADDF7` | tool-kaneto-tint `#0E3A4F` | text | 4.5 | 8.10 | PASS |
+| dark | tool-rhoi-on-tint `#A9C6F2` | tool-rhoi-tint `#16304F` | text | 4.5 | 7.67 | PASS |
+| dark | tool-trace-on-tint `#F0B691` | tool-trace-tint `#46281A` | text | 4.5 | 7.48 | PASS |
+| dark | tool-permitflow-on-tint `#8FDAD2` | tool-permitflow-tint `#0F3A37` | text | 4.5 | 7.81 | PASS |
+| dark | tool-internal-on-tint `#B5C0C9` | tool-internal-tint `#1C2A36` | text | 4.5 | 7.91 | PASS |
+| dark | tool-rhoi `#5E93E6` | bg `#0A1622` | large | 3.0 | 5.90 | PASS |
+| dark | tool-rhoi `#5E93E6` | surface `#13212D` | large | 3.0 | 5.29 | PASS |
+| dark | tool-rhoi `#5E93E6` | surface-2 `#1C2A36` | large | 3.0 | 4.74 | PASS |
+| dark | tool-trace `#E07A45` | bg `#0A1622` | large | 3.0 | 6.12 | PASS |
+| dark | tool-trace `#E07A45` | surface `#13212D` | large | 3.0 | 5.49 | PASS |
+| dark | tool-trace `#E07A45` | surface-2 `#1C2A36` | large | 3.0 | 4.91 | PASS |
+| dark | tool-permitflow `#2DB5A8` | bg `#0A1622` | large | 3.0 | 7.20 | PASS |
+| dark | tool-permitflow `#2DB5A8` | surface `#13212D` | large | 3.0 | 6.46 | PASS |
+| dark | tool-permitflow `#2DB5A8` | surface-2 `#1C2A36` | large | 3.0 | 5.78 | PASS |
+| dark | tool-internal `#8A96A1` | bg `#0A1622` | large | 3.0 | 6.05 | PASS |
+| dark | tool-internal `#8A96A1` | surface `#13212D` | large | 3.0 | 5.42 | PASS |
+| dark | tool-internal `#8A96A1` | surface-2 `#1C2A36` | large | 3.0 | 4.85 | PASS |
+| dark | ok `#8FE0B5` | bg `#0A1622` | large | 3.0 | 11.73 | PASS |
+| dark | ok `#8FE0B5` | surface `#13212D` | large | 3.0 | 10.52 | PASS |
+| dark | ok `#8FE0B5` | surface-2 `#1C2A36` | large | 3.0 | 9.41 | PASS |
+| dark | warn `#F0B957` | bg `#0A1622` | large | 3.0 | 10.24 | PASS |
+| dark | warn `#F0B957` | surface `#13212D` | large | 3.0 | 9.18 | PASS |
+| dark | warn `#F0B957` | surface-2 `#1C2A36` | large | 3.0 | 8.22 | PASS |
+| dark | err `#FF8F86` | bg `#0A1622` | large | 3.0 | 8.28 | PASS |
+| dark | err `#FF8F86` | surface `#13212D` | large | 3.0 | 7.42 | PASS |
+| dark | err `#FF8F86` | surface-2 `#1C2A36` | large | 3.0 | 6.64 | PASS |
+| dark | focus `#5CCBF5` | bg `#0A1622` | large | 3.0 | 9.83 | PASS |
+| dark | focus `#5CCBF5` | surface `#13212D` | large | 3.0 | 8.82 | PASS |
+
+## Exceptions
+
+- primary (#00AEEF) is a fill colour only: it is never used as text, and white text is never put on it. on-primary is the dark ink.
+- tool-kaneto on light surfaces is the brand cyan at 2.3:1. The ToolMark always shows the tool name next to the dot, so the dot is not the only carrier of meaning. It is not declared as a mark pair in light.
+- focus ring in light is the brand cyan at 2.3:1 on bg; the ring is drawn 2px wide with a 2px offset and a 1px surface halo so it reads against both the control and the page. Declared only in dark, where it is 7.2:1.
+- line, line-soft and line-strong are decorative separators, not UI boundaries that carry meaning. They are not declared.
