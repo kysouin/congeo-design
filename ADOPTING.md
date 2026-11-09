@@ -1,5 +1,7 @@
 # Adopting @congeo/design in an app
 
+Proprietary. © CONGEO L.L.C. See LICENSE.
+
 These are the steps every app follows, one app at a time, in its own repo. They are also the shape of the per-app prompts. Start with calendar.
 
 Before you start, take **before** screenshots of the main screens (320 and 390 px, light and dark if the app has dark) and keep them in `docs/design-migration/before/`.
@@ -8,7 +10,7 @@ Before you start, take **before** screenshots of the main screens (320 and 390 p
 
 ```json
 "dependencies": {
-  "@congeo/design": "github:kysouin/congeo-design#v1.0.0"
+  "@congeo/design": "github:kysouin/congeo-design#v1.3.0"
 }
 ```
 

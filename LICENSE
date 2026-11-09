@@ -1,0 +1,21 @@
+CONGEO Design — Proprietary Licence
+
+Copyright © 2026 CONGEO L.L.C., Paphos, Cyprus. All rights reserved.
+
+This package (the design tokens, stylesheets, components, scripts,
+documentation and every other file in this repository) is the property of
+CONGEO L.L.C.
+
+Permitted use: this package may be used only as part of software published
+by CONGEO L.L.C. That includes installing it as a dependency of such
+software and building and deploying that software.
+
+No other right is granted. Nobody else may copy, modify, distribute,
+sublicense or use this package, in whole or in part, for any other purpose,
+without the prior written permission of CONGEO L.L.C.
+
+The repository is public so that CONGEO L.L.C.'s own tools can install it
+without credentials. Public does not mean open source: this is not an
+open-source licence.
+
+The package is provided "as is", without warranty of any kind.
