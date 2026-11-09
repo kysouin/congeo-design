@@ -262,6 +262,35 @@ function NewComponentsSection() {
   );
 }
 
+// ---------- v1.3 components: both languages, both themes ----------
+function NewShowcase13({ scheme, lang }) {
+  const noop = () => {};
+  const Trash = h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' }, h('path', { d: 'M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6' }));
+  return I18N.inLang(lang, () =>
+    h(
+      'div',
+      { className: 'ref-panel', 'data-theme': scheme, lang, id: `v13-${lang}-${scheme}` },
+      h('div', { className: 'cg-cap' }, `${lang} · ${scheme}`),
+      h(Demo, { title: 'Dialog · modal (≥ 900 px)' }, h(C.Dialog, { open: true, inline: true, variant: 'modal', title: I18N.L('Split PDF', 'Διαχωρισμός PDF'), footer: [h(C.Button, { key: 'c' }, I18N.L('Cancel', 'Ακύρωση')), h(C.Button, { key: 'p', variant: 'primary' }, I18N.L('Split', 'Διαχωρισμός'))] }, h(C.RadioList, { label: I18N.L('Split mode', 'Τρόπος διαχωρισμού'), value: 'each', onChange: noop, options: [{ value: 'each', label: I18N.L('One file per page', 'Ένα αρχείο ανά σελίδα'), description: I18N.L('7 files', '7 αρχεία') }, { value: 'ranges', label: I18N.L('By ranges', 'Κατά εύρη'), description: I18N.L('Type the pages', 'Γράψε τις σελίδες'), mark: h('span', { className: 'cg-chip' }, '1-3') }] }))),
+      h(Demo, { title: 'Dialog · sheet (< 900 px)' }, h(C.Dialog, { open: true, inline: true, variant: 'sheet', title: I18N.L('Password-protect PDF', 'Κωδικός στο PDF'), footer: [h(C.Button, { key: 'c' }, I18N.L('Cancel', 'Ακύρωση')), h(C.Button, { key: 'p', variant: 'primary' }, I18N.L('Save', 'Αποθήκευση'))] }, h(C.Input, { label: I18N.L('Password', 'Κωδικός'), type: 'password', defaultValue: 'secret' }))),
+      h(Demo, { title: 'SidePanel (≥ 900 px)' }, h(C.SidePanel, { open: true, inline: true, variant: 'panel', title: I18N.L('Edit task', 'Επεξεργασία εργασίας'), footer: h(C.Button, { variant: 'primary', block: true }, I18N.L('Save', 'Αποθήκευση')) }, h(C.Input, { label: I18N.L('Title', 'Τίτλος'), defaultValue: I18N.L('Site visit', 'Επίσκεψη στο εργοτάξιο') }))),
+      h(Demo, { title: 'Switch' }, h('div', { className: 'cg-card' }, h(C.Switch, { checked: true, onChange: noop, label: I18N.L('Auto capture', 'Αυτόματη λήψη'), description: I18N.L('Captures as soon as the paper is steady.', 'Τραβάει μόλις το χαρτί μείνει σταθερό.') }), h('hr', { className: 'cg-divider' }), h(C.Switch, { checked: false, onChange: noop, label: I18N.L('Searchable text (OCR)', 'Αναζητήσιμο κείμενο (OCR)'), description: I18N.L('Needed for automatic filing.', 'Χρειάζεται για την αυτόματη ταξινόμηση.') }), h('hr', { className: 'cg-divider' }), h(C.Switch, { checked: true, disabled: true, onChange: noop, label: I18N.L('Disabled', 'Ανενεργό') }))),
+      h(Demo, { title: 'RadioList' }, h(C.RadioList, { label: I18N.L('Sender', 'Αποστολέας'), value: 'arch', onChange: noop, options: [{ value: 'arch', label: I18N.L('Architect', 'Αρχιτέκτονας'), description: I18N.L('Drawings, revisions', 'Σχέδια, αναθεωρήσεις'), mark: h(C.ToolMark, { tool: 'rhoi' }) }, { value: 'struct', label: I18N.L('Structural engineer', 'Πολιτικός μηχανικός'), mark: '3' }, { value: 'client', label: I18N.L('Client', 'Πελάτης'), disabled: true }] })),
+      h(Demo, { title: 'IconButton 44 · 36, tooltip on hover' }, h('div', { className: 'cg-cluster' }, h(C.IconButton, { label: I18N.L('Delete', 'Διαγραφή') }, Trash), h(C.IconButton, { label: I18N.L('Delete', 'Διαγραφή'), variant: 'ghost' }, Trash), h(C.IconButton, { label: I18N.L('Delete', 'Διαγραφή'), size: 'sm' }, Trash), h(C.IconButton, { label: I18N.L('Delete', 'Διαγραφή'), size: 'sm', variant: 'ghost' }, Trash))),
+      h(Demo, { title: 'Progress' }, h('div', { className: 'cg-stack' }, h(C.Progress, { value: 3, max: 7, label: I18N.L('Creating PDF', 'Δημιουργία PDF') }), h(C.Progress, { value: 70, label: I18N.L('Compressing', 'Συμπίεση'), text: '70%' }), h(C.Progress, { label: I18N.L('Loading', 'Φόρτωση') }), h(C.Progress, { value: 2, max: 5, size: 'sm', label: I18N.L('Pages', 'Σελίδες'), showText: false }))),
+      h(Demo, { title: 'Stage: paper on a dark ground' }, h('div', { className: 'cg-stage', style: { padding: 'var(--cg-space-5)', borderRadius: 'var(--cg-radius-card)', display: 'grid', placeItems: 'center', gap: 'var(--cg-space-3)' } }, h('div', { className: 'cg-stage__paper', style: { width: 120, height: 160, display: 'grid', placeItems: 'center' } }, h('span', { className: 'cg-mono cg-xsmall' }, 'A4')), h('span', { className: 'cg-xsmall' }, I18N.L('Page 1 of 3 · on-stage text', 'Σελίδα 1 από 3 · κείμενο on-stage')))),
+    ),
+  );
+}
+function NewComponents13Section() {
+  return h(
+    Section,
+    { id: 'v13', title: 'Components v1.3', note: 'Ό,τι έλειπε στο congeo-pdf: Dialog (modal ή sheet κατά την οθόνη), SidePanel, Switch, RadioList, IconButton 36/44, Progress, το token stage. What the PDF tool missed, in both languages and both themes.' },
+    h('p', { className: 'cg-small cg-ink-2' }, 'Dialog is for a decision or a short form that interrupts (save, split, a password). SidePanel is for editing one item while the list stays in view (the Agenda editor). Both are a bottom Sheet under 900 px.'),
+    h('div', { className: 'ref-two' }, h(NewShowcase13, { scheme: 'light', lang: 'en' }), h(NewShowcase13, { scheme: 'dark', lang: 'en' }), h(NewShowcase13, { scheme: 'light', lang: 'el' }), h(NewShowcase13, { scheme: 'dark', lang: 'el' })),
+  );
+}
+
 // ---------- contrast ----------
 function ContrastSection() {
   const { rows, failures } = checkContrast(tokens);
@@ -379,7 +408,7 @@ function Page() {
         'header',
         { className: 'ref-header' },
         h('div', { className: 'ref-header__title' }, h(C.ToolMark, { tool: 'internal', label: 'CONGEO Design', size: 'lg' })),
-        h('nav', null, h('a', { href: '#tokens' }, 'Tokens'), h('a', { href: '#language' }, 'Language'), h('a', { href: '#v12' }, 'v1.2'), h('a', { href: '#components' }, 'Components'), h('a', { href: '#contrast' }, 'Contrast')),
+        h('nav', null, h('a', { href: '#tokens' }, 'Tokens'), h('a', { href: '#language' }, 'Language'), h('a', { href: '#v13' }, 'v1.3'), h('a', { href: '#v12' }, 'v1.2'), h('a', { href: '#components' }, 'Components'), h('a', { href: '#contrast' }, 'Contrast')),
         h('span', { className: 'ref-spacer' }),
         h('span', { id: 'greek-check', className: 'cg-cap', lang: 'el' }, 'Εβδομάδα · Πρόταση · Έγινε'),
         h(C.Button, { size: 'sm', variant: 'secondary', id: 'theme-toggle', onClick: undefined }, 'Light / Dark'),
@@ -391,6 +420,7 @@ function Page() {
         h('p', { className: 'cg-ink-2' }, 'One source for the look of every CONGEO tool. Built from dist/. Light and dark, 320 to 1280 px.'),
         h(TokensSection),
         h(LanguageSection),
+        h(NewComponents13Section),
         h(NewComponentsSection),
         h(ComponentsSection),
         h(ContrastSection),

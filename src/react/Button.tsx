@@ -27,13 +27,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
 
 export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  /** Required: the accessible name, since the button shows only an icon. */
+  /** Required: the accessible name, since the button shows only an icon. Also the tooltip. */
   label: string;
+  /** 44 px (touch, default) or 36 px (dense toolbars, desktop). */
+  size?: 'md' | 'sm';
+  /** Show the label as a tooltip on hover and focus. Default true. */
+  tooltip?: boolean;
 }
 
-/** Round 44 px icon button. Pass a Lucide icon as the child. */
+/** Round icon button, 44 px (or 36 px dense). Pass a Lucide icon as the child. */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { variant = 'secondary', label, className, type = 'button', children, ...rest },
+  { variant = 'secondary', label, size = 'md', tooltip = true, className, type = 'button', children, ...rest },
   ref,
 ) {
   return (
@@ -41,8 +45,8 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(f
       ref={ref}
       type={type}
       aria-label={label}
-      title={rest.title ?? label}
-      className={cx('cg-btn', `cg-btn--${variant}`, 'cg-btn--icon', className)}
+      data-tooltip={tooltip ? label : undefined}
+      className={cx('cg-btn', `cg-btn--${variant}`, 'cg-btn--icon', size === 'sm' && 'cg-btn--icon-sm', className)}
       {...rest}
     >
       {children}

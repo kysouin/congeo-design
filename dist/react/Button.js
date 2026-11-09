@@ -40,8 +40,7 @@ const cx_js_1 = require("./cx.js");
 exports.Button = React.forwardRef(function Button({ variant = 'secondary', size = 'md', block, className, type = 'button', ...rest }, ref) {
     return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, className: (0, cx_js_1.cx)('cg-btn', `cg-btn--${variant}`, `cg-btn--${size}`, block && 'cg-btn--block', className), ...rest }));
 });
-/** Round 44 px icon button. Pass a Lucide icon as the child. */
-exports.IconButton = React.forwardRef(function IconButton({ variant = 'secondary', label, className, type = 'button', children, ...rest }, ref) {
-    var _a;
-    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, "aria-label": label, title: (_a = rest.title) !== null && _a !== void 0 ? _a : label, className: (0, cx_js_1.cx)('cg-btn', `cg-btn--${variant}`, 'cg-btn--icon', className), ...rest, children: children }));
+/** Round icon button, 44 px (or 36 px dense). Pass a Lucide icon as the child. */
+exports.IconButton = React.forwardRef(function IconButton({ variant = 'secondary', label, size = 'md', tooltip = true, className, type = 'button', children, ...rest }, ref) {
+    return ((0, jsx_runtime_1.jsx)("button", { ref: ref, type: type, "aria-label": label, "data-tooltip": tooltip ? label : undefined, className: (0, cx_js_1.cx)('cg-btn', `cg-btn--${variant}`, 'cg-btn--icon', size === 'sm' && 'cg-btn--icon-sm', className), ...rest, children: children }));
 });

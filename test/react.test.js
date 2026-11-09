@@ -52,6 +52,24 @@ test('react: every component exports and renders its class', () => {
   assert.match(inLang('el', () => r(h(C.DateField, { label: 'D', value: '', onChange: noop }))), /placeholder="ΗΗ\/ΜΜ\/ΕΕΕΕ"/);
   assert.match(r(h(C.TimeField, { label: 'T', value: '09:30', onChange: noop })), /cg-timefield[\s\S]*placeholder="HH:MM"[^>]*value="09:30"/);
   assert.match(r(h(C.DatePicker, { value: '2026-11-20', today: '2026-11-12', onPick: noop })), /role="grid"[^>]*aria-label="November 2026"[\s\S]*>Mo<[\s\S]*aria-current="date"[^>]*aria-label="2026-11-12"[\s\S]*aria-selected="true"[^>]*aria-label="2026-11-20"/);
+  // v1.3 additions
+  assert.match(r(h(C.Dialog, { open: true, inline: true, variant: 'modal', title: 'T', footer: h(C.Button, null, 'x') }, 'body')), /role="dialog"[^>]*class="cg-dialog cg-dialog--modal cg-dialog--inline"[^>]*style="max-width:560px"[\s\S]*cg-dialog__head[\s\S]*cg-dialog__title">T<[\s\S]*cg-dialog__body">body<[\s\S]*cg-dialog__foot/);
+  assert.match(r(h(C.Dialog, { open: true, inline: true, variant: 'sheet', title: 'T' }, 'body')), /cg-sheet cg-sheet--inline[^"]*cg-dialog cg-dialog--sheet[\s\S]*cg-sheet__grabber/);
+  assert.match(r(h(C.Dialog, { open: true, inline: true, title: 'T' }, 'body')), /cg-dialog--sheet/, 'server render: the phone container by default');
+  assert.equal(r(h(C.Dialog, { open: false, title: 'T' }, 'body')), '');
+  assert.match(r(h(C.SidePanel, { open: true, inline: true, variant: 'panel', title: 'P', width: 400 }, 'b')), /<aside[^>]*role="dialog"[^>]*class="cg-dialog cg-sidepanel cg-sidepanel--inline"[^>]*style="width:400px"/);
+  assert.match(r(h(C.Switch, { checked: true, onChange: noop, label: 'L', description: 'D' })), /<button type="button" role="switch" id="([^"]+)" aria-checked="true" aria-describedby="\1-desc" class="cg-switch"[\s\S]*cg-switch__label">L<[\s\S]*cg-switch__desc" id="\1-desc">D<[\s\S]*cg-switch__track/);
+  const radio = r(h(C.RadioList, { label: 'G', value: 'b', onChange: noop, options: [{ value: 'a', label: 'A', description: 'd' }, { value: 'b', label: 'B', mark: 'M' }] }));
+  assert.match(radio, /role="radiogroup" aria-label="G" class="cg-radiolist"/);
+  assert.match(radio, /role="radio" aria-checked="false" tabindex="-1" class="cg-radio"[\s\S]*cg-radio__desc">d</);
+  assert.match(radio, /role="radio" aria-checked="true" tabindex="0" class="cg-radio cg-radio--selected"[\s\S]*cg-radio__mark">M</);
+  assert.match(r(h(C.Progress, { value: 3, max: 7, label: 'Creating PDF' })), /role="progressbar" aria-label="Creating PDF" aria-valuemin="0" aria-valuemax="7" aria-valuenow="3" aria-valuetext="3 of 7"[\s\S]*cg-progress__text cg-mono">3 of 7</);
+  assert.match(inLang('el', () => r(h(C.Progress, { value: 3, max: 7, label: 'x' }))), /3 από 7/);
+  assert.match(r(h(C.Progress, { label: 'Loading' })), /cg-progress--indeterminate[\s\S]*aria-busy="true"/);
+  assert.match(r(h(C.IconButton, { label: 'Delete', size: 'sm' }, 'i')), /aria-label="Delete" data-tooltip="Delete" class="cg-btn cg-btn--secondary cg-btn--icon cg-btn--icon-sm"/);
+  assert.doesNotMatch(r(h(C.IconButton, { label: 'Delete', tooltip: false }, 'i')), /data-tooltip/);
+  assert.equal(typeof C.useMediaQuery, 'function');
+  assert.equal(C.DESKTOP_QUERY, '(min-width: 900px)');
   assert.equal(typeof C.accentAttrs, 'function');
   assert.deepEqual(C.accentAttrs({ tool: 'rhoi' }), { 'data-tool': 'rhoi' });
   assert.equal(typeof C.Field, 'function');

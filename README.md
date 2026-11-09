@@ -265,7 +265,9 @@ Only in `tokens/tokens.json`. Then `npm run build`, `npm test`, and commit toget
 
 ### Components
 
-CSS classes prefixed `cg-` and thin React wrappers in `@congeo/design/react`: Button, IconButton, ProjectChip, ToolMark, Card, Row, CheckCircle, Segmented, FilterPill, TabBar, Sheet (swipe down to close, focus trap), TitleBlock (4 to 6 cells; one row on desktop, two columns on the phone with the number first), ProposalCard (Reject left, Approve right), Toast, StatusBar (offline, sending, failed, ok with auto-hide), Input, Textarea (grows; `onSubmit` on Enter), Select (native, Lucide chevron), DateField and TimeField (ΗΗ/ΜΜ/ΕΕΕΕ and 24-hour ΩΩ:ΛΛ whatever the device locale, ISO values, pickers), DatePicker (Monday-first grid), Skeleton, EmptyState, SwipeRow (`onDone` / `onLater`), LanguageSwitch. Helpers: `cx`, `accentAttrs`, `Field`, `useLang`.
+CSS classes prefixed `cg-` and thin React wrappers in `@congeo/design/react`: Button, IconButton (44 or 36 px, tooltip), ProjectChip, ToolMark, Card, Row, CheckCircle, Segmented, FilterPill, TabBar, Sheet (swipe down to close, focus trap), TitleBlock (4 to 6 cells; one row on desktop, two columns on the phone with the number first), ProposalCard (Reject left, Approve right), Toast, StatusBar (offline, sending, failed, ok with auto-hide), Input, Textarea (grows; `onSubmit` on Enter), Select (native, Lucide chevron), DateField and TimeField (ΗΗ/ΜΜ/ΕΕΕΕ and 24-hour ΩΩ:ΛΛ whatever the device locale, ISO values, pickers), DatePicker (Monday-first grid), Skeleton, EmptyState, SwipeRow (`onDone` / `onLater`), LanguageSwitch, Dialog (a Sheet on a phone, a centred modal from 900 px up), SidePanel, Switch, RadioList, Progress. Helpers: `cx`, `accentAttrs`, `Field`, `useLang`, `useMediaQuery`, `useModalFocus`.
+
+Tokens also give `stage` / `on-stage`: the dark ground a page or a drawing sits on.
 
 Every component is exercised in a real browser with React running (`test/harness/`, Chromium through Playwright), not only rendered on the server.
 

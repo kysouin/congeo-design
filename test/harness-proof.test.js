@@ -20,6 +20,7 @@ test.before(async () => {
   if (!pw) return;
   await buildHarness({ name: 'broken-swipe', breakSwipeGuard: true });
   await buildHarness({ name: 'broken-sheet', breakSheetThreshold: true });
+  await buildHarness({ name: 'broken-dialog', breakDialogBreakpoint: true });
   ({ server, port } = await serve());
   browser = await pw.chromium.launch();
 });
@@ -60,10 +61,20 @@ test('proof: with the threshold broken, the short-drag test fails (any drag clos
   });
 });
 
-test('proof: the unbroken bundle passes the same two cases', { skip }, async () => {
+test('proof: with the 900 px breakpoint ignored, the Dialog-at-390 test fails (a modal where a sheet is due)', { skip }, async () => {
+  await withBundle('broken-dialog', { viewport: { width: 390, height: 844 } }, async (page) => {
+    await assert.rejects(() => cases.dialogContainer(page), (e) => {
+      console.log(`  broken-dialog → ${String(e.message).split('\n')[0]}`);
+      return /sheet at \d+px/.test(e.message);
+    });
+  });
+});
+
+test('proof: the unbroken bundle passes the same three cases', { skip }, async () => {
   await buildHarness();
   await withBundle('harness', {}, async (page) => {
     await cases.swipeVerticalScrolls(page);
     await cases.sheetShortDragSpringsBack(page);
+    await cases.dialogContainer(page);
   });
 });

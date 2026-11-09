@@ -13,14 +13,14 @@ function patchPlugin(patches) {
   return {
     name: 'cg-patch',
     setup(build) {
-      build.onLoad({ filter: /src[\\/]react[\\/](SwipeRow|Sheet)\.tsx$/ }, (args) => {
+      build.onLoad({ filter: /src[\\/]react[\\/](SwipeRow|Sheet|focus)\.tsx?$/ }, (args) => {
         let text = fs.readFileSync(args.path, 'utf8');
         for (const [file, from, to] of patches) {
           if (!args.path.endsWith(file)) continue;
           if (!text.includes(from)) throw new Error(`patch anchor not found in ${file}: ${from}`);
           text = text.split(from).join(to);
         }
-        return { contents: text, loader: 'tsx' };
+        return { contents: text, loader: args.path.endsWith('.tsx') ? 'tsx' : 'ts' };
       });
     },
   };
@@ -34,10 +34,12 @@ const PATCHES = {
   ],
   // the close threshold: any drag closes
   breakSheetThreshold: [['Sheet.tsx', 'dist > h * threshold ||', 'dist > 0 ||']],
+  // Dialog ignores the 900 px breakpoint: always the modal
+  breakDialogBreakpoint: [['focus.ts', "export const DESKTOP_QUERY = '(min-width: 900px)';", "export const DESKTOP_QUERY = '(min-width: 0px)';"]],
 };
 
-async function buildHarness({ name = 'harness', breakSwipeGuard = false, breakSheetThreshold = false } = {}) {
-  const patches = [...(breakSwipeGuard ? PATCHES.breakSwipeGuard : []), ...(breakSheetThreshold ? PATCHES.breakSheetThreshold : [])];
+async function buildHarness({ name = 'harness', breakSwipeGuard = false, breakSheetThreshold = false, breakDialogBreakpoint = false } = {}) {
+  const patches = [...(breakSwipeGuard ? PATCHES.breakSwipeGuard : []), ...(breakSheetThreshold ? PATCHES.breakSheetThreshold : []), ...(breakDialogBreakpoint ? PATCHES.breakDialogBreakpoint : [])];
   fs.mkdirSync(outDir, { recursive: true });
   const outfile = path.join(outDir, `${name}.js`);
   await esbuild.build({

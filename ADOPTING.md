@@ -115,6 +115,19 @@ v1.2 brings into the package what calendar built for itself after v1.0. An app o
 9. **Textarea**: `onSubmit` replaces the app's own Enter handler.
 10. Run `congeo-design-lint src --i18n`, the app's tests, and take the before/after screenshots.
 
+## From v1.2.x to v1.3.0
+
+v1.3.0 is the first **tag** with the one-state language fix (the `v1.2.1` tag points at the v1.2.0 commit). Change the tag, then:
+
+1. **Drop the alias.** Remove the `resolve.alias` for `@congeo/design` added for the language state (calendar and congeo-pdf: `vite.config.ts`) and any note about it.
+2. **Replace the local Switch** with `Switch` (`label`, `description`, `checked`, `onChange`). For congeo-pdf: `Switch` in `src/components/Common.tsx` and the `.switch` rules.
+3. **Replace local radio lists** (option buttons with `aria-pressed`) with `RadioList` (`options` with `label`, `description`, `mark`; `value`, `onChange`, `label`). For congeo-pdf: the `.option-list` / `.option` rules, the split modes, the OCR scope and the sender grid.
+4. **Replace local icon buttons** with `IconButton` (`size="sm"` for the 36 px card and dialog actions; `label` required; the tooltip replaces `title`). For congeo-pdf: `.iconbtn`.
+5. **Replace local progress bars** with `Progress` (`value` / `max` + `label`; omit `value` for indeterminate). For congeo-pdf: the `.bar` in the busy card.
+6. **Use `Dialog` for dialogs**: `title`, `footer` (secondary first, primary last), `maxWidth`. It is a Sheet on a phone and a centred modal from 900 px up, so the app stops choosing by hand. For congeo-pdf: `Modal` in `Common.tsx` and the `.dialog` / `.modal-body` / `.modal-foot` rules. An editor that must keep the list in view uses `SidePanel` instead (calendar's `Panel`).
+7. **Dark canvases** (the PDF page editor, a drawing canvas) take `var(--cg-stage)` with `var(--cg-on-stage)` text, or `.cg-stage` / `.cg-stage__paper`, instead of a local dark value.
+8. Run `congeo-design-lint src --i18n`, the app's tests, and take screenshots in both languages and both themes.
+
 ## From v1.2.0 to v1.2.1
 
 v1.2.1 fixes one defect: in v1.2.0 `import` of `@congeo/design/i18n` resolved an ESM file while the components required the CJS one, so an app had **two language states**: the switch changed the components' labels but not the app's own `L()` strings. Now the state lives on `globalThis[Symbol.for('congeo.i18n')]`, shared by every copy, and `import` resolves ESM everywhere (`react`, `i18n`, `inline`) while `require` resolves CJS everywhere.

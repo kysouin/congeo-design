@@ -1,6 +1,6 @@
 /* Generated from tokens/tokens.json by scripts/build.js. Do not edit. */
 
-export type ColorName = "bg" | "surface" | "surface2" | "line" | "lineSoft" | "lineStrong" | "ink" | "ink2" | "ink3" | "primary" | "onPrimary" | "link" | "linkHover" | "projectText" | "ok" | "warn" | "err" | "proposal" | "okTint" | "warnTint" | "errTint" | "proposalTint" | "eventTint" | "onEventTint" | "toolKaneto" | "toolKanetoTint" | "toolKanetoOnTint" | "toolRhoi" | "toolRhoiTint" | "toolRhoiOnTint" | "toolTrace" | "toolTraceTint" | "toolTraceOnTint" | "toolPermitflow" | "toolPermitflowTint" | "toolPermitflowOnTint" | "toolInternal" | "toolInternalTint" | "toolInternalOnTint" | "scrim" | "focus";
+export type ColorName = "bg" | "surface" | "surface2" | "stage" | "onStage" | "line" | "lineSoft" | "lineStrong" | "ink" | "ink2" | "ink3" | "primary" | "onPrimary" | "link" | "linkHover" | "projectText" | "ok" | "warn" | "err" | "proposal" | "okTint" | "warnTint" | "errTint" | "proposalTint" | "eventTint" | "onEventTint" | "toolKaneto" | "toolKanetoTint" | "toolKanetoOnTint" | "toolRhoi" | "toolRhoiTint" | "toolRhoiOnTint" | "toolTrace" | "toolTraceTint" | "toolTraceOnTint" | "toolPermitflow" | "toolPermitflowTint" | "toolPermitflowOnTint" | "toolInternal" | "toolInternalTint" | "toolInternalOnTint" | "scrim" | "focus";
 export type ToolId = "kaneto" | "rhoi" | "trace" | "permitflow" | "internal";
 export type SizeKey = "s12" | "s13" | "s14" | "s15" | "s17" | "s20" | "s24" | "s30";
 export type SpaceKey = "s1" | "s2" | "s3" | "s4" | "s5" | "s6" | "s8";

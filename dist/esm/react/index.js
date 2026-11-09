@@ -23,3 +23,8 @@ export { Field } from './Input.js';
 export { Select } from './Select.js';
 export { DateField, TimeField } from './DateField.js';
 export { DatePicker } from './DatePicker.js';
+export { Dialog, SidePanel } from './Dialog.js';
+export { Switch } from './Switch.js';
+export { RadioList } from './RadioList.js';
+export { Progress, progressText } from './Progress.js';
+export { useMediaQuery, useModalFocus, DESKTOP_QUERY } from './focus.js';

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { cx } from './cx.js';
 import { IconButton } from './Button.js';
 import { L } from '../i18n/core.js';
+import { useModalFocus } from './focus.js';
 
 export interface SheetProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   open: boolean;
@@ -17,7 +18,6 @@ export interface SheetProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   headExtra?: React.ReactNode;
 }
 
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 const FLICK = 0.6; // px per ms
 
 /**
@@ -27,58 +27,13 @@ const FLICK = 0.6; // px per ms
  */
 export function Sheet({ open, onClose, title, closeButton, inline, threshold = 0.25, headExtra, className, children, style, ...rest }: SheetProps) {
   const panel = React.useRef<HTMLDivElement>(null);
-  const opener = React.useRef<HTMLElement | null>(null);
   const [dy, setDy] = React.useState(0);
   const [dragging, setDragging] = React.useState(false);
   const drag = React.useRef<{ id: number; y0: number; t0: number; yPrev: number; tPrev: number; v: number } | null>(null);
   const onCloseRef = React.useRef(onClose);
   onCloseRef.current = onClose;
 
-  // focus: trap while open, return on close
-  React.useEffect(() => {
-    if (!open || inline) return;
-    opener.current = (document.activeElement as HTMLElement | null) ?? null;
-    const el = panel.current;
-    const first = el?.querySelector<HTMLElement>(FOCUSABLE);
-    (first ?? el)?.focus({ preventScroll: true });
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        onCloseRef.current?.();
-        return;
-      }
-      if (e.key !== 'Tab' || !el) return;
-      const items = Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE)).filter((x) => x.offsetParent !== null || x === document.activeElement);
-      if (!items.length) {
-        e.preventDefault();
-        el.focus();
-        return;
-      }
-      const firstItem = items[0];
-      const lastItem = items[items.length - 1];
-      if (e.shiftKey && (document.activeElement === firstItem || document.activeElement === el)) {
-        e.preventDefault();
-        lastItem.focus();
-      } else if (!e.shiftKey && document.activeElement === lastItem) {
-        e.preventDefault();
-        firstItem.focus();
-      }
-    };
-    const onFocusIn = (e: FocusEvent) => {
-      if (el && !el.contains(e.target as Node)) (el.querySelector<HTMLElement>(FOCUSABLE) ?? el).focus();
-    };
-    document.addEventListener('keydown', onKey);
-    document.addEventListener('focusin', onFocusIn);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('focusin', onFocusIn);
-      document.body.style.overflow = prevOverflow;
-      const back = opener.current;
-      if (back && typeof back.focus === 'function' && document.contains(back)) back.focus({ preventScroll: true });
-    };
-  }, [open, inline]);
+  useModalFocus(open && !inline, panel, onClose);
 
   if (!open) return null;
 

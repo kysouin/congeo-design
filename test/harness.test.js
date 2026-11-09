@@ -73,6 +73,13 @@ run('ProposalCard: Reject (secondary) left, Approve (primary) right', cases.prop
 run('TitleBlock: 5 cells in one row at 1280 px', cases.titleBlockLayout, { viewport: { width: 1280, height: 900 } });
 run('TitleBlock: 5 cells in two columns at 390 px, the number first and full-width', cases.titleBlockLayout, { viewport: { width: 390, height: 844 } });
 run('TitleBlock: at 320 px', cases.titleBlockLayout, { viewport: { width: 320, height: 700 } });
+run('Dialog: a centred modal at 1280 px; Escape closes and focus returns', cases.dialogContainer, { viewport: { width: 1280, height: 900 } });
+run('Dialog: a bottom sheet at 390 px; Escape closes and focus returns', cases.dialogContainer, { viewport: { width: 390, height: 844 } });
+run('Switch: toggles by click, Space and Enter; role switch; 44 px', cases.switchToggles);
+run('RadioList: arrow keys move the selection, Home/End, one tab stop, trailing mark', cases.radioListKeyboard);
+run('IconButton: aria-label present, 44 vs 36 measured, tooltip on hover', cases.iconButtonSizes, { hasTouch: false });
+run('Progress: «3 of 7», aria values, indeterminate animates', cases.progressText);
+run('Progress: «3 από 7» in Greek', cases.progressText, {}, '?lang=el');
 run('Greek: the same cases read right in Greek (fields, select, proposal, picker heads)', async (page) => {
   await cases.dateFieldTyping(page);
   await cases.dateFieldPicker(page);
@@ -96,6 +103,7 @@ test('harness: visual runs at 1280 / 390 / 320, light and dark (and Greek at 390
       // open the date picker and the sheet-less states for the picture
       await page.click('[data-case="fields"] .cg-datefield .cg-btn--icon');
       await page.locator('.cg-popover [role="grid"]').waitFor();
+      await page.click('#sw');
       const sw = await page.evaluate(() => document.documentElement.scrollWidth);
       assert.ok(sw <= w, `${theme} ${w}: no sideways scroll (${sw})`);
       assert.deepEqual(errors, []);

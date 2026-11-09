@@ -12,6 +12,8 @@ module.exports = {
         "bg": "var(--cg-bg)",
         "surface": "var(--cg-surface)",
         "surface-2": "var(--cg-surface-2)",
+        "stage": "var(--cg-stage)",
+        "on-stage": "var(--cg-on-stage)",
         "line": "var(--cg-line)",
         "line-soft": "var(--cg-line-soft)",
         "line-strong": "var(--cg-line-strong)",
