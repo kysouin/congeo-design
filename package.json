@@ -2,7 +2,7 @@
   "name": "@congeo/design",
   "version": "1.3.0",
   "description": "CONGEO design tokens and components. One source for the look of every CONGEO tool.",
-  "license": "UNLICENSED",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": "github:kysouin/congeo-design",
   "main": "./dist/tokens.js",
   "types": "./dist/tokens.d.ts",

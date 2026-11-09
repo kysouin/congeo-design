@@ -1,5 +1,7 @@
 # @congeo/design
 
+Proprietary. © CONGEO L.L.C. See LICENSE.
+
 **Μία πηγή για την εμφάνιση κάθε εργαλείου CONGEO.**
 One source for the look of every CONGEO tool.
 
@@ -33,7 +35,7 @@ Git dependency, καρφωμένη σε tag:
 
 ```json
 "dependencies": {
-  "@congeo/design": "github:kysouin/congeo-design#v1.0.0"
+  "@congeo/design": "github:kysouin/congeo-design#v1.3.0"
 }
 ```
 
@@ -87,10 +89,10 @@ module.exports = { presets: [require('@congeo/design/tailwind')], content: ['./s
 
 ### Αναβάθμιση
 
-Άλλαξε το tag και ξανατρέξε install:
+Άλλαξε το tag στο νεότερο (το πάνω-πάνω του `CHANGELOG.md`) και ξανατρέξε install:
 
 ```json
-"@congeo/design": "github:kysouin/congeo-design#v1.1.0"
+"@congeo/design": "github:kysouin/congeo-design#v1.3.0"
 ```
 
 Το `CHANGELOG.md` λέει τι άλλαξε. Minor = νέα tokens ή components, patch = διορθώσεις, major = κάτι αφαιρέθηκε ή μετονομάστηκε.
@@ -188,7 +190,7 @@ A git dependency pinned to a tag:
 
 ```json
 "dependencies": {
-  "@congeo/design": "github:kysouin/congeo-design#v1.0.0"
+  "@congeo/design": "github:kysouin/congeo-design#v1.3.0"
 }
 ```
 
